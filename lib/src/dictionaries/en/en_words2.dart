@@ -48426,8 +48426,10 @@ zlotys
 zodiac/MS
 zodiacal
 zombie/MS
+zombies
 zonal/Y
 zone's
+zones
 zone/AGDS
 zoning/M
 zonked

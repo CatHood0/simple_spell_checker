@@ -6,6 +6,9 @@ provincia
 animalia
 género
 inglés
+errores
+error
+errar
 latín
 argentina
 alcalde

@@ -14,6 +14,8 @@ genus
 latin
 french
 greek
+errors
+error
 germany
 ist
 left
@@ -15846,7 +15848,7 @@ lighttpd
 tarbes
 pharmacies
 banias
-álava
+alava
 privateers
 venad
 autocad
@@ -78153,7 +78155,7 @@ alemtuzumab
 alendronate
 alexandros
 alfentanil
-álfheimr
+alfheimr
 alfie
 alfisol
 algaculture
@@ -78388,7 +78390,7 @@ arylation
 aryloxy
 aryne
 asama
-ásatrú
+asatru
 asce
 asd
 asdf
@@ -82086,7 +82088,7 @@ piereis
 heremod
 pingus
 dofus
-ídolos
+idols
 coupés
 cootes
 stoopid
@@ -82974,7 +82976,7 @@ podes
 podvis
 warlocked
 blocus
-íbar
+ibar
 mazus
 féas
 brabus
@@ -83342,10 +83344,10 @@ ampus
 ambès
 cramans
 ammos
-álamos
+alamos
 jambes
 hamars
-albé
+albe
 albens
 alblas
 kalidos

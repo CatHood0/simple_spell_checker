@@ -17,11 +17,16 @@ papa
 papá
 tienes
 tenemos
-yo tengo
-tu tienes
-ellos tienen
-nosotros tenemos
-vamos a tener
+yo 
+tengo
+tu
+tienes
+ellos
+tienen
+nosotros
+tenemos
+vamos
+tener
 tendras
 lo lograras
 lograr
@@ -32,15 +37,20 @@ podrás
 verás
 veré
 veo
-he visto
+he
+visto
 dividir
 dividido
 finiquito
 finiquitar
 haré
 hecho
-he hecho
+he
 haría
+hazte
+haz
+hacer
+has
 merezco
 mereces
 merecemos
@@ -84,9 +94,6 @@ dónde
 donde
 debería
 debería
-errores
-error
-errar
 mirar
 destacar
 observar
@@ -356,6 +363,7 @@ Alejandra
 Alejandro
 Alejandría
 Alem
+Alquilé
 Alemania
 Alemán
 Aleosán
@@ -70138,6 +70146,8 @@ zóster/S
 ó
 óbice/S
 óbito/S
+típico
+tipico
 óculo/S
 ódiame
 ódianos
@@ -70231,24 +70241,36 @@ zóster/S
 úsalos
 úsame
 úsanos
+usanos
 úsela
+usela
 úselas
+uselas
 úsele
-úseles
+usele
 úselo
+uselo
 úselos
+uselos
 úseme
-úsenla
+useme
 úsenlas
-úsenle
-úsenles
+usenlas
 úsenlo
+uselo
 úsenlos
+uselos
 úsenme
+usenme
 úsennos
+usennos
 úsenos
-úsense
+usenos
 úsese
+usese
+errores
+error
+errar
 útero/S
 útil/S
 útil/kS
