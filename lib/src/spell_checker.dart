@@ -1,7 +1,8 @@
 import 'dart:async' show Future, Stream, StreamController;
 import 'dart:convert';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
-import 'package:flutter/material.dart' show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
+import 'package:flutter/material.dart'
+    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumber, LanguageDicPriorityOrder;
 import 'package:simple_spell_checker/src/common/extensions.dart';
@@ -51,6 +52,8 @@ class SimpleSpellChecker {
   /// then select one of the existent to avoid conflicts
   bool safeDictionaryLoad;
 
+  bool caseSensitive;
+
   /// If safeDictionaryLoad is true, this will be used as the default language to update
   /// the state of SimpleSpellChecker and to store to a existent language with its dictionary
   String safeLanguageName;
@@ -61,11 +64,17 @@ class SimpleSpellChecker {
     required String language,
     required this.safeDictionaryLoad,
     this.safeLanguageName = 'en',
+    this.caseSensitive = true,
     this.priorityOrder = LanguageDicPriorityOrder.defaultFirst,
     bool autoAddLanguagesFromCustomDictionaries = true,
     this.customLanguages,
   }) {
     _language = language;
+    _languageState.add(_language);
+    _languagesRegistry.set = [...defaultLanguages];
+    _cacheWordDictionary = null;
+    _cacheLanguageIdentifier = null;
+    reloadDictionarySync();
     if (autoAddLanguagesFromCustomDictionaries) _addLanguagesFromCustomDictionaries();
   }
 
@@ -166,10 +175,13 @@ class SimpleSpellChecker {
   }
 
   bool hasWrongWords(String word) {
+    // if word is just an whitespace then is not wrong
+    if (word.trim().isEmpty) return false;
     _verifyState();
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    final int validWord = wordsMap[word.toLowerCase()] ?? -1;
-    return validWord == -1;
+    final newWordWithCaseSensitive = caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
+    final int? validWord = wordsMap[newWordWithCaseSensitive];
+    return validWord == null;
   }
 
   bool _checkLanguageRegistry(String language) {
@@ -250,8 +262,8 @@ class SimpleSpellChecker {
 
   /// Use disposeControllers is just never will be use the StreamControllers
   void disposeControllers() {
-    _simpleSpellCheckerWidgetsState.close();
-    _languageState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_languageState.isClosed) _languageState.close();
     _disposedControllers = true;
   }
 
@@ -259,6 +271,7 @@ class SimpleSpellChecker {
     _verifyState();
     reloadDictionarySync();
   }
+
   /// this count about a accidental recursive calling
   int _intoCount = 0;
   void reloadDictionarySync() async {
@@ -294,15 +307,16 @@ class SimpleSpellChecker {
     } else {
       _cacheLanguageIdentifier!.set = identifier;
     }
-    final Iterable<MapEntry<String, int>> entries =
-        const LineSplitter().convert(_cacheLanguageIdentifier!.get.words).map(
-              (element) => MapEntry(element.toLowerCase(), 1),
-            );
-    if (entries.isNotEmpty) {
-      final Map<String, int> wordsMap = {}..addEntries(entries);
-      _cacheWordDictionary ??= CacheObject(object: {});
-      _cacheWordDictionary!.set = wordsMap;
-    }
+    final Iterable<MapEntry<String, int>> entries = const LineSplitter().convert(identifier.words).map(
+          (element) => MapEntry(
+            element.trim().toLowerCase(),
+            1,
+          ),
+        );
+    final Map<String, int> wordsMap = {};
+    wordsMap.addEntries(entries);
+    _cacheWordDictionary ??= CacheObject(object: {});
+    _cacheWordDictionary!.set = {...wordsMap};
   }
 
   Stream get stream {
