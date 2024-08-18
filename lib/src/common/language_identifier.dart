@@ -1,5 +1,5 @@
 /// [LanguageIdentifier] is a representation of a register of a language with it's dictionary
-///   [language] ref to the country code 
+///   [language] ref to the country code
 ///   [word] ref to the dictionary
 ///
 /// [words] dictionary must have a plain text format where the new lines separate every word

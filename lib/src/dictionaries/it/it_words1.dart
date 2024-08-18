@@ -1,5 +1,4 @@
-const itWords1 = 
-'''
+const itWords1 = '''
 italia
 miniatura
 famiglia

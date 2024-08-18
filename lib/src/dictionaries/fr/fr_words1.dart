@@ -1,5 +1,4 @@
-const frWords1 = 
-'''
+const frWords1 = '''
 vignette
 département
 région

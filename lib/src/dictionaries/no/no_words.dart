@@ -1,5 +1,4 @@
-const noWords = 
-'''
+const noWords = '''
 norge
 insekter
 dyreriket

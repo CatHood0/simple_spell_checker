@@ -1,5 +1,4 @@
-const esWords1 = 
-'''
+const esWords1 = '''
 municipio
 miniatura
 provincia

@@ -1,5 +1,4 @@
-const esWords2 = 
-'''
+const esWords2 = '''
 ABS
 ADSL
 Abad

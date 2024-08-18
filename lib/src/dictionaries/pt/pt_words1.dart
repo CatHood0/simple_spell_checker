@@ -1,5 +1,4 @@
-const ptWords1 = 
-'''
+const ptWords1 = '''
 são
 brasil
 unidos

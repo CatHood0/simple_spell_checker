@@ -1,5 +1,4 @@
-const deWords1 = 
-'''
+const deWords1 = '''
 mini
 miniatur
 deutschland

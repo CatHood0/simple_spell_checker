@@ -2,15 +2,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_spell_checker/src/spell_checker.dart';
 
 void main() {
-  test('Should return a simple map with right parts and wrong parts in english', () {
+  test('Should return a simple map with right parts and wrong parts in english',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'en',
       safeDictionaryLoad: false,
     );
     //spellchecker.testingMode = true;
-    final content =
-        spellchecker.checkBuilder<Map<String, bool>>('this is a tśr (with) sme errors', builder: (word, isWrong) {
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'this is a tśr (with) sme errors', builder: (word, isWrong) {
       return {word: isWrong};
     });
     expect(content, isNotNull);
@@ -36,15 +37,16 @@ void main() {
   });
 
   // TODO: you will need to add test where there are words with accents at the middle at them should be wrong
-  test('Should return a simple map with right parts and wrong parts in spanish', () {
+  test('Should return a simple map with right parts and wrong parts in spanish',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'es',
       safeDictionaryLoad: false,
     );
     //spellchecker.testingMode = true;
-    final content = spellchecker.checkBuilder<Map<String, bool>>('Ésto es un tesr (con) alnu errores',
-        builder: (word, isWrong) {
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Ésto es un tesr (con) alnu errores', builder: (word, isWrong) {
       return {word: isWrong};
     });
     expect(content, isNotNull);

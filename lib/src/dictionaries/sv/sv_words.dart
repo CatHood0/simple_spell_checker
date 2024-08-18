@@ -1,5 +1,4 @@
-const svWords = 
-'''
+const svWords = '''
 miniatyr
 släkte
 svampar

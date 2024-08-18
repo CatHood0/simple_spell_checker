@@ -1,5 +1,4 @@
-const enWords2 = 
-'''
+const enWords2 = '''
 0/nm
 0th/pt
 1/n1

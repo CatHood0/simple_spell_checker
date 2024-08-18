@@ -1,5 +1,4 @@
-const enWords1 = 
-'''
+const enWords1 = '''
 district
 india
 municipality

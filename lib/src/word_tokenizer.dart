@@ -11,7 +11,10 @@ class WordTokenizer {
     String content, {
     bool removeAllEmptyWords = false,
   }) {
-    final List<String> words = separatorRegExp.allMatches(content).map((match) => match.group(0)!).toList();
+    final List<String> words = separatorRegExp
+        .allMatches(content)
+        .map((match) => match.group(0)!)
+        .toList();
     if (!removeAllEmptyWords) return [...words];
     return words.where((String element) => element.isNotEmpty).toList();
   }

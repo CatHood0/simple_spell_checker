@@ -4,7 +4,12 @@ import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart'
     show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumber, LanguageDicPriorityOrder;
+    show
+        LanguageIdentifier,
+        WordTokenizer,
+        defaultLanguages,
+        isWordHasNumber,
+        LanguageDicPriorityOrder;
 import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/utils.dart';
 import 'common/cache_object.dart';
@@ -57,7 +62,8 @@ class SimpleSpellChecker {
   /// If safeDictionaryLoad is true, this will be used as the default language to update
   /// the state of SimpleSpellChecker and to store to a existent language with its dictionary
   String safeLanguageName;
-  final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
+  final StreamController<Object?> _simpleSpellCheckerWidgetsState =
+      StreamController.broadcast();
   final StreamController<String?> _languageState = StreamController.broadcast();
   final LanguageDicPriorityOrder priorityOrder;
   SimpleSpellChecker({
@@ -75,7 +81,8 @@ class SimpleSpellChecker {
     _cacheWordDictionary = null;
     _cacheLanguageIdentifier = null;
     reloadDictionarySync();
-    if (autoAddLanguagesFromCustomDictionaries) _addLanguagesFromCustomDictionaries();
+    if (autoAddLanguagesFromCustomDictionaries)
+      _addLanguagesFromCustomDictionaries();
   }
 
   /// Check if your line wrong words
@@ -86,7 +93,8 @@ class SimpleSpellChecker {
   List<TextSpan>? check(
     String text, {
     bool removeEmptyWordsOnTokenize = false,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   }) {
     _simpleSpellCheckerWidgetsState.add(null);
     _verifyState();
@@ -98,11 +106,15 @@ class SimpleSpellChecker {
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = WordTokenizer.tokenize(text,
+        removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          !hasWrongWords(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -151,11 +163,15 @@ class SimpleSpellChecker {
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <T>[];
-    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = WordTokenizer.tokenize(text,
+        removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          !hasWrongWords(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -179,7 +195,8 @@ class SimpleSpellChecker {
     if (word.trim().isEmpty) return false;
     _verifyState();
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    final newWordWithCaseSensitive = caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
+    final newWordWithCaseSensitive =
+        caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
     final int? validWord = wordsMap[newWordWithCaseSensitive];
     return validWord == null;
   }
@@ -191,7 +208,8 @@ class SimpleSpellChecker {
 
   void setNewLanguageToState(String language) {
     _verifyState();
-    assert(language.isNotEmpty, 'The country code of your language cannot be empty');
+    assert(language.isNotEmpty,
+        'The country code of your language cannot be empty');
     _language = language;
     _languageState.add(_language);
   }
@@ -232,7 +250,8 @@ class SimpleSpellChecker {
       throw StateError(
           'The identifier ${language.language} is not into customLanguages. Please consider add before use update operations');
     }
-    int indexOf = customLanguages!.indexWhere((element) => element.language == language.language);
+    int indexOf = customLanguages!
+        .indexWhere((element) => element.language == language.language);
     if (indexOf != -1) {
       customLanguages![indexOf] = language;
     }
@@ -242,19 +261,23 @@ class SimpleSpellChecker {
   void _verifyState() {
     if (!_disposedControllers) {
       assert(
-        !_disposed && !_simpleSpellCheckerWidgetsState.isClosed && !_languageState.isClosed,
+        !_disposed &&
+            !_simpleSpellCheckerWidgetsState.isClosed &&
+            !_languageState.isClosed,
         'You cannot reuse this SimpleSpellchecker since you dispose it before',
       );
       return;
     }
-    assert(!_disposed, 'You cannot reuse this SimpleSpellchecker since you dispose it before');
+    assert(!_disposed,
+        'You cannot reuse this SimpleSpellchecker since you dispose it before');
   }
 
   /// Use dispose when you don't need the SimpleSpellchecker already
   void dispose({bool closeDirectionary = true}) {
     if (closeDirectionary) _cacheWordDictionary = null;
     _cacheLanguageIdentifier = null;
-    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed)
+      _simpleSpellCheckerWidgetsState.close();
     if (!_languageState.isClosed) _languageState.close();
     _disposed = true;
     _disposedControllers = true;
@@ -262,7 +285,8 @@ class SimpleSpellChecker {
 
   /// Use disposeControllers is just never will be use the StreamControllers
   void disposeControllers() {
-    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed)
+      _simpleSpellCheckerWidgetsState.close();
     if (!_languageState.isClosed) _languageState.close();
     _disposedControllers = true;
   }
@@ -278,9 +302,11 @@ class SimpleSpellChecker {
     _verifyState();
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
-    if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) &&
+    if ((priorityOrder == LanguageDicPriorityOrder.customFirst ||
+            !defaultLanguages.contains(_language)) &&
         _intoCount <= 2) {
-      final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
+      final indexOf = customLanguages
+          ?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {
         throw UnsupportedError(
@@ -292,7 +318,8 @@ class SimpleSpellChecker {
         reloadDictionarySync();
         return;
       }
-      final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
+      final LanguageIdentifier identifier =
+          customLanguages!.elementAt(indexOf!);
       _initDictionary(identifier);
       return;
     }
@@ -307,12 +334,13 @@ class SimpleSpellChecker {
     } else {
       _cacheLanguageIdentifier!.set = identifier;
     }
-    final Iterable<MapEntry<String, int>> entries = const LineSplitter().convert(identifier.words).map(
-          (element) => MapEntry(
-            element.trim().toLowerCase(),
-            1,
-          ),
-        );
+    final Iterable<MapEntry<String, int>> entries =
+        const LineSplitter().convert(identifier.words).map(
+              (element) => MapEntry(
+                element.trim().toLowerCase(),
+                1,
+              ),
+            );
     final Map<String, int> wordsMap = {};
     wordsMap.addEntries(entries);
     _cacheWordDictionary ??= CacheObject(object: {});

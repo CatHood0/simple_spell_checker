@@ -1,5 +1,4 @@
-const itWords2 = 
-'''
+const itWords2 = '''
 a
 ab
 abaco/OTqr
