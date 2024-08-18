@@ -44,7 +44,6 @@ class SimpleSpellChecker {
   bool _disposed = false;
   @visibleForTesting
   bool testingMode = false;
-  bool _needReloadDictionary = true;
 
   /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
@@ -138,16 +137,6 @@ class SimpleSpellChecker {
   bool hasWrongWords(String word) {
     _verifyState();
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    if (_needReloadDictionary) {
-      final Iterable<MapEntry<String, int>> entries =
-          const LineSplitter().convert(_cacheLanguageIdentifier!.get.words).map(
-                (element) => MapEntry(element, 1),
-              );
-      if (entries.isNotEmpty) {
-        wordsMap.addEntries(entries);
-        _cacheWordDictionary?.set = wordsMap;
-      }
-    }
     final int validWord = wordsMap[word] ?? -1;
     return validWord == 1;
   }
@@ -215,7 +204,6 @@ class SimpleSpellChecker {
 
   void reloadDictionarySync() async {
     _verifyState();
-    _needReloadDictionary = true;
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
     if (!defaultLanguages.contains(_language) || testingMode) {
@@ -243,6 +231,15 @@ class SimpleSpellChecker {
       _cacheLanguageIdentifier = CacheObject(object: identifier);
     } else {
       _cacheLanguageIdentifier!.set = identifier;
+    }
+    final Iterable<MapEntry<String, int>> entries =
+        const LineSplitter().convert(_cacheLanguageIdentifier!.get.words).map(
+              (element) => MapEntry(element, 1),
+            );
+    if (entries.isNotEmpty) {
+      final Map<String, int> wordsMap = {}..addEntries(entries);
+      _cacheWordDictionary ??= CacheObject(object: {});
+      _cacheWordDictionary!.set = wordsMap;
     }
   }
 
