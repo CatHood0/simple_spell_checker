@@ -1,6 +1,6 @@
 # Simple Spell Checker
 
-`SimpleSpellChecker` provides a simple and powerful spell checker, allowing developers to detect and highlight spelling errors in text. The package caches language dictionaries and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
+`SimpleSpellChecker` is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. _The package caches language dictionaries_ and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
 ## Features
 
@@ -10,18 +10,18 @@
 - **Customizable Error Handling**: Optionally use custom gesture recognizers for wrong words, enabling custom interactions.
 - **Stream-based State Management**: Provides a stream of updates for spell-checking states, allowing reactive UI updates.
 
-## Current languages supported by default
+## Current languages supported by default (more will be added in future releases)
 
 The package already have a default list of words for these languages:
 
-* German - de_words
-* English - en_words
-* Spanish - es_words
-* French - fr_words
-* Italian - it_words
-* Norwegian - no_words
-* Portuguese - pt_words
-* Swedish - sv_words
+* German - de
+* English - en
+* Spanish - es
+* French - fr
+* Italian - it
+* Norwegian - no
+* Portuguese - pt
+* Swedish - sv
 
 ## Getting Started
 
@@ -43,6 +43,7 @@ import 'package:simple_spell_checker/simple_spell_checker.dart';
 
 SimpleSpellChecker spellChecker = SimpleSpellChecker(
    language: 'en', // the current language that the user is using
+   safeLanguageName: 'en', // when was not founded a custom language and safeDictionaryLoad is true this value is used
    safeDictionaryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
 );
 ```
@@ -94,6 +95,7 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 * **setNewLanguageToState(String language)**: override the current language into the Spellchecker.
 * **registerLanguage(String language)**: Add a new language to the cache with the default ones supported.
+* **updateCustomLanguageIfExist(LanguageIdentifier language)**: override the current value if exist in `customLanguages` var.
 * **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
 
 ### Customization Options
@@ -112,11 +114,22 @@ The package uses caching mechanisms (`CacheObject`) to store loaded dictionaries
 
 The `SimpleSpellChecker` class provides a stream (stream getter) that broadcasts updates whenever the spell-checker state changes (by now, we just pass the current state of the object list that is always updated when add a new object). This is useful for reactive UI updates.
 
+For listen the list of the widgets while is checking:
+
 ```dart
 spellChecker.stream.listen((event) {
   print("Spell check state updated.");
 });
 ```
+
+For listen the changes of the language into SimpleSpellChecker:
+
+```dart
+spellChecker.languageStream.listen((event) {
+  print("Spell check language state updated.");
+});
+```
+
 ### Disposing of Resources
 
 When the `SimpleSpellChecker` is no longer needed, ensure you dispose of it properly:
@@ -124,6 +137,13 @@ When the `SimpleSpellChecker` is no longer needed, ensure you dispose of it prop
 ```dart
 //Avoid reuse this spellchecker after dispose since it will throws error
 spellChecker.dispose();
+```
+
+Or also, if you don't need listen the StreamControllers then you can dispose them:
+
+```dart
+//Avoid reuse the streams of the spellchecker after dispose since it will throws error
+spellChecker.disposeControllers();
 ```
 
 It clears any cached data and closes the internal stream to prevent memory leaks.
