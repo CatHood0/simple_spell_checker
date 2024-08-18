@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart'
     show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle, visibleForTesting;
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumberOrBracket;
 import 'package:simple_spell_checker/src/utils.dart';
