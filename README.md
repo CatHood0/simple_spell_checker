@@ -14,14 +14,14 @@
 
 The package already have a default list of words for these languages:
 
-* German - de_words.txt
-* English - en_words.txt
-* Spanish - es_words.txt
-* French - fr_words.txt
-* Italian - it_words.txt
-* Norwegian - no_words.txt
-* Portuguese - pt_words.txt
-* Swedish - sv_words.txt
+* German - de_words
+* English - en_words
+* Spanish - es_words
+* French - fr_words
+* Italian - it_words
+* Norwegian - no_words
+* Portuguese - pt_words
+* Swedish - sv_words
 
 ## Getting Started
 

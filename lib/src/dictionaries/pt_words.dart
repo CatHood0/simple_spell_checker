@@ -1,3 +1,5 @@
+const ptWords = 
+'''
 são
 brasil
 unidos
@@ -149988,3 +149990,4 @@ preguearmo
 preguearão
 pregueasse
 pregueaste
+''';

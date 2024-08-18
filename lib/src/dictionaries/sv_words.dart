@@ -1,3 +1,5 @@
+const svWords = 
+'''
 miniatyr
 släkte
 svampar
@@ -149377,3 +149379,4 @@ humpr
 jasá
 hemlighetsfulle
 stiffy
+''';

@@ -246,7 +246,7 @@ class SimpleSpellChecker {
       _initDictionary(identifier);
       return;
     }
-    final dictionary = await rootBundle.loadString('assets/${_language}_words.txt');
+    final dictionary = defaultLanguagesMap[_language]!;
     _initDictionary(LanguageIdentifier(language: _language, words: dictionary));
   }
 

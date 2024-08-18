@@ -1,3 +1,5 @@
+const esWords = 
+'''
 municipio
 miniatura
 provincia
@@ -146570,3 +146572,4 @@ yerbales
 yerales
 yeguares
 yatagánes
+''';

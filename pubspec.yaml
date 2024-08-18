@@ -1,6 +1,6 @@
 name: simple_spell_checker
 description: "A simple and powerful spell checker, allowing developers to detect and highlight spelling errors in text"
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/CatHood0/simple_spell_checker/
 issue_tracker: https://github.com/CatHood0/simple_spell_checker/issues
 documentation: https://github.com/CatHood0/simple_spell_checker
@@ -33,12 +33,3 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-  assets:
-     - assets/de_words.txt 
-     - assets/en_words.txt 
-     - assets/es_words.txt 
-     - assets/fr_words.txt 
-     - assets/it_words.txt 
-     - assets/no_words.txt 
-     - assets/pt_words.txt 
-     - assets/sv_words.txt 

@@ -1,17 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:simple_spell_checker/src/common/language_identifier.dart';
 import 'package:simple_spell_checker/src/spell_checker.dart';
-import 'utils/words_testing.dart';
 
 void main() {
   test('Should return a simple map with right parts and wrong parts', () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
-      language: 'test',
+      language: 'en',
       safeDictionaryLoad: false,
-      customLanguages: [
-        LanguageIdentifier(language: 'test', words: wordsTesting),
-      ],
     );
     //spellchecker.testingMode = true;
     final content = spellchecker.checkBuilder<Map<String, bool>>(

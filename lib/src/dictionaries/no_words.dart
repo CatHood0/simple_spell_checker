@@ -1,3 +1,5 @@
+const noWords = 
+'''
 norge
 insekter
 dyreriket
@@ -149000,3 +149002,4 @@ ungdomsrom
 pærebrandy
 hobbypsykolog
 kgnu
+''';

@@ -1,3 +1,5 @@
+const itWords = 
+'''
 italia
 miniatura
 famiglia
@@ -146648,3 +146650,4 @@ fàunofaunusfaunétto
 lanutolanale
 lanutoconducean
 seco
+''';

@@ -1,3 +1,5 @@
+const frWords = 
+'''
 vignette
 département
 région
@@ -119149,3 +119151,4 @@ montrouge
 villegouge
 mascareignite
 podalique
+''';

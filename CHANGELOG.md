@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Fix: unable to load assets
+
 ## 1.0.2
 
 * Fix: whitespaces are removed or ignored

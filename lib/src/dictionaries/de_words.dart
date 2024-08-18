@@ -1,4 +1,5 @@
-mini
+const deWords = 
+'''mini
 miniatur
 deutschland
 gemeinde
@@ -149970,4 +149971,4 @@ bildausgabe
 briefmarkenausgabe
 bulldoggenausgabe
 computerausgabe
-devisenausgabe
+devisenausgabe''';
