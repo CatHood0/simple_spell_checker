@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Fix: accents are ignored
+
 ## 1.0.5
 
 * Fix: several language characters are ignored

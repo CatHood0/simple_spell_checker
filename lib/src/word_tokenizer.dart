@@ -1,6 +1,6 @@
 class WordTokenizer {
   static final RegExp separatorRegExp = RegExp(
-      r'(\s+|[,;°|\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ\_\«\»\<\>\¢\@\€\←\↓\→]|[\wẃéÿĺẗŕýïßśëæëïüãñõáéíóúýâêîôûöáéíñǵćóúüñÁÉÍÓÚÜÑ]+)');
+      r'(\s+|[,;°|·̣•µ\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ\_\«\»\<\>\¢\@\€\←\↓\→]|[\wẃéÿĺĸẗŕýïßśëæëïüãñõáéíóúýâêîôûöáéíñǵćóúüñÁÉÍ`´^¨`ÓÚÜÑ]+)');
 
   static bool canTokenizeText(String text) {
     return separatorRegExp.hasMatch(text);
