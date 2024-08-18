@@ -1,3 +1,7 @@
+## 1.0.9 
+
+* Fix: restore a removed character that is needed to avoid missing character while typing
+
 ## 1.0.8
 
 * Fix(de): Deutsch language cause some characters are ignore like: `ẅ`, `ä`, `ë`, `ï`, `ö`, `ÿ`, etc
