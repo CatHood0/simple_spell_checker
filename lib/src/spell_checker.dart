@@ -2,20 +2,11 @@ import 'dart:async' show Future, Stream, StreamController;
 import 'dart:convert';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart'
-    show
-        Colors,
-        TextDecoration,
-        TextDecorationStyle,
-        TextSpan,
-        TextStyle,
-        visibleForTesting;
+    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show
-        LanguageIdentifier,
-        WordTokenizer,
-        defaultLanguages,
-        isWordHasNumberOrBracket;
+    show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumberOrBracket;
+import 'package:simple_spell_checker/src/utils.dart';
 import 'common/cache_object.dart';
 
 CacheObject<LanguageIdentifier>? _cacheLanguageIdentifier;
@@ -59,8 +50,7 @@ class SimpleSpellChecker {
   /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
   bool safeDictionaryLoad;
-  final StreamController<Object?> _simpleSpellCheckerWidgetsState =
-      StreamController.broadcast();
+  final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
   SimpleSpellChecker({
     required String language,
     required this.safeDictionaryLoad,
@@ -79,8 +69,7 @@ class SimpleSpellChecker {
   List<TextSpan>? check(
     String text, {
     bool removeEmptyWordsOnTokenize = false,
-    LongPressGestureRecognizer Function(String)?
-        customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) {
     _simpleSpellCheckerWidgetsState.add(null);
     _verifyState();
@@ -92,10 +81,20 @@ class SimpleSpellChecker {
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = WordTokenizer.tokenize(text,
-        removeAllEmptyWords: removeEmptyWordsOnTokenize);
-    for (var word in words) {
-      if (isWordHasNumberOrBracket(text) || !hasWrongWords(word)) {
+    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    for (int i = 0; i < words.length; i++) {
+      final word = words.elementAt(i);
+      final nextIndex = (i + 1) < words.length -1 ? i + 1 : -1;
+      if (isWordHasNumberOrBracket(text) || !hasWrongWords(word) || word.contains(' ')) {
+        if(nextIndex != -1){
+          final nextWord = words.elementAt(nextIndex);
+          if(nextWord.contains(' ')){
+            spans.add(TextSpan(text: '$word$nextWord'));   
+            // ignore the next since it was already passed
+            i++;
+            continue;
+          }
+        }
         spans.add(TextSpan(text: word));
       } else if (hasWrongWords(word)) {
         final longTap = customLongPressRecognizerOnWrongSpan?.call(word);
@@ -136,13 +135,23 @@ class SimpleSpellChecker {
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <T>[];
-    final words = WordTokenizer.tokenize(text,
-        removeAllEmptyWords: removeEmptyWordsOnTokenize);
-    for (var word in words) {
-      if (isWordHasNumberOrBracket(word) || !hasWrongWords(word)) {
-        spans.add(builder.call(word, true));
-      } else if (hasWrongWords(word)) {
+    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    for (int i = 0; i < words.length; i++) {
+      final word = words.elementAt(i);
+      final nextIndex = (i + 1) < words.length -1 ? i + 1 : -1;
+      if (isWordHasNumberOrBracket(text) || !hasWrongWords(word) || word.contains(' ')) {
+        if(nextIndex != -1){
+          final nextWord = words.elementAt(nextIndex);
+          if(nextWord.contains(' ')){
+            spans.add(builder.call('$word$nextWord', false));   
+            // ignore the next since it was already passed
+            i++;
+            continue;
+          }
+        }
         spans.add(builder.call(word, false));
+      } else if (hasWrongWords(word)) {
+        spans.add(builder.call(word, true));
       }
       _simpleSpellCheckerWidgetsState.add([...spans]);
     }
@@ -153,7 +162,7 @@ class SimpleSpellChecker {
     _verifyState();
     final wordsMap = _cacheWordDictionary?.get ?? {};
     final int validWord = wordsMap[word] ?? -1;
-    return validWord == 1;
+    return validWord == -1;
   }
 
   bool _checkLanguageRegistry(String language) {
@@ -163,8 +172,7 @@ class SimpleSpellChecker {
 
   void setNewLanguageToState(String language) {
     _verifyState();
-    assert(language.isNotEmpty,
-        'The country code of your language cannot be empty');
+    assert(language.isNotEmpty, 'The country code of your language cannot be empty');
     _language = language;
   }
 
@@ -223,8 +231,7 @@ class SimpleSpellChecker {
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
     if (!defaultLanguages.contains(_language) || testingMode) {
-      final indexOf = customLanguages
-          ?.indexWhere((element) => element.language == _language);
+      final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {
         throw UnsupportedError(
@@ -235,13 +242,11 @@ class SimpleSpellChecker {
         reloadDictionarySync();
         return;
       }
-      final LanguageIdentifier identifier =
-          customLanguages!.elementAt(indexOf!);
+      final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
       _initDictionary(identifier);
       return;
     }
-    final dictionary =
-        await rootBundle.loadString('assets/${_language}_words.txt');
+    final dictionary = await rootBundle.loadString('assets/${_language}_words.txt');
     _initDictionary(LanguageIdentifier(language: _language, words: dictionary));
   }
 

@@ -33,8 +33,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-
-   assets:
+  assets:
      - assets/de_words.txt 
      - assets/en_words.txt 
      - assets/es_words.txt 
