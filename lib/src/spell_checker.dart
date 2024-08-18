@@ -8,7 +8,6 @@ import 'package:flutter/material.dart'
         TextDecorationStyle,
         TextSpan,
         TextStyle,
-        Widget,
         visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
