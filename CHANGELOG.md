@@ -1,6 +1,7 @@
 ## 1.0.6
 
 * Fix: accents are ignored
+* Chore: more missing words and sentences for spanish translation
 
 ## 1.0.5
 
