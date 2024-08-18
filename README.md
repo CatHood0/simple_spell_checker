@@ -45,6 +45,7 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
    language: 'en', // the current language that the user is using
    safeLanguageName: 'en', // when was not founded a custom language and safeDictionaryLoad is true this value is used
    safeDictionaryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
+   caseSensitive: false,
 );
 ```
 ### Check your text:

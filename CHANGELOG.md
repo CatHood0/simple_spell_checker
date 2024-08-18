@@ -1,3 +1,9 @@
+## 1.0.7
+
+* Fix: words with accents are detected as a special character instead a common word
+* Fix: bad updating of cache instances when initalize different instances
+* Chore: added some missing translations for english and spanish
+
 ## 1.0.6
 
 * Fix: accents are ignored
