@@ -9,6 +9,70 @@ esto
 esta
 ésta
 está
+mas
+mama
+mamá
+pa
+papa
+papá
+tienes
+tenemos
+yo tengo
+tu tienes
+ellos tienen
+nosotros tenemos
+vamos a tener
+tendras
+lo lograras
+lograr
+lograras
+iras
+irán
+podrás
+verás
+veré
+veo
+he visto
+dividir
+dividido
+finiquito
+finiquitar
+haré
+hecho
+he hecho
+haría
+merezco
+mereces
+merecemos
+ojala
+ojalá
+lograsemos
+continuar
+tu
+tú
+ellos
+ella
+ello
+eso
+esa
+esos
+ese
+hasta
+veremos
+ver
+visualización
+ala
+pluma
+tinta
+papel
+lapiz
+lapíz
+sacapuntas
+sereis
+seras
+seré
+porque
+por qué
 raro
 abajo
 centrado
