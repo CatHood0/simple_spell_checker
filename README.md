@@ -32,8 +32,8 @@ To use the `SimpleSpellChecker` in your `Flutter` project, follow these steps:
 Add the following line to your `pubspec.yaml` file:
 
 ```yaml
-   dependencies:
-     simple_spell_checker: <latest_version>
+dependencies:
+   simple_spell_checker: <latest_version>
 ```
 
 Import the necessary components into your `Dart` file and initialize the Spell-Checker:
@@ -43,7 +43,7 @@ import 'package:simple_spell_checker/simple_spell_checker.dart';
 
 SimpleSpellChecker spellChecker = SimpleSpellChecker(
    language: 'en', // the current language that the user is using
-   safeDirectoryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
+   safeDictionaryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
 );
 ```
 ### Check your text:

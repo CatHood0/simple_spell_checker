@@ -7,7 +7,7 @@ void main() {
   test('Should return a simple map with right parts and wrong parts', () {
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'test',
-      safeDirectoryLoad: false,
+      safeDictionaryLoad: false,
       customLanguages: [
         LanguageIdentifier(language: 'test', words: wordsTesting),
       ],

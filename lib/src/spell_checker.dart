@@ -58,12 +58,12 @@ class SimpleSpellChecker {
 
   /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
-  bool safeDirectoryLoad;
+  bool safeDictionaryLoad;
   final StreamController<Object?> _simpleSpellCheckerWidgetsState =
       StreamController.broadcast();
   SimpleSpellChecker({
     required String language,
-    required this.safeDirectoryLoad,
+    required this.safeDictionaryLoad,
     bool autoAddLanguagesFromCustomDictionaries = true,
     this.customLanguages,
   }) {
@@ -226,11 +226,11 @@ class SimpleSpellChecker {
       final indexOf = customLanguages
           ?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
-      if (invalidIndex && !safeDirectoryLoad) {
+      if (invalidIndex && !safeDictionaryLoad) {
         throw UnsupportedError(
           'The $_language is not supported by default and was not founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
         );
-      } else if (invalidIndex && safeDirectoryLoad) {
+      } else if (invalidIndex && safeDictionaryLoad) {
         setNewLanguageToState('en');
         reloadDictionarySync();
         return;
