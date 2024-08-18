@@ -5,16 +5,16 @@ import 'utils/words_testing.dart';
 
 void main() {
   test('Should return a simple map with right parts and wrong parts', () {
-    final SimpleSpellchecker spellchecker = SimpleSpellchecker(
+    final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'test',
       safeDirectoryLoad: false,
-      customDictionaries: [
+      customLanguages: [
         LanguageIdentifier(language: 'test', words: wordsTesting),
       ],
     );
     spellchecker.testingMode = true;
     final content = spellchecker.checkBuilder<Map<String, bool>>(
-        'this is a tes', builder: (word, isWrong) {
+        'this is a tsr', builder: (word, isWrong) {
       return {word: isWrong};
     });
     expect(content, isNotNull);
@@ -23,12 +23,12 @@ void main() {
       {'this': false}, // is not wrong
       {'is': false}, // is not wrong
       {'a': false}, // is not wrong
-      {'tes': true} // is wrong
+      {'tsr': true} // is wrong
     ]);
     spellchecker.dispose();
     // this should throws an error
     expect(() {
-      spellchecker.addNewLanguage('Shouldn\'t add this language');
+      spellchecker.registerLanguage('Shouldn\'t add this language');
     }, throwsA(isA<AssertionError>()));
   });
 }

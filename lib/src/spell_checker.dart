@@ -2,21 +2,10 @@ import 'dart:async' show Future, Stream, StreamController;
 import 'dart:convert';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart'
-    show
-        Colors,
-        TextDecoration,
-        TextDecorationStyle,
-        TextSpan,
-        TextStyle,
-        visibleForTesting;
+    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show
-        CacheObject,
-        LanguageIdentifier,
-        WordTokenizer,
-        defaultLanguages,
-        isWordHasNumberOrBracket;
+    show CacheObject, LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumberOrBracket;
 
 CacheObject<LanguageIdentifier>? _cacheLanguageIdentifier;
 
@@ -25,7 +14,7 @@ CacheObject<LanguageIdentifier>? _cacheLanguageIdentifier;
 CacheObject<Map<String, int>>? _cacheWordDictionary;
 
 /// add a cache var let us add any custom language
-CacheObject<List<String>> _cacheLanguages = CacheObject(
+CacheObject<List<String>> _languagesRegistry = CacheObject(
   object: [...defaultLanguages],
 );
 
@@ -43,35 +32,32 @@ CacheObject<List<String>> _cacheLanguages = CacheObject(
 // [setNewLanguage] method to override the current language from the class
 // second:
 // [reloadDictionary] or [reloadDictionarySync] methods to set a new state to the directionary
-class SimpleSpellchecker {
+class SimpleSpellChecker {
   late String _language;
 
   /// By default we only have support for the most used languages
-  /// but, we cannot cover all the cases. By this, you can use [customDictionaries]
+  /// but, we cannot cover all the cases. By this, you can use [customLanguages]
   /// adding the key of the language and your words
   ///
   /// Note: [words] param must be have every element separated by a new line
-  List<LanguageIdentifier>? customDictionaries;
+  List<LanguageIdentifier>? customLanguages;
   bool _disposed = false;
-  bool _needReloadDictionary = true;
   @visibleForTesting
   bool testingMode = false;
+  bool _needReloadDictionary = true;
 
-  /// If the current language is not founded on [customDictionaries] or default ones,
+  /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
   bool safeDirectoryLoad;
-  final StreamController<Object?> _simpleSpellCheckerWidgetsState =
-      StreamController.broadcast();
-  SimpleSpellchecker({
+  final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
+  SimpleSpellChecker({
     required String language,
     required this.safeDirectoryLoad,
     bool autoAddLanguagesFromCustomDictionaries = true,
-    this.customDictionaries,
+    this.customLanguages,
   }) {
     _language = language;
-    reloadDictionarySync();
-    if (autoAddLanguagesFromCustomDictionaries)
-      _addLanguagesFromCustomDictionaries();
+    if (autoAddLanguagesFromCustomDictionaries) _addLanguagesFromCustomDictionaries();
   }
 
   /// Check if your line wrong words
@@ -82,18 +68,19 @@ class SimpleSpellchecker {
   List<TextSpan>? check(
     String text, {
     bool removeEmptyWordsOnTokenize = false,
-    LongPressGestureRecognizer Function(String)?
-        customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) {
     _simpleSpellCheckerWidgetsState.add(null);
     _verifyState();
-    if (!checkLanguageRegistry(_language)) {
+    if (_cacheLanguageIdentifier == null) {
+      reloadDictionarySync();
+    }
+    if (!_checkLanguageRegistry(_language)) {
       return null;
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = WordTokenizer.tokenize(text,
-        removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (var word in words) {
       if (isWordHasNumberOrBracket(text) || !hasWrongWords(word)) {
         spans.add(TextSpan(text: word));
@@ -120,8 +107,6 @@ class SimpleSpellchecker {
   /// a custom implementation for check if your line wrong words and return a custom list of widgets
   ///
   /// [removeEmptyWordsOnTokenize] this remove empty strings that was founded while splitting the text
-  /// [customLongPressRecognizerOnWrongSpan] let you add a custom recognizer for when you need to show suggestions
-  /// or make some custom action for wrong words
   List<T>? checkBuilder<T>(
     String text, {
     required T Function(String, bool) builder,
@@ -129,13 +114,16 @@ class SimpleSpellchecker {
   }) {
     _simpleSpellCheckerWidgetsState.add(null);
     _verifyState();
-    if (!checkLanguageRegistry(_language)) {
-      return null;
+    if (_cacheLanguageIdentifier == null) {
+      reloadDictionarySync();
+    }
+    if (!_checkLanguageRegistry(_language)) {
+      throw UnsupportedError(
+          'The $_language is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
     if (!WordTokenizer.canTokenizeText(text)) return null;
     final spans = <T>[];
-    final words = WordTokenizer.tokenize(text,
-        removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (var word in words) {
       if (isWordHasNumberOrBracket(word) || !hasWrongWords(word)) {
         spans.add(builder.call(word, true));
@@ -149,7 +137,7 @@ class SimpleSpellchecker {
 
   bool hasWrongWords(String word) {
     _verifyState();
-    Map<String, int> wordsMap = _cacheWordDictionary?.get ?? {};
+    final wordsMap = _cacheWordDictionary?.get ?? {};
     if (_needReloadDictionary) {
       final Iterable<MapEntry<String, int>> entries =
           const LineSplitter().convert(_cacheLanguageIdentifier!.get.words).map(
@@ -164,42 +152,47 @@ class SimpleSpellchecker {
     return validWord == 1;
   }
 
-  bool checkLanguageRegistry(String language) {
+  bool _checkLanguageRegistry(String language) {
     _verifyState();
-    return _cacheLanguages.get.contains(language);
+    return _languagesRegistry.get.contains(language);
   }
 
-  void setNewLanguage(String language) {
+  void setNewLanguageToState(String language) {
     _verifyState();
-    assert(language.isNotEmpty,
-        'The country code of your language cannot be empty');
+    assert(language.isNotEmpty, 'The country code of your language cannot be empty');
     _language = language;
   }
 
-  void addNewLanguage(String language) {
+  /// **register the language** with the default ones supported
+  /// by the package to let you use customLanguages properly since
+  /// we always check if the current language is already registered
+  /// on [_languagesRegistry]
+  void registerLanguage(String language) {
     _verifyState();
-    if (!_cacheLanguages.get.contains(language)) {
-      _cacheLanguages.set = [..._cacheLanguages.get, language];
+    if (!_languagesRegistry.get.contains(language)) {
+      _languagesRegistry.set = [..._languagesRegistry.get, language];
     }
   }
 
   void _addLanguagesFromCustomDictionaries() {
     _verifyState();
-    if (customDictionaries == null) return;
-    for (var language in customDictionaries!) {
-      if (!_cacheLanguages.get.contains(language.language)) {
-        _cacheLanguages.set = [..._cacheLanguages.get, language.language];
+    if (customLanguages == null) return;
+    for (var language in customLanguages!) {
+      if (!_languagesRegistry.get.contains(language.language)) {
+        _languagesRegistry.set = [..._languagesRegistry.get, language.language];
       }
     }
   }
 
-  void addCustomDirectionary(String language) {
+  void addCustomLanguage(LanguageIdentifier language) {
     _verifyState();
-    if (!_cacheLanguages.get.contains(language)) {
-      _cacheLanguages.set = [..._cacheLanguages.get, language];
+    customLanguages ??= [];
+    if (!customLanguages!.contains(language)) {
+      customLanguages?.add(language);
     }
   }
 
+  /// Verify if [SimpleSpellChecker] is not disposed yet
   void _verifyState() {
     assert(
       !_disposed && !_simpleSpellCheckerWidgetsState.isClosed,
@@ -222,29 +215,26 @@ class SimpleSpellchecker {
 
   void reloadDictionarySync() async {
     _verifyState();
-    if (_cacheLanguageIdentifier?.get.language == _language) return;
     _needReloadDictionary = true;
+    if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
     if (!defaultLanguages.contains(_language) || testingMode) {
-      final indexOf = customDictionaries
-          ?.indexWhere((element) => element.language == _language);
+      final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDirectoryLoad) {
         throw UnsupportedError(
-          'The $_language is not supported by default and was not founded on your [customDictionaries]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
+          'The $_language is not supported by default and was not founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
         );
       } else if (invalidIndex && safeDirectoryLoad) {
-        setNewLanguage('en');
+        setNewLanguageToState('en');
         reloadDictionarySync();
         return;
       }
-      final LanguageIdentifier identifier =
-          customDictionaries!.elementAt(indexOf!);
+      final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
       _initDictionary(identifier);
       return;
     }
-    final dictionary =
-        await rootBundle.loadString('assets/${_language}_words.txt');
+    final dictionary = await rootBundle.loadString('assets/${_language}_words.txt');
     _initDictionary(LanguageIdentifier(language: _language, words: dictionary));
   }
 
