@@ -110,7 +110,6 @@ class SimpleSpellChecker {
           TextSpan(
             text: word,
             recognizer: longTap,
-            spellOut: true,
             style: const TextStyle(
               decorationColor: Colors.red,
               decoration: TextDecoration.underline,
@@ -169,7 +168,7 @@ class SimpleSpellChecker {
   bool hasWrongWords(String word) {
     _verifyState();
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    final int validWord = wordsMap[word] ?? -1;
+    final int validWord = wordsMap[word.toLowerCase()] ?? -1;
     return validWord == -1;
   }
 
@@ -297,7 +296,7 @@ class SimpleSpellChecker {
     }
     final Iterable<MapEntry<String, int>> entries =
         const LineSplitter().convert(_cacheLanguageIdentifier!.get.words).map(
-              (element) => MapEntry(element, 1),
+              (element) => MapEntry(element.toLowerCase(), 1),
             );
     if (entries.isNotEmpty) {
       final Map<String, int> wordsMap = {}..addEntries(entries);

@@ -1,3 +1,8 @@
+## 1.0.5
+
+* Fix: several language characters are ignored
+* Chore: added some missing words for spanish translation
+
 ## 1.0.4
 
 * Fix: line is ignored directly if contains a special character (like: "(", "[", etc)
