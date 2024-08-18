@@ -1,6 +1,6 @@
 # Simple Spell Checker
 
-SimpleSpellChecker provides a simple and powerful spell checker, allowing developers to detect and highlight spelling errors in text. The package caches language dictionaries and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
+`SimpleSpellChecker` provides a simple and powerful spell checker, allowing developers to detect and highlight spelling errors in text. The package caches language dictionaries and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
 ## Features
 
@@ -33,7 +33,7 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-   simple_spell_checker: <latest_version>
+  simple_spell_checker: <latest_version>
 ```
 
 Import the necessary components into your `Dart` file and initialize the Spell-Checker:
