@@ -11,7 +11,7 @@ final List<String> defaultLanguages = List.unmodifiable(
   ['pt', 'de', 'en', 'es', 'it', 'fr', 'no', 'sv'],
 );
 
-final Map<String, String> defaultLanguagesMap = {
+final Map<String, String> defaultLanguagesMap = Map.unmodifiable({
   'en': joinEnglishWords,
   'de': joinDeutschWords,
   'es': joinSpanishWords,
@@ -20,9 +20,8 @@ final Map<String, String> defaultLanguagesMap = {
   'no': noWords,
   'sv': svWords,
   'pt': joinPortugueseWords,
-};
+});
 
-
-bool isWordHasNumberOrBracket(String s) {
-  return s.contains(RegExp(r'[0-9\()]'));
+bool isWordHasNumber(String s) {
+  return s.contains(RegExp(r'[0-9]'));
 }

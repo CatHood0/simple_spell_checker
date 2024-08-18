@@ -14899,7 +14899,7 @@ Byron
 byroniano/o
 byronismo/O
 byte
-c/£$
+c/£
 ca
 cab
 cabala/Q
@@ -23191,7 +23191,7 @@ Cutrofiano
 Cuveglio
 Cuvio
 cyberspazio/O
-d/£$
+d/£
 da
 dabbasso
 dabbenaggine/S
@@ -46534,7 +46534,7 @@ Kuwait
 kuwaitiano/o
 Kyoto
 Kyrgyzstan
-l/£$
+l/£
 là
 labaro/O
 labbo/O
@@ -48921,7 +48921,7 @@ Luvinate
 lux
 luxmetro/O
 Luzzana
-m/£$
+m/£
 Maastricht
 macabro/oY
 macaco/O
@@ -94708,7 +94708,7 @@ WTO
 WWF
 www
 Wyoming
-x/£$
+x/£
 xantofilla
 xantogenato/O
 xantogenico
@@ -94759,8 +94759,8 @@ xilologico/p
 xilologo
 xilosio
 XML
-xx/£$
-xxx/£$
+xx/£
+xxx/£
 y
 yacht
 yachting

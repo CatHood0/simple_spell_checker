@@ -1,10 +1,9 @@
 import 'dart:async' show Future, Stream, StreamController;
 import 'dart:convert';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
-import 'package:flutter/material.dart'
-    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle, visibleForTesting;
+import 'package:flutter/material.dart' show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumberOrBracket;
+    show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumber, LanguageDicPriorityOrder;
 import 'package:simple_spell_checker/src/utils.dart';
 import 'common/cache_object.dart';
 
@@ -43,16 +42,25 @@ class SimpleSpellChecker {
   /// Note: [words] param must be have every element separated by a new line
   List<LanguageIdentifier>? customLanguages;
   bool _disposed = false;
-  @visibleForTesting
-  bool testingMode = false;
+
+  /// this just can be called on closeControllers
+  bool _disposedControllers = false;
 
   /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
   bool safeDictionaryLoad;
+
+  /// If safeDictionaryLoad is true, this will be used as the default language to update
+  /// the state of SimpleSpellChecker and to store to a existent language with its dictionary
+  String safeLanguageName;
   final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
+  final StreamController<String?> _languageState = StreamController.broadcast();
+  final LanguageDicPriorityOrder priorityOrder;
   SimpleSpellChecker({
     required String language,
     required this.safeDictionaryLoad,
+    this.safeLanguageName = 'en',
+    this.priorityOrder = LanguageDicPriorityOrder.defaultFirst,
     bool autoAddLanguagesFromCustomDictionaries = true,
     this.customLanguages,
   }) {
@@ -83,12 +91,12 @@ class SimpleSpellChecker {
     final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
-      final nextIndex = (i + 1) < words.length -1 ? i + 1 : -1;
-      if (isWordHasNumberOrBracket(text) || !hasWrongWords(word) || word.contains(' ')) {
-        if(nextIndex != -1){
+      final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
+      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ')) {
+        if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if(nextWord.contains(' ')){
-            spans.add(TextSpan(text: '$word$nextWord'));   
+          if (nextWord.contains(' ')) {
+            spans.add(TextSpan(text: '$word$nextWord'));
             // ignore the next since it was already passed
             i++;
             continue;
@@ -137,12 +145,12 @@ class SimpleSpellChecker {
     final words = WordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
-      final nextIndex = (i + 1) < words.length -1 ? i + 1 : -1;
-      if (isWordHasNumberOrBracket(text) || !hasWrongWords(word) || word.contains(' ')) {
-        if(nextIndex != -1){
+      final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
+      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ')) {
+        if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if(nextWord.contains(' ')){
-            spans.add(builder.call('$word$nextWord', false));   
+          if (nextWord.contains(' ')) {
+            spans.add(builder.call('$word$nextWord', false));
             // ignore the next since it was already passed
             i++;
             continue;
@@ -173,6 +181,7 @@ class SimpleSpellChecker {
     _verifyState();
     assert(language.isNotEmpty, 'The country code of your language cannot be empty');
     _language = language;
+    _languageState.add(_language);
   }
 
   /// **register the language** with the default ones supported
@@ -204,20 +213,46 @@ class SimpleSpellChecker {
     }
   }
 
+  void updateCustomLanguageIfExist(LanguageIdentifier language) {
+    _verifyState();
+    customLanguages ??= [];
+    if (!customLanguages!.contains(language)) {
+      throw StateError(
+          'The identifier ${language.language} is not into customLanguages. Please consider add before use update operations');
+    }
+    int indexOf = customLanguages!.indexWhere((element) => element.language == language.language);
+    if (indexOf != -1) {
+      customLanguages![indexOf] = language;
+    }
+  }
+
   /// Verify if [SimpleSpellChecker] is not disposed yet
   void _verifyState() {
-    assert(
-      !_disposed && !_simpleSpellCheckerWidgetsState.isClosed,
-      'You cannot reuse this SimpleSpellchecker since you dispose it before',
-    );
+    if (!_disposedControllers) {
+      assert(
+        !_disposed && !_simpleSpellCheckerWidgetsState.isClosed && !_languageState.isClosed,
+        'You cannot reuse this SimpleSpellchecker since you dispose it before',
+      );
+      return;
+    }
+    assert(!_disposed, 'You cannot reuse this SimpleSpellchecker since you dispose it before');
   }
 
   /// Use dispose when you don't need the SimpleSpellchecker already
   void dispose({bool closeDirectionary = true}) {
     if (closeDirectionary) _cacheWordDictionary = null;
     _cacheLanguageIdentifier = null;
-    _simpleSpellCheckerWidgetsState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_languageState.isClosed) _languageState.close();
     _disposed = true;
+    _disposedControllers = true;
+  }
+
+  /// Use disposeControllers is just never will be use the StreamControllers
+  void disposeControllers() {
+    _simpleSpellCheckerWidgetsState.close();
+    _languageState.close();
+    _disposedControllers = true;
   }
 
   Future<void> reloadDictionary() async {
@@ -225,11 +260,11 @@ class SimpleSpellChecker {
     reloadDictionarySync();
   }
 
-  void reloadDictionarySync() async {
+  void reloadDictionarySync([bool ensureSafeLanguage = false]) async {
     _verifyState();
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
-    if (!defaultLanguages.contains(_language) || testingMode) {
+    if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) && !ensureSafeLanguage) {
       final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {
@@ -237,8 +272,8 @@ class SimpleSpellChecker {
           'The $_language is not supported by default and was not founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
         );
       } else if (invalidIndex && safeDictionaryLoad) {
-        setNewLanguageToState('en');
-        reloadDictionarySync();
+        setNewLanguageToState(ensureSafeLanguage ? 'en' : safeLanguageName);
+        reloadDictionarySync(true);
         return;
       }
       final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
@@ -269,6 +304,11 @@ class SimpleSpellChecker {
   Stream get stream {
     _verifyState();
     return _simpleSpellCheckerWidgetsState.stream;
+  }
+
+  Stream get languageStream {
+    _verifyState();
+    return _languageState.stream;
   }
 
   void reloadStreamState() {
