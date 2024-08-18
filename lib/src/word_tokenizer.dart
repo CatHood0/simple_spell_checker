@@ -1,5 +1,3 @@
-// This comes from Spell-check-on-client
-
 class WordTokenizer {
   static final RegExp separatorRegExp =
       RegExp('[ .*+!)?,:;@£§€\\{\\[\\]\\}\\\\\\?«» ºª\$%&/()=\\|!\'\\"#<>-]+');
