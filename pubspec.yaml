@@ -1,9 +1,23 @@
 name: simple_spell_checker
-description: "Simple checker for your plain text"
+description: "A simple and powerful spell checker, allowing developers to detect and highlight spelling errors in text"
 version: 1.0.0
-homepage:
-# remove before publish
-publish_to: 'none'
+homepage: https://github.com/CatHood0/simple_spell_checker
+issue_tracker: https://github.com/CatHood0/simple_spell_checker/issues
+documentation: https://github.com/CatHood0/simple_spell_checker
+
+topics:
+  - ui
+  - text-checking
+  - highlighting
+  - spellchecker 
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -18,11 +32,14 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^4.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
 
    assets:
-     - assets/ 
+     - assets/de_words.txt 
+     - assets/en_words.txt 
+     - assets/es_words.txt 
+     - assets/fr_words.txt 
+     - assets/it_words.txt 
+     - assets/no_words.txt 
+     - assets/pt_words.txt 
+     - assets/sv_words.txt 
