@@ -260,13 +260,14 @@ class SimpleSpellChecker {
     _verifyState();
     reloadDictionarySync();
   }
-
-  void reloadDictionarySync([bool ensureSafeLanguage = false]) async {
+  /// this count about a accidental recursive calling
+  int _intoCount = 0;
+  void reloadDictionarySync() async {
     _verifyState();
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
     if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) &&
-        !ensureSafeLanguage) {
+        _intoCount <= 2) {
       final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {
@@ -274,8 +275,9 @@ class SimpleSpellChecker {
           'The $_language is not supported by default and was not founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
         );
       } else if (invalidIndex && safeDictionaryLoad) {
-        setNewLanguageToState(ensureSafeLanguage ? 'en' : safeLanguageName);
-        reloadDictionarySync(true);
+        setNewLanguageToState(_intoCount >= 2 ? 'en' : safeLanguageName);
+        _intoCount++;
+        reloadDictionarySync();
         return;
       }
       final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
@@ -287,6 +289,7 @@ class SimpleSpellChecker {
   }
 
   void _initDictionary(LanguageIdentifier identifier) {
+    _intoCount = 0;
     if (_cacheWordDictionary == null) {
       _cacheLanguageIdentifier = CacheObject(object: identifier);
     } else {
