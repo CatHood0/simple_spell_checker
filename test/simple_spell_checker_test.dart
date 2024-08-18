@@ -36,7 +36,43 @@ void main() {
     }, throwsA(isA<AssertionError>()));
   });
 
-  // TODO: you will need to add test where there are words with accents at the middle at them should be wrong
+  test('Should return a simple map with right parts and wrong parts in deutsch',
+      () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final SimpleSpellChecker spellchecker = SimpleSpellChecker(
+      language: 'de',
+      safeDictionaryLoad: false,
+    );
+    //spellchecker.testingMode = true;
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Dies ist ein Tst (Äpfel, Männer) eiige Fehler',
+        builder: (word, isWrong) {
+      return {word: isWrong};
+    });
+    expect(content, isNotNull);
+    expect(content, isNotEmpty);
+    expect(content, [
+      {'Dies ': false}, // is not wrong
+      {'ist ': false}, // is not wrong
+      {'ein ': false}, // is not wrong
+      {'Tst': true}, // is wrong
+      {' ': false}, // is wrong
+      {'(': false},
+      {'Äpfel': false}, // is not wrong
+      {', ': false}, // is not wrong
+      {'Männer': false}, // is not wrong
+      {') ': false},
+      {'eiige': true}, // is wrong
+      {' ': false}, // is not wrong
+      {'Fehler': false}, // is not wrong
+    ]);
+    spellchecker.dispose();
+    // this should throws an error
+    expect(() {
+      spellchecker.registerLanguage('Shouldn\'t add this language');
+    }, throwsA(isA<AssertionError>()));
+  });
+
   test('Should return a simple map with right parts and wrong parts in spanish',
       () {
     TestWidgetsFlutterBinding.ensureInitialized();

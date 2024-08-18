@@ -1,3 +1,7 @@
+## 1.0.8
+
+* Fix(de): Deutsch language cause some characters are ignore like: `ẅ`, `ä`, `ë`, `ï`, `ö`, `ÿ`, etc
+
 ## 1.0.7
 
 * Fix: words with accents are detected as a special character instead a common word
