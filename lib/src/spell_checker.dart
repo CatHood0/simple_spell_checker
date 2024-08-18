@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart' show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, WordTokenizer, defaultLanguages, isWordHasNumber, LanguageDicPriorityOrder;
+import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/utils.dart';
 import 'common/cache_object.dart';
 
@@ -92,7 +93,7 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ')) {
+      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -146,7 +147,7 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ')) {
+      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -264,7 +265,8 @@ class SimpleSpellChecker {
     _verifyState();
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
-    if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) && !ensureSafeLanguage) {
+    if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) &&
+        !ensureSafeLanguage) {
       final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {

@@ -9,8 +9,8 @@ void main() {
       safeDictionaryLoad: false,
     );
     //spellchecker.testingMode = true;
-    final content = spellchecker.checkBuilder<Map<String, bool>>(
-        'this is a tsr with sme errors', builder: (word, isWrong) {
+    final content =
+        spellchecker.checkBuilder<Map<String, bool>>('this is a tsr (with) sme errors', builder: (word, isWrong) {
       return {word: isWrong};
     });
     expect(content, isNotNull);
@@ -21,7 +21,9 @@ void main() {
       {'a ': false}, // is not wrong
       {'tsr': true}, // is wrong
       {' ': false}, // is wrong
-      {'with ': false}, // is not wrong
+      {'(': false},
+      {'with': false}, // is not wrong
+      {') ': false},
       {'sme': true}, // is wrong
       {' ': false}, // is wrong
       {'errors': false}, // is not wrong

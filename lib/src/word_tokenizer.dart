@@ -1,5 +1,5 @@
 class WordTokenizer {
-  static final RegExp separatorRegExp = RegExp(r'\S+|\s+');
+  static final RegExp separatorRegExp = RegExp(r'(\s+|[^\w\s]+|\w+)');
 
   static bool canTokenizeText(String text) {
     return separatorRegExp.hasMatch(text);
