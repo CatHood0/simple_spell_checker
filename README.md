@@ -29,7 +29,7 @@ To use the `SimpleSpellChecker` in your `Flutter` project, follow these steps:
 
 1. **Add the Dependency**:
 
-   Add the following line to your `pubspec.yaml` file:
+Add the following line to your `pubspec.yaml` file:
 
 ```yaml
    dependencies:
@@ -39,10 +39,11 @@ To use the `SimpleSpellChecker` in your `Flutter` project, follow these steps:
 Import the necessary components into your `Dart` file and initialize the Spell-Checker:
 
  ```dart
- import 'package:simple_spell_checker/simple_spell_checker.dart';
+import 'package:simple_spell_checker/simple_spell_checker.dart';
+
 SimpleSpellChecker spellChecker = SimpleSpellChecker(
-  language: 'en', // the current language that the user is using
-  safeDirectoryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
+   language: 'en', // the current language that the user is using
+   safeDirectoryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
 );
 ```
 ### Check your text:
@@ -74,19 +75,18 @@ List<Widget>? result = spellChecker.checkBuilder<Widget>(
 Add and use `addCustomLanguage()` by updating the `customLanguages` parameter:
 
 ```dart
-    final LanguageIdentifier languageId = LanguageIdentifier(language: 'custom_lang', words: '<your_dictionary>');
-    // this need to be called for cases when we check if the language into the Spellchecker is already registered
-    // then, if the language on SimpleSpellChecker
-    spellChecker.registerLanguage(languageId.language);
-    spellChecker.addCustomLanguage(languageId);
-    // to set this new custom language to the state of the [SimpleSpellChecker] then use:
-    spellChecker.setNewLanguageToState(languageId.language);
+final LanguageIdentifier languageId = LanguageIdentifier(language: 'custom_lang', words: '<your_dictionary>');
+// this need to be called for cases when we check if the language into the Spellchecker is already registered
+// then, if the language on SimpleSpellChecker
+spellChecker.registerLanguage(languageId.language);
+spellChecker.addCustomLanguage(languageId);
+// to set this new custom language to the state of the [SimpleSpellChecker] then use:
+spellChecker.setNewLanguageToState(languageId.language);
 ```
 
 #### Note:
 
-When you add a custom language you'll need to call always `registerLanguage()` and pass the language code to avoid return null
-always when `_checkLanguageRegistry()` it's called _(this method ensure to check if the current state of the language in `SimpleSpellChecker` is already registered with the other ones)_.
+When you add a custom language you will need to call `registerLanguage()` and pass the language id to avoid return null in `check()` or `checkBuilder()` method since it always call `_checkLanguageRegistry()` to ensure to check if the current state of the language in `SimpleSpellChecker` is already registered with the other ones).
 
 ## Additional Information
 
@@ -104,7 +104,6 @@ always when `_checkLanguageRegistry()` it's called _(this method ensure to check
 ### Caching
 
 The package uses caching mechanisms (`CacheObject`) to store loaded dictionaries and languages, significantly reducing the load time when checking large texts.
-State Management
 
 * **Language Caching**: The package caches language identifiers and word dictionaries to avoid reloading them multiple times, which is particularly useful for large dictionaries.
 * **Custom Language Caching**: When adding custom languages, they are cached automatically to improve performance.
@@ -127,7 +126,7 @@ When the `SimpleSpellChecker` is no longer needed, ensure you dispose of it prop
 spellChecker.dispose();
 ```
 
-This clears any cached data and closes the internal stream to prevent memory leaks.
+It clears any cached data and closes the internal stream to prevent memory leaks.
 
 ## Contributions
 
