@@ -10,6 +10,7 @@ import 'dictionaries/sv/sv_words.dart';
 final List<String> defaultLanguages = List.unmodifiable(
   ['pt', 'de', 'en', 'es', 'it', 'fr', 'no', 'sv'],
 );
+
 /// This are a list of special languages that can be RTL or that need a special
 /// build of it's characters. we use this list to avoid check languages that cannot be
 /// support and doesn't have characters such as English or Spanish
