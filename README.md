@@ -72,6 +72,34 @@ List<Widget>? result = spellChecker.checkBuilder<Widget>(
 );
 ```
 
+### Creating your custom `Tokenizer`
+
+Use the `wordTokenizer` param from constructor to set a custom instance of your `Tokenizer` or use `setNewTokenizer()` or `setWordTokenizerToDefault()`.
+
+#### Example of a custom `Tokenizer`:
+
+```dart
+/// custom tokenizer implemented by the package
+class CustomWordTokenizer extends Tokenizer {
+  CustomWordTokenizer() : super(separatorRegExp: RegExp(r'\S+|\s+'));
+
+  @override
+  bool canTokenizeText(String text) {
+    return separatorRegExp!.hasMatch(text);
+  }
+
+  /// Divides a string into words
+  @override
+  List<String> tokenize(
+    String content, {
+    bool removeAllEmptyWords = false,
+  }) {
+    final List<String> words = separatorRegExp!.allMatches(content).map((match) => match.group(0)!).toList();
+    return [...words];
+  }
+}
+```
+
 ### Handling Custom Languages:
 
 Add and use `addCustomLanguage()` by updating the `customLanguages` parameter:
@@ -115,7 +143,44 @@ The package uses caching mechanisms (`CacheObject`) to store loaded dictionaries
 
 The `SimpleSpellChecker` class provides a stream (stream getter) that broadcasts updates whenever the spell-checker state changes (by now, we just pass the current state of the object list that is always updated when add a new object). This is useful for reactive UI updates.
 
-For listen the list of the widgets while is checking:
+#### Native methods streams without using `StreamController`
+
+Use the `checkStream()` or `checkBuilderStream<T>()` method to analyze a `String` for spelling errors:
+
+_Note: this functions let us dispose the controllers using `disposeControllers()` without lost the realtime functionality_.
+
+```dart
+late StreamSubscription subscription;
+subscription = SimpleSpellChecker(language: '')
+   .checkStream(
+      'Your text here',
+      removeEmptyWordsOnTokenize: true,
+   )
+   .listen(
+      (List<TextSpan> data) {},
+);
+/// remenber call cancel
+subscription.cancel();
+```
+or 
+
+```dart
+late StreamSubscription subscription;
+subscription = SimpleSpellChecker(language: '').checkBuilderStream<Widget>(
+    'Your text here',
+    builder: (word, isWrong) {
+      return Text(word, style: TextStyle(color: isWrong ? Colors.red : null));
+    },
+    removeEmptyWordsOnTokenize: true,
+  ).listen(
+    (List<Widget> data) {},
+);
+
+/// remenber call cancel
+subscription.cancel();
+```
+
+#### For listen the list of the widgets while is checking:
 
 ```dart
 spellChecker.stream.listen((event) {
