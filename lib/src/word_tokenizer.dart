@@ -1,19 +1,27 @@
-class WordTokenizer {
-  static final RegExp separatorRegExp = RegExp(
-      r'(\s+|[,;°|·̣•µ\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ\_\«\»\<\>\¢\@\€\←\↓\→]|[\wẃéÿĺĸẗŕýïßśëŔŸËẄÄŸÏÖÜüÍÁẂÉÚÝÓÁäëÿïößðẅẍæëïüãñõáéíóúýâêîôûöáéíñǵćóúüñÁÉÍ`´^¨`ÓÚÜÑ]+)');
+import 'package:simple_spell_checker/src/common/tokenizer.dart';
 
-  static bool canTokenizeText(String text) {
-    return separatorRegExp.hasMatch(text);
+/// Default work tokenizer implemented by the package
+class WordTokenizer extends Tokenizer {
+  WordTokenizer({
+    super.separatorRegExp,
+  });
+
+  @override
+  bool canTokenizeText(String text) {
+    return (separatorRegExp ?? defaultSeparatorRegExp).hasMatch(text);
   }
 
   /// Divides a string into words
-  static List<String> tokenize(
+  @override
+  List<String> tokenize(
     String content, {
     bool removeAllEmptyWords = false,
   }) {
-    final List<String> words = separatorRegExp
+    final List<String> words = (separatorRegExp ?? defaultSeparatorRegExp)
         .allMatches(content)
-        .map((match) => match.group(0)!)
+        .map(
+          (match) => match.group(0)!,
+        )
         .toList();
     if (!removeAllEmptyWords) return [...words];
     return words.where((String element) => element.isNotEmpty).toList();
