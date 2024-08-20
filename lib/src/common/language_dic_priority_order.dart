@@ -1,5 +1,4 @@
-/// This tells to the [SimpleSpellchecker] which should be the priority
-/// when we need to search the dictionary for the current language
+@Deprecated('LanguageDicPriorityOrder is not longer used and will be removed in future releases\nPlease use StrategyLanguageSearchOrder instead')
 enum LanguageDicPriorityOrder {
   customFirst,
   defaultFirst,

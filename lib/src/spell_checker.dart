@@ -9,6 +9,7 @@ import 'package:simple_spell_checker/src/common/tokenizer.dart' show Tokenizer;
 import 'package:simple_spell_checker/src/utils.dart'
     show defaultLanguages, defaultLanguagesMap, isWordHasNumber, notSupportedLanguages;
 import 'common/cache_object.dart' show CacheObject;
+import 'common/strategy_language_search_order.dart';
 
 CacheObject<LanguageIdentifier>? _cacheLanguageIdentifier;
 
@@ -64,6 +65,7 @@ class SimpleSpellChecker {
   final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
   final StreamController<String?> _languageState = StreamController.broadcast();
   LanguageDicPriorityOrder priorityOrder;
+  StrategyLanguageSearchOrder strategy;
   SimpleSpellChecker({
     required String language,
     Tokenizer? wordTokenizer,
@@ -71,7 +73,9 @@ class SimpleSpellChecker {
     this.safeDictionaryLoad = false,
     this.safeLanguageName = 'en',
     this.caseSensitive = true,
+    @Deprecated('priorityOrder is no longer used. Please use strategy instead')
     this.priorityOrder = LanguageDicPriorityOrder.defaultFirst,
+    this.strategy = StrategyLanguageSearchOrder.byPackage,
     this.customLanguages,
   }) {
     _language = language;
@@ -138,7 +142,7 @@ class SimpleSpellChecker {
           ),
         );
       }
-    _addNewEventToWidgetsState(spans);
+      _addNewEventToWidgetsState(spans);
     }
     return [...spans];
   }
@@ -245,7 +249,7 @@ class SimpleSpellChecker {
       } else if (hasWrongWords(word)) {
         spans.add(builder.call(word, true));
       }
-    _addNewEventToWidgetsState(spans);
+      _addNewEventToWidgetsState(spans);
     }
     return [...spans];
   }
@@ -340,10 +344,15 @@ class SimpleSpellChecker {
     _language = language;
     _addNewEventToLanguageState(_language);
   }
-
+  @Deprecated('SetNewPriorityOrder is no longer used. Please, use setNewStrategy instead')
   void setNewPriorityOrder(LanguageDicPriorityOrder priorityOrder) {
     _verifyState();
     this.priorityOrder = priorityOrder;
+  }
+
+  void setNewStrategy(StrategyLanguageSearchOrder strategy) {
+    _verifyState();
+    this.strategy = strategy;
   }
 
   /// Set a new cusotm Tokenizer instance to be used by the package
@@ -419,7 +428,7 @@ class SimpleSpellChecker {
     _verifyState();
     if (_cacheLanguageIdentifier?.get.language == _language) return;
     // check if the current language is not registered already
-    if ((priorityOrder == LanguageDicPriorityOrder.customFirst || !defaultLanguages.contains(_language)) &&
+    if ((strategy == StrategyLanguageSearchOrder.byUser || !defaultLanguages.contains(_language)) &&
         _intoCount <= 2) {
       final indexOf = customLanguages?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
