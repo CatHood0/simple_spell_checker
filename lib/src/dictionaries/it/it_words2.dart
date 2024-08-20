@@ -56986,7 +56986,6 @@ omozigotico/nT
 omozigoto/OTqr
 OMS/T
 omuncolo/OTqr
-on
 onagrocrazia/TUqrs
 onagro/OTqr
 Onanì
@@ -87740,7 +87739,6 @@ tessitrice/S
 tessitura/Q
 tessutale/S
 tessuto/Ey
-test
 testabile/S
 testaccia/n
 testaceo/o
