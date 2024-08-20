@@ -120,7 +120,7 @@ class SimpleSpellChecker {
       if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if (nextWord.contains(' ') || nextWord.noWords) {
+          if (nextWord.contains(' ')) {
             spans.add(TextSpan(text: '$word$nextWord'));
             // ignore the next since it was already passed
             i++;
@@ -178,7 +178,7 @@ class SimpleSpellChecker {
       if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if (nextWord.contains(' ') || nextWord.noWords) {
+          if (nextWord.contains(' ')) {
             spans.add(TextSpan(text: '$word$nextWord'));
             yield [...spans];
             // ignore the next since it was already passed
@@ -238,7 +238,7 @@ class SimpleSpellChecker {
       if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if (nextWord.contains(' ') || nextWord.noWords) {
+          if (nextWord.contains(' ')) {
             spans.add(builder.call('$word$nextWord', false));
             // ignore the next since it was already passed
             i++;
@@ -300,7 +300,7 @@ class SimpleSpellChecker {
       if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
-          if (nextWord.contains(' ') || nextWord.noWords) {
+          if (nextWord.contains(' ')) {
             spans.add(builder.call('$word$nextWord', false));
             yield [...spans];
             // ignore the next since it was already passed
