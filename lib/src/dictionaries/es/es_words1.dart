@@ -1648,7 +1648,6 @@ elecciones
 horacio
 molar
 astrónomo
-as
 arteria
 arroyo
 estadística
@@ -1740,6 +1739,9 @@ sátira
 simetría
 silla
 si
+sí
+deberíamos
+querríamos
 santo
 rococó
 reina
@@ -1803,7 +1805,6 @@ marsupiales
 corales
 anglosajones
 science
-ra
 religiones
 ibérica
 atlas
@@ -1858,7 +1859,6 @@ honda
 histamina
 hembra
 gusano
-gea
 ficción
 esmalte
 era
@@ -2160,6 +2160,10 @@ mercadotecnia
 mente
 mareo
 manuscrito
+allí
+alli
+ahí
+ahi
 mandioca
 mama
 lira
@@ -2366,6 +2370,12 @@ fénix
 humanista
 mosca
 neoplasia
+qué
+cómo
+cúando
+dónde
+porqué
+por qué
 nicotina
 rea
 sello
@@ -2391,6 +2401,7 @@ siciliano
 sepultura
 septentrional
 segundo
+sé
 se
 roedor
 riego
@@ -2406,7 +2417,6 @@ patriarca
 paralelo
 obispado
 nutria
-na
 mortero
 monoteísmo
 misa
@@ -2613,6 +2623,8 @@ anglicismo
 anestesia
 americano
 alias
+una
+revista
 abeja
 fuentes
 piratas
@@ -2827,6 +2839,12 @@ azúcares
 escocesa
 dragones
 hui
+huí
+huir
+huirás
+huiré
+huiremos
+huír
 latinas
 germánica
 hebrea
@@ -2858,6 +2876,7 @@ reactivo
 semen
 terrorista
 ti
+tí
 tiburón
 tinta
 toponimia
@@ -3231,7 +3250,6 @@ perdices
 cananea
 fortune
 constelaciones
-li
 goa
 óptica
 aplicaciones
@@ -3261,7 +3279,6 @@ realismo
 semivida
 semiótica
 sopa
-ter
 terrateniente
 tesitura
 tic
@@ -3386,7 +3403,6 @@ encomendero
 emir
 ecografía
 dígrafo
-do
 disciplina
 desplazamiento
 descomposición
@@ -3503,6 +3519,12 @@ estas
 ésto
 orígenes
 comunicaciones
+comunicación
+comunicarse
+comuniquemonos
+comunícate
+comunicaras
+comunicaremos
 diomedes
 pilar
 astillero
@@ -3517,6 +3539,13 @@ caracalla
 carcinoma
 carcinógeno
 carga
+cargaremos
+cargamiento
+cargamos
+carguemos
+cargaré
+cargaras
+cargaremos
 cariotipo
 deseo
 frisia
@@ -4450,7 +4479,6 @@ alemanas
 violines
 mon
 bíblica
-sa
 prehistórica
 caracteres
 ed
@@ -4493,6 +4521,20 @@ miocardio
 molecular
 motivación
 motril
+queremos
+querriamos
+tendriamos
+podriamos
+deberiamos
+cambiariamos
+igualariamos
+igualar
+igual
+menos
+mal
+TODO
+lista
+bartender
 neoplatónico
 nochebuena
 pedernal
@@ -4552,7 +4594,6 @@ secreción
 sardina
 sarampión
 sanjacado
-san
 samba
 sacristía
 romaní
@@ -4643,7 +4684,6 @@ juez
 jersey
 jefe
 jalapa
-isa
 inercia
 incesto
 impresión
@@ -4700,7 +4740,6 @@ dominica
 diálisis
 dismenorrea
 disacárido
-din
 diastema
 diario
 determinismo
@@ -4823,7 +4862,6 @@ periféricos
 pendientes
 nativos
 nacionalistas
-nas
 musas
 mulatos
 mozárabes
@@ -7172,7 +7210,6 @@ intriga
 infante
 independentismo
 incaico
-in
 impedancia
 imam
 ilirio
@@ -10152,7 +10189,6 @@ birrete
 bibliografía
 betún
 berza
-be
 bato
 bate
 bastidor
@@ -10771,15 +10807,14 @@ limones
 salmones
 plantaciones
 diseminado
-at
 une
+anna
 compuestas
 financiera
 mera
 revoluciones
 denominaciones
 com
-an
 liendo
 vicente
 vargas
@@ -28061,7 +28096,6 @@ precipitando
 facciones
 reelegido
 generalizada
-for
 misma
 compleja
 formadas
