@@ -15,7 +15,8 @@ class WordTokenizer extends Tokenizer {
   @override
   List<String> tokenize(
     String content, {
-    @Deprecated('removeAllEmptyWords are no longer used and will be removed in future releases')
+    @Deprecated(
+        'removeAllEmptyWords are no longer used and will be removed in future releases')
     bool removeAllEmptyWords = false,
   }) {
     final List<String> words = (separatorRegExp ?? defaultSeparatorRegExp)

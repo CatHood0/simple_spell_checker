@@ -6,6 +6,7 @@ abstract class Tokenizer {
   Tokenizer({this.separatorRegExp});
   bool canTokenizeText(String text);
   List<String> tokenize(String content,
-      {@Deprecated('removeAllEmptyWords are no longer used and will be removed in future releases')
+      {@Deprecated(
+          'removeAllEmptyWords are no longer used and will be removed in future releases')
       bool removeAllEmptyWords = false});
 }
