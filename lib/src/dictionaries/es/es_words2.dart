@@ -1,6 +1,16 @@
 const esWords2 = '''
 ABS
 ADSL
+andalucia
+perú
+venezuela
+USA
+United states
+Estados unidos
+Inglaterra
+china
+corea del norte
+corea del sur
 Abad
 Abadía
 esto

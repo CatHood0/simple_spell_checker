@@ -11,7 +11,7 @@ void main() {
     );
     //spellchecker.testingMode = true;
     final content = spellchecker.checkBuilder<Map<String, bool>>(
-        'this is a tśr (with) sme errors', builder: (word, isWrong) {
+        'this is a tśr (with) sme errors.', builder: (word, isWrong) {
       return {word: isWrong};
     });
     expect(content, isNotNull);
@@ -28,6 +28,7 @@ void main() {
       {'sme': true}, // is wrong
       {' ': false}, // is not wrong
       {'errors': false}, // is not wrong
+      {'.': false}, // is not wrong
     ]);
     spellchecker.dispose();
     // this should throws an error

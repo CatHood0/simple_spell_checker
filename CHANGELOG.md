@@ -1,3 +1,8 @@
+## 1.1.1
+
+* Fix: dot (".") characters is lost while typing
+* Fix: added missing translations
+
 ## 1.1.0
 
 * Fix: avoid spellchecker default behavior when the current language like chinese, japanese, russian, etc that for now it's characters are not registered

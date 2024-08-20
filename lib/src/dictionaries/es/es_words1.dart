@@ -28038,7 +28038,6 @@ elevadas
 id
 petrificados
 hija
-and
 fijada
 comparativa
 mide
