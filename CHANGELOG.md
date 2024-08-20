@@ -1,3 +1,10 @@
+## 1.1.3
+
+* Chore: deprecated `removeEmptyWordsOnTokenize` and `removeAllEmptyWords` since are useless
+* Chore: deprecated `LanguageDicPriorityOrder` and it was replaced by `StrategyLanguageSearchOrder` 
+* Fix: `italian` contains not used english words
+* Feat: added more words for `Deutsch` and `Spanish` dictionaries
+
 ## 1.1.2
 
 * Fix: bad state after close controllers

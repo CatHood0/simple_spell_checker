@@ -10,18 +10,18 @@
 - **Customizable Error Handling**: Optionally use custom gesture recognizers for wrong words, enabling custom interactions.
 - **Stream-based State Management**: Provides a stream of updates for spell-checking states, allowing reactive UI updates.
 
-## Current languages supported by default (more will be added in future releases)
+## Current languages supported (more languages will be added in future releases)
 
 The package already have a default list of words for these languages:
 
-* German - de
-* English - en
-* Spanish - es
-* French - fr
-* Italian - it
-* Norwegian - no
-* Portuguese - pt
-* Swedish - sv
+* German - `de`
+* English - `en`
+* Spanish - `es`
+* French - `fr`
+* Italian - `it`
+* Norwegian - `no`
+* Portuguese - `pt`
+* Swedish - `sv`
 
 ## Getting Started
 
@@ -55,7 +55,6 @@ Use the `check()` method to analyze a `String` for spelling errors:
 ```dart
 List<TextSpan>? result = spellChecker.check(
   'Your text here',
-  removeEmptyWordsOnTokenize: true,
 );
 ```
 
@@ -130,6 +129,7 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 ### Customization Options
 
 * **checkBuilder**: Use the checkBuilder() method for a custom widget-based approach to handling spelling errors.
+* **setNewStrategy**: Use the setNewStrategy() method to modify the current value to change the behvarior if the dictionary is reloaded.
 * **customLongPressRecognizerOnWrongSpan**: Attach custom gesture recognizers to wrong words for tailored interactions.
 
 ### Caching
@@ -151,7 +151,7 @@ _Note: this functions let us dispose the controllers using `disposeControllers()
 
 ```dart
 late StreamSubscription subscription;
-subscription = SimpleSpellChecker(language: '')
+subscription = spellChecker 
    .checkStream(
       'Your text here',
       removeEmptyWordsOnTokenize: true,
@@ -166,12 +166,12 @@ or
 
 ```dart
 late StreamSubscription subscription;
-subscription = SimpleSpellChecker(language: '').checkBuilderStream<Widget>(
-    'Your text here',
-    builder: (word, isWrong) {
-      return Text(word, style: TextStyle(color: isWrong ? Colors.red : null));
-    },
-    removeEmptyWordsOnTokenize: true,
+subscription = spellChecker
+    .checkBuilderStream<Widget>(
+      'Your text here',
+      builder: (word, isWrong) {
+        return Text(word, style: TextStyle(color: isWrong ? Colors.red : null));
+      },
   ).listen(
     (List<Widget> data) {},
 );
