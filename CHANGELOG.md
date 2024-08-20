@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Fix: bad state after close controllers
+
 ## 1.1.1
 
 * Fix: dot (".") characters is lost while typing
