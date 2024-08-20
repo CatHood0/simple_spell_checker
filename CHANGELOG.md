@@ -5,7 +5,7 @@
 
 ## 1.1.0
 
-* Fix: avoid spellchecker default behavior when the current language like chinese, japanese, russian, etc that for now it's characters are not registered
+* Fix: avoid spellchecker default behavior when the current language it's no supported (some of the not supported ones can be: chinese, japanese, russian, etc) for now. 
 * Feat: added more characteres to add better support for the default implementation 
 * Feat: support for custom word tokenizer
 * Feat: support for realtime subscription to changes using directly `checkStream` or `checkBuilderStream` instead controllers
