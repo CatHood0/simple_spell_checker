@@ -91,6 +91,7 @@ class SimpleSpellChecker {
   /// or make some custom action for wrong words
   List<TextSpan>? check(
     String text, {
+    @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
     LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) {
@@ -108,7 +109,7 @@ class SimpleSpellChecker {
     }
     if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = _wordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -149,6 +150,7 @@ class SimpleSpellChecker {
   /// or make some custom action for wrong words
   Stream<List<TextSpan>> checkStream(
     String text, {
+    @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
     LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) async* {
@@ -165,7 +167,7 @@ class SimpleSpellChecker {
     }
     if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <TextSpan>[];
-    final words = _wordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -207,6 +209,7 @@ class SimpleSpellChecker {
   List<T>? checkBuilder<T>(
     String text, {
     required T Function(String, bool) builder,
+    @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
   }) {
     _addNewEventToWidgetsState(null);
@@ -224,7 +227,7 @@ class SimpleSpellChecker {
     }
     if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <T>[];
-    final words = _wordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -270,6 +273,7 @@ class SimpleSpellChecker {
   Stream<List<T>> checkBuilderStream<T>(
     String text, {
     required T Function(String, bool) builder,
+    @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
   }) async* {
     _verifyState();
@@ -285,7 +289,7 @@ class SimpleSpellChecker {
     }
     if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <T>[];
-    final words = _wordTokenizer.tokenize(text, removeAllEmptyWords: removeEmptyWordsOnTokenize);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
