@@ -363,6 +363,10 @@ class SimpleSpellChecker {
     _turnOffChecking = !_turnOffChecking;
   }
 
+  bool isCheckerActive() {
+    return _turnOffChecking;
+  }
+
   bool _checkLanguageRegistry(String language) {
     _verifyState();
     return _languagesRegistry.get.contains(language);
