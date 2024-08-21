@@ -1,3 +1,11 @@
+## 1.1.4
+
+* Feat: support for create common and wrong styles in `check` functions 
+* Feat: added example app
+* Fix: some characters are losted while typing by wrong regexp match
+* Fix: uppercase words with just one char length not is parsed to lowercase
+* Chore: change `hasWrongWord` to `isWordValid` to make more sense
+
 ## 1.1.3
 
 * Chore: deprecated `removeEmptyWordsOnTokenize` and `removeAllEmptyWords` since are useless

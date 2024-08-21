@@ -1,5 +1,7 @@
 # Simple Spell Checker
 
+![simple spell checker example preview](https://github.com/CatHood0/simple_spell_checker)
+
 `SimpleSpellChecker` is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. _The package caches language dictionaries_ and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
 ## Features
@@ -55,6 +57,8 @@ Use the `check()` method to analyze a `String` for spelling errors:
 ```dart
 List<TextSpan>? result = spellChecker.check(
   'Your text here',
+  wrongStyle: TextStyle(backgroundColor: Colors.red.withOpacity(0.2)), // set you custom style to the wrong spans 
+  commonStyle: TextStyle(your_normal_styles_for_non_wrong_words), 
 );
 ```
 
@@ -128,8 +132,8 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 ### Customization Options
 
-* **checkBuilder**: Use the checkBuilder() method for a custom widget-based approach to handling spelling errors.
-* **setNewStrategy**: Use the setNewStrategy() method to modify the current value to change the behvarior if the dictionary is reloaded.
+* **checkBuilder**: Use the `checkBuilder()` method for a custom widget-based approach to handling spelling errors.
+* **setNewStrategy**: Use the `setNewStrategy()` method to modify the current value to change the behvarior if the dictionary is reloaded.
 * **customLongPressRecognizerOnWrongSpan**: Attach custom gesture recognizers to wrong words for tailored interactions.
 
 ### Caching
