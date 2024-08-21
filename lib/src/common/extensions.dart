@@ -4,6 +4,6 @@ extension WordExtension on String {
   String toLowerCaseFirst() =>
       isEmpty || length < 2 ? this : "${this[0].toLowerCase()}${substring(1)}";
   bool get noWords => RegExp(
-          r'[,;\.°|·̣•µ\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ\_\«\»\<\>\¢\@\€\←\↓\→\ð\ø\¢\”\“\„\"]')
+          r'''[,;:'\'\.°\|\*\•µ\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ·~½¬ſþˀ\_\«\»\<\>\¢\@\€\←\↓\→\ð\ø\¢\”\“\„\"]''')
       .hasMatch(this);
 }
