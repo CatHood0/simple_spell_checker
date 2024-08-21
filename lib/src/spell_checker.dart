@@ -100,6 +100,8 @@ class SimpleSpellChecker {
     String text, {
     @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
+    TextStyle? wrongStyle,
+    TextStyle? commonStyle,
     LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) {
     _addNewEventToWidgetsState(null);
@@ -124,28 +126,29 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
-            spans.add(TextSpan(text: '$word$nextWord'));
+            spans.add(TextSpan(text: '$word$nextWord', style: commonStyle));
             // ignore the next since it was already passed
             i++;
             continue;
           }
         }
-        spans.add(TextSpan(text: word));
-      } else if (hasWrongWords(word)) {
+        spans.add(TextSpan(text: word, style: commonStyle));
+      } else if (!isWordValid(word)) {
         final longTap = customLongPressRecognizerOnWrongSpan?.call(word);
         spans.add(
           TextSpan(
             text: word,
             recognizer: longTap,
-            style: const TextStyle(
-              decorationColor: Colors.red,
-              decoration: TextDecoration.underline,
-              decorationStyle: TextDecorationStyle.wavy,
-            ),
+            style: wrongStyle ??
+                const TextStyle(
+                  decorationColor: Colors.red,
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.wavy,
+                ),
           ),
         );
       }
@@ -163,6 +166,8 @@ class SimpleSpellChecker {
     String text, {
     @Deprecated('removeEmptyWordsOnTokenize are no longer used and will be removed in future releases')
     bool removeEmptyWordsOnTokenize = false,
+    TextStyle? wrongStyle,
+    TextStyle? commonStyle,
     LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
   }) async* {
     if (_turnOffChecking) {
@@ -185,30 +190,31 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
-            spans.add(TextSpan(text: '$word$nextWord'));
+            spans.add(TextSpan(text: '$word$nextWord', style: commonStyle));
             yield [...spans];
             // ignore the next since it was already passed
             i++;
             continue;
           }
         }
-        spans.add(TextSpan(text: word));
+        spans.add(TextSpan(text: word, style: commonStyle));
         yield [...spans];
-      } else if (hasWrongWords(word)) {
+      } else if (!isWordValid(word)) {
         final longTap = customLongPressRecognizerOnWrongSpan?.call(word);
         spans.add(
           TextSpan(
             text: word,
             recognizer: longTap,
-            style: const TextStyle(
-              decorationColor: Colors.red,
-              decoration: TextDecoration.underline,
-              decorationStyle: TextDecorationStyle.wavy,
-            ),
+            style: wrongStyle ??
+                const TextStyle(
+                  decorationColor: Colors.red,
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.wavy,
+                ),
           ),
         );
         yield [...spans];
@@ -227,7 +233,7 @@ class SimpleSpellChecker {
     bool removeEmptyWordsOnTokenize = false,
   }) {
     _addNewEventToWidgetsState(null);
-    if(_turnOffChecking){
+    if (_turnOffChecking) {
       return null;
     }
     _verifyState();
@@ -248,19 +254,19 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
-            spans.add(builder.call('$word$nextWord', false));
+            spans.add(builder.call('$word$nextWord', true));
             // ignore the next since it was already passed
             i++;
             continue;
           }
         }
-        spans.add(builder.call(word, false));
-      } else if (hasWrongWords(word)) {
         spans.add(builder.call(word, true));
+      } else if (!isWordValid(word)) {
+        spans.add(builder.call(word, false));
       }
       _addNewEventToWidgetsState(spans);
     }
@@ -313,11 +319,11 @@ class SimpleSpellChecker {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || !hasWrongWords(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
-            spans.add(builder.call('$word$nextWord', false));
+            spans.add(builder.call('$word$nextWord', true));
             yield [...spans];
             // ignore the next since it was already passed
             i++;
@@ -325,10 +331,10 @@ class SimpleSpellChecker {
           }
         }
 
-        spans.add(builder.call(word, false));
-        yield [...spans];
-      } else if (hasWrongWords(word)) {
         spans.add(builder.call(word, true));
+        yield [...spans];
+      } else if (!isWordValid(word)) {
+        spans.add(builder.call(word, false));
         yield [...spans];
       }
     }
@@ -339,20 +345,21 @@ class SimpleSpellChecker {
   ///
   /// This will throw error if the SimpleSpellChecker is non
   /// initilizated
-  bool hasWrongWords(String word) {
+  bool isWordValid(String word) {
     // if word is just an whitespace then is not wrong
-    if (word.trim().isEmpty) return false;
+    if (word.trim().isEmpty) return true;
     _verifyState(alsoCache: true);
     final wordsMap = _cacheWordDictionary?.get ?? {};
     final newWordWithCaseSensitive = caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
     final int? validWord = wordsMap[newWordWithCaseSensitive];
-    return validWord == null;
+    return validWord != null;
   }
-  /// toggle the state of the checking 
-  /// 
+
+  /// toggle the state of the checking
+  ///
   /// if the current checking is deactivate when this be called then should activate
   /// if the current checking is activate when this be called then should deactivate
-  void toggleChecker(){
+  void toggleChecker() {
     _turnOffChecking = !_turnOffChecking;
   }
 
