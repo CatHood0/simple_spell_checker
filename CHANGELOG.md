@@ -1,3 +1,7 @@
+## 1.1.6
+
+* Fix: `isCheckerActive()` return a confuse value
+
 ## 1.1.5
 
 * Chore: update documentation 

@@ -395,7 +395,7 @@ class SimpleSpellChecker {
   }
 
   bool isCheckerActive() {
-    return _turnOffChecking;
+    return !_turnOffChecking;
   }
 
   bool _checkLanguageRegistry(String language) {
