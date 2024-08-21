@@ -2,14 +2,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_spell_checker/src/spell_checker.dart';
 
 void main() {
-  test('Should return a simple map with right parts and wrong parts in english', () {
+  test('Should return a simple map with right parts and wrong parts in english',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'en',
       safeDictionaryLoad: false,
     );
-    final content =
-        spellchecker.checkBuilder<Map<String, bool>>('this is a tśr (with) sme errors.', builder: (word, isValid) {
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'this is a tśr (with) sme errors.', builder: (word, isValid) {
       return {word: isValid};
     });
     expect(content, isNotNull);
@@ -30,14 +31,16 @@ void main() {
     ]);
   });
 
-  test('Should return a simple map with right parts and wrong parts in deutsch', () {
+  test('Should return a simple map with right parts and wrong parts in deutsch',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'de',
       safeDictionaryLoad: false,
     );
     //spellchecker.testingMode = false;
-    final content = spellchecker.checkBuilder<Map<String, bool>>('Dies ist ein Tst (Äpfel, Männer) eiige Fehler',
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Dies ist ein Tst (Äpfel, Männer) eiige Fehler',
         builder: (word, isValid) {
       return {word: isValid};
     });
@@ -60,7 +63,8 @@ void main() {
     ]);
   });
 
-  test('Should return a simple map with right parts and wrong parts in italian', () {
+  test('Should return a simple map with right parts and wrong parts in italian',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'it',
@@ -68,7 +72,8 @@ void main() {
     );
     //spellchecker.testingMode = false;
     final content = spellchecker.checkBuilder<Map<String, bool>>(
-        'Questo è un test (con) aluni errori grammaticali', builder: (word, isValid) {
+        'Questo è un test (con) aluni errori grammaticali',
+        builder: (word, isValid) {
       return {word: isValid};
     });
     expect(content, isNotNull);
@@ -89,15 +94,16 @@ void main() {
     ]);
   });
 
-  test('Should return a simple map with right parts and wrong parts in spanish', () {
+  test('Should return a simple map with right parts and wrong parts in spanish',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'es',
       safeDictionaryLoad: false,
     );
     //spellchecker.testingMode = false;
-    final content = spellchecker.checkBuilder<Map<String, bool>>('Ésto es un tesr (con) alnu errores',
-        builder: (word, isValid) {
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Ésto es un tesr (con) alnu errores', builder: (word, isValid) {
       return {word: isValid};
     });
     expect(content, isNotNull);
@@ -117,7 +123,9 @@ void main() {
     ]);
   });
 
-  test('Should dispose service and throw error when try to use checkBuilder() method', () {
+  test(
+      'Should dispose service and throw error when try to use checkBuilder() method',
+      () {
     TestWidgetsFlutterBinding.ensureInitialized();
     final SimpleSpellChecker spellchecker = SimpleSpellChecker(
       language: 'de',
@@ -126,7 +134,8 @@ void main() {
     spellchecker.dispose();
     // this should throws an error
     expect(() {
-      spellchecker.checkBuilder<Map<String, bool>>('Dies ist ein Tst (Äpfel, Männer) eiige Fehler',
+      spellchecker.checkBuilder<Map<String, bool>>(
+          'Dies ist ein Tst (Äpfel, Männer) eiige Fehler',
           builder: (word, isValid) {
         return {word: isValid};
       });

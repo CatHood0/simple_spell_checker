@@ -15,17 +15,24 @@ class SpellCheckerController extends TextEditingController {
   }
 
   @override
-  TextSpan buildTextSpan({required BuildContext context, TextStyle? style, required bool withComposing}) {
-    assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
-    final bool composingRegionOutOfRange = !value.isComposingRangeValid || !withComposing;
+  TextSpan buildTextSpan(
+      {required BuildContext context,
+      TextStyle? style,
+      required bool withComposing}) {
+    assert(!value.composing.isValid ||
+        !withComposing ||
+        value.isComposingRangeValid);
+    final bool composingRegionOutOfRange =
+        !value.isComposingRangeValid || !withComposing;
 
     // basically, if is not in focus this is builded
     if (composingRegionOutOfRange) {
       return TextSpan(style: style, children: _buildCheckedSpans(text));
     }
 
-    final TextStyle composingStyle = style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
-        const TextStyle(decoration: TextDecoration.underline);
+    final TextStyle composingStyle =
+        style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
+            const TextStyle(decoration: TextDecoration.underline);
     final leftPart = value.composing.textBefore(value.text);
     final currentPart = value.composing.textInside(value.text);
     final rightPart = value.composing.textAfter(value.text);
