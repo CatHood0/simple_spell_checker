@@ -1,3 +1,7 @@
+## 1.1.5
+
+* Chore: update documentation 
+
 ## 1.1.4
 
 * Feat: support for create common and wrong styles in `check` functions 

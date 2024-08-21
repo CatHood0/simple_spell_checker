@@ -130,6 +130,11 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 * **updateCustomLanguageIfExist(LanguageIdentifier language)**: override the current value if exist in `customLanguages` var.
 * **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
 
+### State 
+
+* **toggleChecker()**: activate or deactivate the spell checking. If it is deactivate `check()` methods always will return null 
+* **isCheckerActive()**: return the state of the spell checker.
+
 ### Customization Options
 
 * **checkBuilder**: Use the `checkBuilder()` method for a custom widget-based approach to handling spelling errors.
