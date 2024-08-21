@@ -1,6 +1,6 @@
 # Simple Spell Checker
 
-![simple spell checker example preview](https://github.com/CatHood0/simple_spell_checker)
+![simple spell checker example preview](https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif)
 
 `SimpleSpellChecker` is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. _The package caches language dictionaries_ and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
