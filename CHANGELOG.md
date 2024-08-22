@@ -1,6 +1,11 @@
 ## 1.1.7
 
-* Feat: improve default word separator to accept correctly all language characters and non characters
+* Feat: improved default separator regexp for accept all languages character and non characters (it includes emojis) by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/1
+
+### New Contributors
+* @CatHood0 made their first contribution in https://github.com/CatHood0/simple_spell_checker/pull/1
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.1.6...V1.1.8
 
 ## 1.1.6
 
