@@ -27,18 +27,16 @@ The package already have a default list of words for these languages:
 
 ## Getting Started
 
-To use the `SimpleSpellChecker` in your `Flutter` project, follow these steps:
+To use the `SimpleSpellChecker` in your `Flutter` project:
 
-1. **Add the Dependency**:
-
-Add the following line to your `pubspec.yaml` file:
+**Add the Dependency**:
 
 ```yaml
 dependencies:
   simple_spell_checker: <latest_version>
 ```
 
-Import the necessary components into your `Dart` file and initialize the Spell-Checker:
+**Import the necessary components into your `Dart` file and initialize the Spell-Checker**:
 
  ```dart
 import 'package:simple_spell_checker/simple_spell_checker.dart';
@@ -50,6 +48,9 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
    caseSensitive: false,
 );
 ```
+
+## Check functions
+
 ### Check your text:
 
 Use the `check()` method to analyze a `String` for spelling errors:
@@ -74,6 +75,8 @@ List<Widget>? result = spellChecker.checkBuilder<Widget>(
   }
 );
 ```
+
+## Word tokenizer customization
 
 ### Creating your custom `Tokenizer`
 
@@ -103,21 +106,25 @@ class CustomWordTokenizer extends Tokenizer {
 }
 ```
 
-### Handling Custom Languages:
+## Handling Custom Languages:
 
 Add and use `addCustomLanguage()` by updating the `customLanguages` parameter:
 
 ```dart
-final LanguageIdentifier languageId = LanguageIdentifier(language: 'custom_lang', words: '<your_dictionary>');
+// You dictionary should be a string splitted by new lines
+// since this is the current format supported 
+//
+// Note: this could change in future releases
+final LanguageIdentifier identifier = LanguageIdentifier(language: 'custom_lang', words: '<your_dictionary>');
 // this need to be called for cases when we check if the language into the Spellchecker is already registered
 // then, if the language on SimpleSpellChecker
-spellChecker.registerLanguage(languageId.language);
-spellChecker.addCustomLanguage(languageId);
+spellChecker.registerLanguage(identifier.language);
+spellChecker.addCustomLanguage(identifier);
 // to set this new custom language to the state of the [SimpleSpellChecker] then use:
-spellChecker.setNewLanguageToState(languageId.language);
+spellChecker.setNewLanguageToState(identifier.language);
 ```
 
-#### Note:
+### Note:
 
 When you add a custom language you will need to call `registerLanguage()` and pass the language id to avoid return null in `check()` or `checkBuilder()` method since it always call `_checkLanguageRegistry()` to ensure to check if the current state of the language in `SimpleSpellChecker` is already registered with the other ones).
 

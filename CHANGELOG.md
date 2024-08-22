@@ -1,3 +1,7 @@
+## 1.1.7
+
+* Feat: improve default word separator to accept correctly all language characters and non characters
+
 ## 1.1.6
 
 * Fix: `isCheckerActive()` return a confuse value
