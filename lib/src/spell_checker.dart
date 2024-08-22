@@ -17,6 +17,8 @@ import 'package:simple_spell_checker/src/utils.dart'
 import 'common/cache_object.dart' show CacheObject;
 import 'common/strategy_language_search_order.dart';
 
+const _noLanguage = LanguageIdentifier(language: 'no_lang', words: '');
+
 CacheObject<LanguageIdentifier>? _cacheLanguageIdentifier;
 
 /// add a cache var to avoid always reload all dictionary (it's a heavy task)
@@ -61,14 +63,18 @@ class SimpleSpellChecker {
 
   /// If the current language is not founded on [customLanguages] or default ones,
   /// then select one of the existent to avoid conflicts
-  bool safeDictionaryLoad;
+  late bool _safeDictionaryLoad;
+
+  /// If it is true then the spell checker
+  /// ignores if the dictionary or language is not founded
+  late bool _worksWithoutDictionary;
 
   /// Decides how the text will be divided and if the text could be tokenized
   late Tokenizer _wordTokenizer;
 
   bool caseSensitive;
 
-  /// If safeDictionaryLoad is true, this will be used as the default language to update
+  /// If _safeDictionaryLoad is true, this will be used as the default language to update
   /// the state of SimpleSpellChecker and to store to a existent language with its dictionary
   String safeLanguageName;
   final StreamController<Object?> _simpleSpellCheckerWidgetsState =
@@ -79,8 +85,9 @@ class SimpleSpellChecker {
   SimpleSpellChecker({
     required String language,
     Tokenizer? wordTokenizer,
+    bool safeDictionaryLoad = false,
+    bool worksWithoutDictionary = false,
     bool autoAddLanguagesFromCustomDictionaries = true,
-    this.safeDictionaryLoad = false,
     this.safeLanguageName = 'en',
     this.caseSensitive = true,
     @Deprecated('priorityOrder is no longer used. Please use strategy instead')
@@ -89,6 +96,8 @@ class SimpleSpellChecker {
     this.customLanguages,
   }) {
     _language = language;
+    _safeDictionaryLoad = safeDictionaryLoad;
+    _worksWithoutDictionary = worksWithoutDictionary;
     _languageState.add(_language);
     _languagesRegistry.set = [...defaultLanguages];
     _cacheWordDictionary = null;
@@ -123,7 +132,7 @@ class SimpleSpellChecker {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!_checkLanguageRegistry(_language)) {
+    if (!_checkLanguageRegistry(_language) && !_worksWithoutDictionary) {
       return null;
     }
     if (!_wordTokenizer.canTokenizeText(text)) return null;
@@ -157,6 +166,7 @@ class SimpleSpellChecker {
                   decorationColor: Colors.red,
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.wavy,
+                  decorationThickness: 1.75,
                 ),
           ),
         );
@@ -188,7 +198,7 @@ class SimpleSpellChecker {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!_checkLanguageRegistry(_language)) {
+    if (!_checkLanguageRegistry(_language) && !_worksWithoutDictionary) {
       yield [];
     }
     if (!_wordTokenizer.canTokenizeText(text)) yield [];
@@ -252,7 +262,7 @@ class SimpleSpellChecker {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!_checkLanguageRegistry(_language)) {
+    if (!_checkLanguageRegistry(_language) && !_worksWithoutDictionary) {
       throw UnsupportedError(
           'The $_language is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -318,7 +328,7 @@ class SimpleSpellChecker {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!_checkLanguageRegistry(_language)) {
+    if (!_checkLanguageRegistry(_language) && !_worksWithoutDictionary) {
       throw UnsupportedError(
           'The $_language is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -486,12 +496,18 @@ class SimpleSpellChecker {
       final indexOf = customLanguages
           ?.indexWhere((element) => element.language == _language);
       final invalidIndex = (indexOf == null || indexOf == -1);
-      if (invalidIndex && !safeDictionaryLoad) {
+      if (invalidIndex && !_safeDictionaryLoad) {
         throw UnsupportedError(
           'The $_language is not supported by default and was not founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
         );
-      } else if (invalidIndex && safeDictionaryLoad) {
-        setNewLanguageToState(_intoCount >= 2 ? 'en' : safeLanguageName);
+      } else if (invalidIndex && _worksWithoutDictionary) {
+        setNewLanguageToState(_noLanguage.language);
+        _initDictionary(_noLanguage);
+        return;
+      } else if (invalidIndex &&
+          _safeDictionaryLoad &&
+          !_worksWithoutDictionary) {
+        setNewLanguageToState(safeLanguageName);
         _intoCount++;
         reloadDictionarySync();
         return;
