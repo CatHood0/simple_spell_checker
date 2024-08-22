@@ -5,6 +5,7 @@ extension WordExtension on String {
       ? toLowerCase()
       : "${this[0].toLowerCase()}${substring(1)}";
   bool get noWords => RegExp(
-          r'''[,;:'`´^¨`\'\.°\|\*\•µ\[\]\(\)\!\¡\¿\?\¶\$\%\&\/\\=\}\{\+\-©℗ⓒ·~½¬ſþˀ\_\«\»\<\>\¢\@\€\←\↓\→\ð\ø\¢\”\“\„\"]''')
+          r'''[\p{P}\p{N}\p{Pd}\p{Nd}\p{Nl}\p{Pi}\p{No}\p{Pf}\p{Pc}\p{Ps}\p{Cf}\p{Co}\p{Cn}\p{Cs}\p{Pe}\p{S}\p{Sm}\p{Sc}\p{Sk}\p{So}\p{Cc}\p{Po}\p{Mc}]''',
+          unicode: true)
       .hasMatch(this);
 }
