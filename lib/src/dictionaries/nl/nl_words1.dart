@@ -1,5 +1,4 @@
-const nlWords1 =
-'''
+const nlWords1 = '''
 Aad/PN
 Aafje/PN
 Aafke/PN

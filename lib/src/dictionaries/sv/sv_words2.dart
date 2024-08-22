@@ -1,5 +1,4 @@
-const svWords2 = 
-'''
+const svWords2 = '''
 0
 a/EDr
 à

@@ -13,10 +13,7 @@ import 'package:simple_spell_checker/simple_spell_checker.dart'
 import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/common/tokenizer.dart' show Tokenizer;
 import 'package:simple_spell_checker/src/utils.dart'
-    show
-        defaultLanguages,
-        defaultLanguagesMap,
-        isWordHasNumber;
+    show defaultLanguages, defaultLanguagesMap, isWordHasNumber;
 import 'common/cache_object.dart' show CacheObject;
 import 'common/strategy_language_search_order.dart';
 

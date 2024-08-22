@@ -1,5 +1,4 @@
-const caWords1 =
-'''
+const caWords1 = '''
 11/Y
 a.
 a/VY

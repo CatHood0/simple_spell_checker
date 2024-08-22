@@ -1,5 +1,4 @@
-const arWords1 =
-'''
+const arWords1 = '''
 بيد
 وبيد
 فبيد

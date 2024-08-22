@@ -1,5 +1,4 @@
-const koWords1 =
-'''
+const koWords1 = '''
 1루/25
 1루수/25
 1루타/25

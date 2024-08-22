@@ -1,5 +1,4 @@
-const enWords3 = 
-'''
+const enWords3 = '''
 aa
 aah
 aahed

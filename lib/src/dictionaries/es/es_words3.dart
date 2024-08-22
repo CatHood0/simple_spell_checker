@@ -1,5 +1,4 @@
-const esWords3 = 
-'''
+const esWords3 = '''
 de
 la
 que

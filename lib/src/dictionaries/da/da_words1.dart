@@ -1,5 +1,4 @@
-const daWords1 = 
-'''
+const daWords1 = '''
 A
 a
 a

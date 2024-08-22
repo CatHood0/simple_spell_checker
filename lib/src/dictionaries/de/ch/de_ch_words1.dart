@@ -1,5 +1,4 @@
-const deChWords1 =
-'''
+const deChWords1 = '''
 Äbte/Nm
 Äbtissin/Fm
 Äbtissinnenliste/Nm

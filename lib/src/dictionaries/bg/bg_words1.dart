@@ -1,5 +1,4 @@
-const bgWords1 =
-'''
+const bgWords1 = '''
 Абаджиев
 Абаджиева
 Абеба

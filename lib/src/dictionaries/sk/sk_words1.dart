@@ -1,5 +1,4 @@
-const skWords1 =
-'''
+const skWords1 = '''
 a
 A
 á

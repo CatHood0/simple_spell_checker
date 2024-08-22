@@ -1,5 +1,4 @@
-const britishWords1 = 
-'''
+const britishWords1 = '''
 'gainst
 'mongst
 'neath
