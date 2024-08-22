@@ -1,5 +1,5 @@
 final RegExp removeDicCharacter = RegExp(r'\/(\S+)?');
 
-String removeUnnecessaryCharacters(String original) {
-  return original.replaceAll('-', '\n').replaceAll(removeDicCharacter, '');
+String removeUnnecessaryCharacters(String original, [Object? replace]) {
+  return original.replaceAll('-', '${replace ?? '\n'}').replaceAll(removeDicCharacter, '');
 }
