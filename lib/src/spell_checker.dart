@@ -16,8 +16,7 @@ import 'package:simple_spell_checker/src/utils.dart'
     show
         defaultLanguages,
         defaultLanguagesMap,
-        isWordHasNumber,
-        notSupportedLanguages;
+        isWordHasNumber;
 import 'common/cache_object.dart' show CacheObject;
 import 'common/strategy_language_search_order.dart';
 
@@ -123,10 +122,6 @@ class SimpleSpellChecker {
       return null;
     }
 
-    // verify if the current language is a non supported one
-    if (notSupportedLanguages.contains(_language)) {
-      return null;
-    }
     _verifyState();
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
@@ -190,10 +185,6 @@ class SimpleSpellChecker {
         customLongPressRecognizerOnWrongSpan,
   }) async* {
     if (_turnOffChecking) {
-      yield [];
-    }
-    // verify if the current language is a non supported one
-    if (notSupportedLanguages.contains(_language)) {
       yield [];
     }
     _verifyState();
@@ -261,9 +252,6 @@ class SimpleSpellChecker {
     }
     _verifyState();
 
-    if (notSupportedLanguages.contains(_language)) {
-      return null;
-    }
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
@@ -330,9 +318,6 @@ class SimpleSpellChecker {
       yield [];
     }
     _verifyState();
-    if (notSupportedLanguages.contains(_language)) {
-      yield [];
-    }
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
