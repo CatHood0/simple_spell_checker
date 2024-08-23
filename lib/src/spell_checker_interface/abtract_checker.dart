@@ -123,7 +123,6 @@ abstract class Checker<T extends Object, R>
   }
 
   /// Use dispose when you don't need the SimpleSpellchecker already
-  @visibleForOverriding
   @override
   void dispose() {
     if (!_simpleSpellCheckerWidgetsState.isClosed)
@@ -134,7 +133,6 @@ abstract class Checker<T extends Object, R>
   }
 
   /// Use disposeControllers is just never will be use the StreamControllers
-  @visibleForOverriding
   @override
   void disposeControllers() {
     if (!_simpleSpellCheckerWidgetsState.isClosed)
@@ -233,7 +231,6 @@ abstract class Checker<T extends Object, R>
 
   /// Verify if [Checker] is not disposed yet
   @protected
-  @visibleForOverriding
   void verifyState() {
     if (!_disposedControllers) {
       assert(
