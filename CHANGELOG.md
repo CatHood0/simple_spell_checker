@@ -1,3 +1,10 @@
+## 1.2.0
+
+* Feat: More translations for spell checker by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/2
+* Feat: Multi language checker by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/3
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.1.7...V1.2.0
+
 ## 1.1.7
 
 * Feat: improved default separator regexp for accept all languages character and non characters (it includes emojis) by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/1
