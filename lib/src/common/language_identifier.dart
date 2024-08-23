@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart' show immutable;
+
 /// [LanguageIdentifier] is a representation of a register of a language with it's dictionary
 ///   [language] ref to the country code
 ///   [word] ref to the dictionary
@@ -17,14 +19,15 @@
 /// roma
 ///
 /// Making simple and easier add custom dictionaries for everyone
+@immutable
 class LanguageIdentifier {
   final String language;
   final String words;
 
-  LanguageIdentifier({
+  const LanguageIdentifier({
     required this.language,
     required this.words,
-  }) : assert(language.isNotEmpty);
+  });
 
   LanguageIdentifier copyWith({
     String? language,

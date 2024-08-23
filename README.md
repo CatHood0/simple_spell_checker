@@ -16,14 +16,24 @@
 
 The package already have a default list of words for these languages:
 
-* German - `de`
-* English - `en`
+* German - `de`, `de-ch` 
+* English - `en`, `en-gb`
 * Spanish - `es`
+* Catalan - `ca`
+* Arabic - `ar`
+* Danish - `da`
 * French - `fr`
+* Bulgarian - `bg`
+* Dutch - `nl`
+* Korean - `ko`
+* Estonian - `et`
+* Hebrew - `he`
+* Slovak - `sk`
 * Italian - `it`
 * Norwegian - `no`
 * Portuguese - `pt`
 * Swedish - `sv`
+* Russian - `ru`
 
 ## Getting Started
 

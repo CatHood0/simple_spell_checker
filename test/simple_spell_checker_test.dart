@@ -113,13 +113,47 @@ void main() {
       {'es ': true}, // is not wrong
       {'un ': true}, // is not wrong
       {'tesr': false}, // is wrong
-      {' ': true}, // is wrong
+      {' ': true}, // is not wrong
       {'(': true},
       {'con': true}, // is not wrong
       {') ': true},
       {'alnu': false}, // is wrong
       {' ': true}, // is not wrong
       {'errores': true}, // is not wrong
+    ]);
+  });
+
+  test('Should works even the language not exist', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final SimpleSpellChecker spellchecker = SimpleSpellChecker(
+      language: '',
+      safeDictionaryLoad: true,
+      worksWithoutDictionary: true,
+    );
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Questo è un test (con) aluni errori grammaticali',
+        builder: (word, isValid) {
+      return {word: isValid};
+    });
+    expect(content, isNotNull);
+    expect(content, isNotEmpty);
+    expect(content, [
+      {'Questo': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'è': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'un': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'test': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'(': true}, // is not wrong
+      {'con': false}, // is wrong
+      {') ': true}, // is not wrong
+      {'aluni': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'errori': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'grammaticali': false}, // is wrong
     ]);
   });
 

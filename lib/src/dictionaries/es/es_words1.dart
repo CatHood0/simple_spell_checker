@@ -440,7 +440,6 @@ soul
 fox
 necrópolis
 órgano
-la
 abdomen
 matemáticas
 perennes
