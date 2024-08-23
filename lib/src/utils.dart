@@ -42,7 +42,7 @@ final List<String> defaultLanguages = List.unmodifiable(
   ],
 );
 
-final Map<String, String> defaultLanguagesMap = Map.unmodifiable({
+final Map<String, String> defaultLanguagesDictionaries = Map.unmodifiable({
   'en': joinEnglishWords,
   'en-gb': joinBritishWords,
   'de': joinDeutschWords,

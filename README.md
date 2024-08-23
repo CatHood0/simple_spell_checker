@@ -48,6 +48,10 @@ dependencies:
 
 **Import the necessary components into your `Dart` file and initialize the Spell-Checker**:
 
+### SimpleSpellChecker 
+
+`SimpleSpellChecker` is a single language checker.
+
  ```dart
 import 'package:simple_spell_checker/simple_spell_checker.dart';
 
@@ -55,6 +59,19 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
    language: 'en', // the current language that the user is using
    safeLanguageName: 'en', // when was not founded a custom language and safeDictionaryLoad is true this value is used
    safeDictionaryLoad: true, // avoid throws UnSupportedError if a custom language is not founded 
+   caseSensitive: false,
+);
+```
+
+### MultiSpellChecker 
+
+`MultiSpellChecker` is a instance of the same type of `SimpleSpellChecker` but this one let us add multiple languages to be checked.
+
+ ```dart
+import 'package:simple_spell_checker/simple_spell_checker.dart';
+
+MultiSpellChecker spellChecker = MultiSpellChecker(
+   language: ['en', 'ru', 'it', 'en-gb'], // the current languages that the user is using and correspond with english, russian, italian, and british english
    caseSensitive: false,
 );
 ```
@@ -129,7 +146,15 @@ final LanguageIdentifier identifier = LanguageIdentifier(language: 'custom_lang'
 // this need to be called for cases when we check if the language into the Spellchecker is already registered
 // then, if the language on SimpleSpellChecker
 spellChecker.registerLanguage(identifier.language);
+// Note:
+// If you are using `MultiSpellChecker`  this method to update the state automatically 
+// adding this new custom language to the current ones
 spellChecker.addCustomLanguage(identifier);
+// Note:
+// If you are using `SimpleSpellChecker` use `setNewLanguageToState` to update the state
+// but, if you want to add manually your language you can use `setNewLanguageToCurrentLanguages` 
+spellChecker.setNewLanguageToCurrentLanguages(identifier.language);
+//
 // to set this new custom language to the state of the [SimpleSpellChecker] then use:
 spellChecker.setNewLanguageToState(identifier.language);
 ```
@@ -142,7 +167,8 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 ### Language Management
 
-* **setNewLanguageToState(String language)**: override the current language into the Spellchecker.
+* **setNewLanguageToState(String language)**: override the current language into the Spellchecker. _Only available for `SimpleSpellChecker` instances_
+* **setNewLanguageToCurrentLanguages(String language)**: add the language to the current ones into the Spellchecker. _Only available for `MultiSpellChecker` instances_
 * **registerLanguage(String language)**: Add a new language to the cache with the default ones supported.
 * **updateCustomLanguageIfExist(LanguageIdentifier language)**: override the current value if exist in `customLanguages` var.
 * **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
@@ -160,7 +186,7 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 ### Caching
 
-The package uses caching mechanisms (`CacheObject`) to store loaded dictionaries and languages, significantly reducing the load time when checking large texts.
+The package uses caching mechanisms to store loaded dictionaries and languages, significantly reducing the load time when checking large texts. The cache mechanisms share the same instances used by both type of the Spell Checkers (`SimpleSpellChecker` and `MultiSpellChecker`).
 
 * **Language Caching**: The package caches language identifiers and word dictionaries to avoid reloading them multiple times, which is particularly useful for large dictionaries.
 * **Custom Language Caching**: When adding custom languages, they are cached automatically to improve performance.
