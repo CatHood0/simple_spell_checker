@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:simple_spell_checker/src/spell_checker.dart';
+import 'package:simple_spell_checker/simple_spell_checker.dart';
+import 'package:simple_spell_checker/src/simple_spell_checker.dart';
 
 void main() {
   test('Should return a simple map with right parts and wrong parts in english',
@@ -174,5 +175,70 @@ void main() {
         return {word: isValid};
       });
     }, throwsA(isA<AssertionError>()));
+  });
+
+  // this process could be heavy since is loading different dictionaries
+  test('Should work with different languages at the same time', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final MultiSpellChecker spellchecker = MultiSpellChecker(
+      language: ['en', 'ru'],
+    );
+    final content = spellchecker.checkBuilder<Map<String, bool>>(
+        'Questo è un test (con) aluni errori grammaticali and правильно',
+        builder: (word, isValid) {
+      return {word: isValid};
+    });
+    expect(content, isNotNull);
+    expect(content, isNotEmpty);
+    expect(content, [
+      {'Questo': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'è': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'un': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'test ': true}, // is wrong
+      {'(': true}, // is not wrong
+      {'con': true}, // is wrong
+      {') ': true}, // is not wrong
+      {'aluni': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'errori': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'grammaticali': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'and ': true}, // is not wrong
+      {'правильно': true}, // is not wrong
+    ]);
+    spellchecker.registerLanguage('custom_it');
+    // automatically adds the new language to the current state
+    spellchecker.addCustomLanguage(const LanguageIdentifier(
+        language: 'custom_it', words: 'Questo\naluni'));
+    spellchecker.reloadDictionarySync();
+    final content2 = spellchecker.checkBuilder<Map<String, bool>>(
+        'Questo è un test (con) aluni errori grammaticali and правильно',
+        builder: (word, isValid) {
+      return {word: isValid};
+    });
+    expect(content2, isNotNull);
+    expect(content2, isNotEmpty);
+    expect(content2, [
+      {'Questo ': true}, // is wrong
+      {'è': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'un': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'test ': true}, // is wrong
+      {'(': true}, // is not wrong
+      {'con': true}, // is wrong
+      {') ': true}, // is not wrong
+      {'aluni ': true}, // is wrong
+      {'errori': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'grammaticali': false}, // is wrong
+      {' ': true}, // is not wrong
+      {'and ': true}, // is not wrong
+      {'правильно': true}, // is not wrong
+    ]);
   });
 }
