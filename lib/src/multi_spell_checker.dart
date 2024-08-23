@@ -360,7 +360,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
   }
 
   void _initLanguageCache(List<LanguageIdentifier> identifiers) {
-    _cacheLanguageIdentifiers = CacheObject(object: identifiers);
+    _cacheLanguageIdentifiers ??= CacheObject(object: []);
+    _cacheLanguageIdentifiers!.set = identifiers;
   }
 
   @override
