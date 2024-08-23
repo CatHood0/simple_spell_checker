@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Fix: dispose methods show that need to be overrided
+
 ## 1.2.0
 
 * Feat: More translations for spell checker by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/2
