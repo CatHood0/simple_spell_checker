@@ -462,6 +462,7 @@ class SimpleSpellChecker extends Checker<String, String> {
     }
   }
 
+  @override
   void setNewStrategy(StrategyLanguageSearchOrder strategy) {
     verifyState();
     this.strategy = strategy;
