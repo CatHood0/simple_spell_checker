@@ -2,11 +2,14 @@ import 'dart:async' show Stream, StreamController;
 import 'dart:convert' show LineSplitter;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
-import 'package:flutter/material.dart' show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
-import 'package:simple_spell_checker/simple_spell_checker.dart' show LanguageIdentifier, isWordHasNumber;
+import 'package:flutter/material.dart'
+    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
+import 'package:simple_spell_checker/simple_spell_checker.dart'
+    show LanguageIdentifier, isWordHasNumber;
 import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/abtract_checker.dart';
-import 'package:simple_spell_checker/src/utils.dart' show defaultLanguagesDictionaries, isWordHasNumber;
+import 'package:simple_spell_checker/src/utils.dart'
+    show defaultLanguagesDictionaries, isWordHasNumber;
 import 'common/cache_object.dart' show CacheObject;
 
 CacheObject<List<LanguageIdentifier>>? _cacheLanguageIdentifiers;
@@ -80,7 +83,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   }) {
     addNewEventToWidgetsState(null);
     if (turnOffChecking) {
@@ -90,7 +94,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (_cacheLanguageIdentifiers == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       return null;
     }
     if (!wordTokenizer.canTokenizeText(text)) return null;
@@ -99,7 +104,10 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -141,7 +149,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   }) async* {
     if (turnOffChecking) {
       yield [];
@@ -150,7 +159,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (_cacheLanguageIdentifiers == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       yield [];
     }
     if (!wordTokenizer.canTokenizeText(text)) yield [];
@@ -159,7 +169,10 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -209,7 +222,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (_cacheLanguageIdentifiers == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -219,7 +233,10 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -258,7 +275,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (_cacheLanguageIdentifiers == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -268,7 +286,10 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -301,7 +322,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (word.trim().isEmpty) return true;
     verifyState(alsoCache: true);
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    final newWordWithCaseSensitive = caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
+    final newWordWithCaseSensitive =
+        caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
     final int? validWord = wordsMap[newWordWithCaseSensitive];
     return validWord != null;
   }
@@ -357,12 +379,13 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     _cacheWordDictionary = CacheObject(object: {});
     for (var identifier in _cacheLanguageIdentifiers!.get) {
       final lanWords = identifier.words;
-      final Iterable<MapEntry<String, int>> entries = const LineSplitter().convert(lanWords).map(
-            (element) => MapEntry(
-              element.trim().toLowerCase(),
-              1,
-            ),
-          );
+      final Iterable<MapEntry<String, int>> entries =
+          const LineSplitter().convert(lanWords).map(
+                (element) => MapEntry(
+                  element.trim().toLowerCase(),
+                  1,
+                ),
+              );
       final Map<String, int> wordsMap = {};
       wordsMap.addEntries(entries);
       _cacheWordDictionary!.set = {
@@ -426,7 +449,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
       throw StateError(
           'The identifier ${language.language} is not into customLanguages. Please consider add before use update operations');
     }
-    int indexOf = customLanguages!.indexWhere((element) => element.language == language.language);
+    int indexOf = customLanguages!
+        .indexWhere((element) => element.language == language.language);
     if (indexOf != -1) {
       customLanguages![indexOf] = language;
     }

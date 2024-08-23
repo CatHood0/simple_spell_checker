@@ -2,7 +2,8 @@ import 'dart:async' show Stream, StreamController;
 import 'dart:convert' show LineSplitter;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
-import 'package:flutter/material.dart' show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
+import 'package:flutter/material.dart'
+    show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
 import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, defaultLanguages, isWordHasNumber;
 import 'package:simple_spell_checker/src/common/extensions.dart';
@@ -65,7 +66,8 @@ class SimpleSpellChecker extends Checker<String, String> {
       safeLanguageName: safeLanguageName,
       caseSensitive: caseSensitive,
     );
-    if(autoAddLanguagesFromCustomDictionaries) registryLanguagesFromCustomDictionaries();
+    if (autoAddLanguagesFromCustomDictionaries)
+      registryLanguagesFromCustomDictionaries();
   }
 
   /// Check if your line wrong words
@@ -78,7 +80,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   }) {
     addNewEventToWidgetsState(null);
     if (turnOffChecking) {
@@ -88,7 +91,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       return null;
     }
     if (!wordTokenizer.canTokenizeText(text)) return null;
@@ -97,7 +101,10 @@ class SimpleSpellChecker extends Checker<String, String> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -139,7 +146,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   }) async* {
     if (turnOffChecking) {
       yield [];
@@ -148,7 +156,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       yield [];
     }
     if (!wordTokenizer.canTokenizeText(text)) yield [];
@@ -157,7 +166,10 @@ class SimpleSpellChecker extends Checker<String, String> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -207,7 +219,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -217,7 +230,10 @@ class SimpleSpellChecker extends Checker<String, String> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -256,7 +272,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (_cacheLanguageIdentifier == null) {
       reloadDictionarySync();
     }
-    if (!checkLanguageRegistry(getCurrentLanguage()) && !worksWithoutDictionary) {
+    if (!checkLanguageRegistry(getCurrentLanguage()) &&
+        !worksWithoutDictionary) {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
@@ -266,7 +283,10 @@ class SimpleSpellChecker extends Checker<String, String> {
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
-      if (isWordHasNumber(word) || isWordValid(word) || word.contains(' ') || word.noWords) {
+      if (isWordHasNumber(word) ||
+          isWordValid(word) ||
+          word.contains(' ') ||
+          word.noWords) {
         if (nextIndex != -1) {
           final nextWord = words.elementAt(nextIndex);
           if (nextWord.contains(' ')) {
@@ -299,7 +319,8 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (word.trim().isEmpty) return true;
     verifyState(alsoCache: true);
     final wordsMap = _cacheWordDictionary?.get ?? {};
-    final newWordWithCaseSensitive = caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
+    final newWordWithCaseSensitive =
+        caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
     final int? validWord = wordsMap[newWordWithCaseSensitive];
     return validWord != null;
   }
@@ -311,9 +332,11 @@ class SimpleSpellChecker extends Checker<String, String> {
     verifyState();
     if (_cacheLanguageIdentifier?.get.language == getCurrentLanguage()) return;
     // check if the current language is not registered already
-    if ((strategy == StrategyLanguageSearchOrder.byUser || !defaultLanguages.contains(getCurrentLanguage())) &&
+    if ((strategy == StrategyLanguageSearchOrder.byUser ||
+            !defaultLanguages.contains(getCurrentLanguage())) &&
         _intoCount <= 2) {
-      final indexOf = customLanguages?.indexWhere((element) => element.language == getCurrentLanguage());
+      final indexOf = customLanguages
+          ?.indexWhere((element) => element.language == getCurrentLanguage());
       final invalidIndex = (indexOf == null || indexOf == -1);
       if (invalidIndex && !safeDictionaryLoad) {
         throw UnsupportedError(
@@ -324,20 +347,24 @@ class SimpleSpellChecker extends Checker<String, String> {
         _initLanguageCache(_noLanguage);
         initDictionary(_noLanguage.words);
         return;
-      } else if (invalidIndex && safeDictionaryLoad && !worksWithoutDictionary) {
+      } else if (invalidIndex &&
+          safeDictionaryLoad &&
+          !worksWithoutDictionary) {
         setNewLanguageToState(safeLanguageName);
         _intoCount++;
         reloadDictionarySync();
         return;
       }
-      final LanguageIdentifier identifier = customLanguages!.elementAt(indexOf!);
+      final LanguageIdentifier identifier =
+          customLanguages!.elementAt(indexOf!);
       _initLanguageCache(identifier);
       initDictionary(identifier.words);
       return;
     }
     final dictionary = defaultLanguagesDictionaries[getCurrentLanguage()]!;
     _intoCount = 0;
-    final identifier = LanguageIdentifier(language: getCurrentLanguage(), words: dictionary);
+    final identifier =
+        LanguageIdentifier(language: getCurrentLanguage(), words: dictionary);
     _initLanguageCache(identifier);
     initDictionary(identifier.words);
   }
@@ -358,12 +385,13 @@ class SimpleSpellChecker extends Checker<String, String> {
       _cacheWordDictionary = CacheObject(object: {});
       return;
     }
-    final Iterable<MapEntry<String, int>> entries = const LineSplitter().convert(words).map(
-          (element) => MapEntry(
-            element.trim().toLowerCase(),
-            1,
-          ),
-        );
+    final Iterable<MapEntry<String, int>> entries =
+        const LineSplitter().convert(words).map(
+              (element) => MapEntry(
+                element.trim().toLowerCase(),
+                1,
+              ),
+            );
     final Map<String, int> wordsMap = {};
     wordsMap.addEntries(entries);
     _cacheWordDictionary ??= CacheObject(object: {});
@@ -416,7 +444,8 @@ class SimpleSpellChecker extends Checker<String, String> {
       throw StateError(
           'The identifier ${language.language} is not into customLanguages. Please consider add before use update operations');
     }
-    int indexOf = customLanguages!.indexWhere((element) => element.language == language.language);
+    int indexOf = customLanguages!
+        .indexWhere((element) => element.language == language.language);
     if (indexOf != -1) {
       customLanguages![indexOf] = language;
     }

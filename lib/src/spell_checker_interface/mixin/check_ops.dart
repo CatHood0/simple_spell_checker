@@ -10,14 +10,16 @@ mixin CheckOperations<T extends Object, R> {
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   });
 
   Stream<T?> checkStream(
     String text, {
     TextStyle? wrongStyle,
     TextStyle? commonStyle,
-    LongPressGestureRecognizer Function(String)? customLongPressRecognizerOnWrongSpan,
+    LongPressGestureRecognizer Function(String)?
+        customLongPressRecognizerOnWrongSpan,
   });
 
   List<O>? checkBuilder<O>(

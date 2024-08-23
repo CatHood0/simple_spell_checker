@@ -49,7 +49,8 @@ abstract class Checker<T extends Object, R>
   /// this just can be called on closeControllers
   bool _disposedControllers = false;
 
-  final StreamController<Object?> _simpleSpellCheckerWidgetsState = StreamController.broadcast();
+  final StreamController<Object?> _simpleSpellCheckerWidgetsState =
+      StreamController.broadcast();
   final StreamController<T?> _languageState = StreamController.broadcast();
   Checker({
     required T language,
@@ -86,7 +87,8 @@ abstract class Checker<T extends Object, R>
   }
 
   @protected
-  List<String> get languagesRegistry => List.unmodifiable(_languagesRegistry.get);
+  List<String> get languagesRegistry =>
+      List.unmodifiable(_languagesRegistry.get);
 
   @protected
   bool get worksWithoutDictionary => _worksWithoutDictionary;
@@ -124,7 +126,8 @@ abstract class Checker<T extends Object, R>
   @visibleForOverriding
   @override
   void dispose() {
-    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed)
+      _simpleSpellCheckerWidgetsState.close();
     if (!_languageState.isClosed) _languageState.close();
     _disposed = true;
     _disposedControllers = true;
@@ -134,7 +137,8 @@ abstract class Checker<T extends Object, R>
   @visibleForOverriding
   @override
   void disposeControllers() {
-    if (!_simpleSpellCheckerWidgetsState.isClosed) _simpleSpellCheckerWidgetsState.close();
+    if (!_simpleSpellCheckerWidgetsState.isClosed)
+      _simpleSpellCheckerWidgetsState.close();
     if (!_languageState.isClosed) _languageState.close();
     _disposedControllers = true;
   }
@@ -154,7 +158,8 @@ abstract class Checker<T extends Object, R>
     bool worksWithoutDictionary = false,
     String safeLanguageName = 'en',
     bool caseSensitive = true,
-    StrategyLanguageSearchOrder strategy = StrategyLanguageSearchOrder.byPackage,
+    StrategyLanguageSearchOrder strategy =
+        StrategyLanguageSearchOrder.byPackage,
   }) {
     _languagesRegistry.set = [...defaultLanguages];
     addNewEventToWidgetsState(null);
@@ -232,11 +237,14 @@ abstract class Checker<T extends Object, R>
   void verifyState() {
     if (!_disposedControllers) {
       assert(
-        !_disposed && !_simpleSpellCheckerWidgetsState.isClosed && !_languageState.isClosed,
+        !_disposed &&
+            !_simpleSpellCheckerWidgetsState.isClosed &&
+            !_languageState.isClosed,
         'You cannot reuse this SimpleSpellchecker since you dispose it before',
       );
       return;
     }
-    assert(!_disposed, 'You cannot reuse this SimpleSpellchecker since you dispose it before');
+    assert(!_disposed,
+        'You cannot reuse this SimpleSpellchecker since you dispose it before');
   }
 }
