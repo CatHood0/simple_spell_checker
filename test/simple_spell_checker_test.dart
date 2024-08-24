@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_spell_checker/simple_spell_checker.dart';
-import 'package:simple_spell_checker/src/simple_spell_checker.dart';
 
 void main() {
   test('Should return a simple map with right parts and wrong parts in english',
