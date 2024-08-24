@@ -1,3 +1,10 @@
+## 1.2.2
+
+* Fix: some parameters in `MultiSpellChecker` are not used by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/4
+* Feat: white list for the checker by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/5
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.2.1...V1.2.2
+
 ## 1.2.1
 
 * Fix: dispose methods show that need to be overrided
