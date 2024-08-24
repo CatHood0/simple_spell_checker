@@ -370,6 +370,12 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     super.setNewLanguageToState(language);
   }
 
+  /// override the current languages
+  void setNewLanState(List<String> languages) {
+    super.setNewLanguageToState(List.from(languages));
+  }
+
+  /// add a new language keeping the current ones
   void setNewLanguageToCurrentLanguages(String language) {
     super.setNewLanguageToState([language, ...getCurrentLanguage()]);
   }

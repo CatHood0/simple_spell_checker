@@ -1,8 +1,11 @@
 # Simple Spell Checker
 
 ![simple spell checker example preview](https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif)
-
 `SimpleSpellChecker` is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. _The package caches language dictionaries_ and allows customization of languages, providing efficient and adaptable spell-checking for various applications.
+
+## Use with caution
+
+since `Simple Spell Checker` is a client-side dependency that works without any need for an internet connection, it could weigh more than expected due to each of the dictionaries. As mentioned below, it supports a very wide variety of languages which can have a file of up to 300.000 words (this being just one language, since there are others such as Russian that contain up to 400.000 words), which makes the package increase in size more than expected. If you want to avoid your application increasing in size significantly, the best thing you can do is use the native solution [DefaultSpellCheckService](https://api.flutter.dev/flutter/services/DefaultSpellCheckService-class.html) to avoid this.
 
 ## Features
 
@@ -65,7 +68,7 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
 
 ### MultiSpellChecker 
 
-`MultiSpellChecker` is a instance of the same type of `SimpleSpellChecker` but this one let us add multiple languages to be checked.
+`MultiSpellChecker` is a instance of the same type of `SimpleSpellChecker` but this one let us add multiple languages to be checked in real-time.
 
  ```dart
 import 'package:simple_spell_checker/simple_spell_checker.dart';
@@ -137,6 +140,8 @@ class CustomWordTokenizer extends Tokenizer {
 
 Add and use `addCustomLanguage()` by updating the `customLanguages` parameter:
 
+### SimpleSpellChecker
+
 ```dart
 // You dictionary should be a string splitted by new lines
 // since this is the current format supported 
@@ -146,17 +151,23 @@ final LanguageIdentifier identifier = LanguageIdentifier(language: 'custom_lang'
 // this need to be called for cases when we check if the language into the Spellchecker is already registered
 // then, if the language on SimpleSpellChecker
 spellChecker.registerLanguage(identifier.language);
-// Note:
-// If you are using `MultiSpellChecker`  this method to update the state automatically 
-// adding this new custom language to the current ones
+// this method add new custom language to the current ones
+// with it's own custom dictionary
 spellChecker.addCustomLanguage(identifier);
-// Note:
-// If you are using `SimpleSpellChecker` use `setNewLanguageToState` to update the state
-// but, if you want to add manually your language you can use `setNewLanguageToCurrentLanguages` 
-spellChecker.setNewLanguageToCurrentLanguages(identifier.language);
-//
 // to set this new custom language to the state of the [SimpleSpellChecker] then use:
 spellChecker.setNewLanguageToState(identifier.language);
+```
+
+### MultiSpellChecker
+
+```dart
+final LanguageIdentifier identifier = LanguageIdentifier(language: 'custom_lang', words: '<your_dictionary>');
+// this need to be called for cases when we check if the language into the Spellchecker is already registered
+// then, if the language on SimpleSpellChecker
+spellChecker.registerLanguage(identifier.language);
+// this method to update the state automatically adding this 
+// new language identifier to the current languages in the state
+spellChecker.addCustomLanguage(identifier);
 ```
 
 ### Note:
@@ -169,7 +180,8 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 * **setNewLanguageToState(String language)**: override the current language into the Spellchecker. _Only available for `SimpleSpellChecker` instances_
 * **setNewLanguageToCurrentLanguages(String language)**: add the language to the current ones into the Spellchecker. _Only available for `MultiSpellChecker` instances_
-* **registerLanguage(String language)**: Add a new language to the cache with the default ones supported.
+* **setNewLanState(List languages)**: override the current languages into the Spellchecker. _Only available for `MultiSpellChecker` instances_
+* **registerLanguage(String language)**: Add a new language to the registries (the registry is a different instance that the current languages that contains all languages available and is used in `check()` methods to avoid check if the language is not available _however, this is overrided if `worksWithoutDictionary` is true_).
 * **updateCustomLanguageIfExist(LanguageIdentifier language)**: override the current value if exist in `customLanguages` var.
 * **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
 
