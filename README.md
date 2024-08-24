@@ -68,7 +68,10 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
    // byPackage | byUser -> defines if the language need to be searched first in customLanguages or in the default ones
    strategy: StrategyLanguageSearchOrder.byPackage, 
    // this is a list of words that will be ignored by check ops
-   whiteList: [],  
+   whiteList: <String>[],  
+   customLanguages: <LanguageIdentifier>[],
+   // if is true, will take all languages into [customLanguages] to add them to the registry
+   autoAddLanguagesFromCustomDictionaries: false,
    caseSensitive: false,
 );
 ```
@@ -93,6 +96,9 @@ MultiSpellChecker spellChecker = MultiSpellChecker(
    strategy: StrategyLanguageSearchOrder.byPackage, 
    // this is a list of words that will be ignored by check ops
    whiteList: [],  
+   customLanguages: <LanguageIdentifier>[],
+   // if is true, will take all languages into [customLanguages] to add them to the registry
+   autoAddLanguagesFromCustomDictionaries: false,
    caseSensitive: false,
 );
 ```
