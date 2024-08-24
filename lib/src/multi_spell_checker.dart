@@ -7,6 +7,7 @@ import 'package:flutter/material.dart'
 import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, isWordHasNumber;
 import 'package:simple_spell_checker/src/common/extensions.dart';
+import 'package:simple_spell_checker/src/common/strategy_language_search_order.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/abtract_checker.dart';
 import 'package:simple_spell_checker/src/utils.dart'
     show defaultLanguagesDictionaries, isWordHasNumber;
@@ -96,7 +97,8 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     }
     if (!checkLanguageRegistry(getCurrentLanguage()) &&
         !worksWithoutDictionary) {
-      return null;
+      throw UnsupportedError(
+          'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
     if (!wordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
@@ -196,6 +198,7 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
                   decorationColor: Colors.red,
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.wavy,
+                  decorationThickness: 1.75,
                 ),
           ),
         );
@@ -225,7 +228,7 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (!checkLanguageRegistry(getCurrentLanguage()) &&
         !worksWithoutDictionary) {
       throw UnsupportedError(
-          'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
+          'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
     if (!wordTokenizer.canTokenizeText(text)) return null;
     final spans = <O>[];
@@ -278,7 +281,7 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     if (!checkLanguageRegistry(getCurrentLanguage()) &&
         !worksWithoutDictionary) {
       throw UnsupportedError(
-          'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
+          'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
     if (!wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <T>[];
@@ -343,17 +346,45 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     // check if the current language is not registered already
     final List<LanguageIdentifier> dictionaries = [];
     for (var lan in getCurrentLanguage()) {
-      final (customContainsLan, identifier) = _customContainsLanguage(lan);
-      if (customContainsLan) {
-        dictionaries.add(identifier!);
-        continue;
+      final defaultDictionary = defaultLanguagesDictionaries[lan];
+      if (strategy == StrategyLanguageSearchOrder.byUser ||
+          defaultDictionary == null) {
+        final (customContainsLan, identifier) = _customContainsLanguage(lan);
+        if (customContainsLan) {
+          dictionaries.add(identifier!);
+          continue;
+        } else if (!customContainsLan &&
+            worksWithoutDictionary &&
+            safeDictionaryLoad) {
+          dictionaries.add(LanguageIdentifier(
+              language: lan, words: identifier?.words ?? ''));
+          continue;
+        } else {
+          if (safeDictionaryLoad) {
+            final defaultSafeDictionary =
+                defaultLanguagesDictionaries[safeLanguageName] ?? '';
+            if (defaultSafeDictionary.isNotEmpty) {
+              dictionaries.add(
+                LanguageIdentifier(
+                  language: safeLanguageName,
+                  words: defaultSafeDictionary,
+                ),
+              );
+              continue;
+            }
+          }
+          throw UnsupportedError(
+            'The $lan is not supported by default and it wasnt founded on your [customLanguages]. We recommend always add first your custom LanguageIdentifier and after set your custom language to avoid this type of errors.',
+          );
+        }
+      } else {
+        dictionaries.add(
+          LanguageIdentifier(
+            language: lan,
+            words: defaultDictionary,
+          ),
+        );
       }
-      dictionaries.add(
-        LanguageIdentifier(
-          language: lan,
-          words: defaultLanguagesDictionaries[lan] ?? '',
-        ),
-      );
     }
     _initLanguageCache(dictionaries);
     initDictionary('');
@@ -449,10 +480,13 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     }
   }
 
-  void updateCustomLanguageIfExist(LanguageIdentifier language) {
+  /// search if the custom language exist and update if it is founded
+  void updateCustomLanguageIfExist(LanguageIdentifier language,
+      [bool withException = true]) {
     verifyState();
     customLanguages ??= [];
     if (!customLanguages!.contains(language)) {
+      if (!withException) return;
       throw StateError(
           'The identifier ${language.language} is not into customLanguages. Please consider add before use update operations');
     }

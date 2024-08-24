@@ -193,6 +193,7 @@ class SimpleSpellChecker extends Checker<String, String> {
                   decorationColor: Colors.red,
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.wavy,
+                  decorationThickness: 1.75,
                 ),
           ),
         );
