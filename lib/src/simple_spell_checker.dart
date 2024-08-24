@@ -51,6 +51,7 @@ class SimpleSpellChecker extends Checker<String, String> {
     super.safeDictionaryLoad,
     super.worksWithoutDictionary,
     bool autoAddLanguagesFromCustomDictionaries = false,
+    List<String> whiteList = const [],
     super.safeLanguageName,
     super.caseSensitive = false,
     super.strategy = StrategyLanguageSearchOrder.byPackage,
@@ -58,6 +59,9 @@ class SimpleSpellChecker extends Checker<String, String> {
   }) {
     _cacheWordDictionary = null;
     _cacheLanguageIdentifier = null;
+    if (autoAddLanguagesFromCustomDictionaries) {
+      registryLanguagesFromCustomDictionaries();
+    }
     initializeChecker(
       language: getCurrentLanguage(),
       wordTokenizer: wordTokenizer,
@@ -66,8 +70,6 @@ class SimpleSpellChecker extends Checker<String, String> {
       safeLanguageName: safeLanguageName,
       caseSensitive: caseSensitive,
     );
-    if (autoAddLanguagesFromCustomDictionaries)
-      registryLanguagesFromCustomDictionaries();
   }
 
   /// Check if your line wrong words
@@ -318,6 +320,7 @@ class SimpleSpellChecker extends Checker<String, String> {
   bool isWordValid(String word) {
     // if word is just an whitespace then is not wrong
     if (word.trim().isEmpty) return true;
+    if (whiteList.contains(word)) return true;
     verifyState(alsoCache: true);
     final wordsMap = _cacheWordDictionary?.get ?? {};
     final newWordWithCaseSensitive =

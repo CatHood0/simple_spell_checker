@@ -48,13 +48,19 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     super.caseSensitive = false,
     super.safeLanguageName,
     super.strategy,
+    List<String> whiteList = const [],
+    bool autoAddLanguagesFromCustomDictionaries = false,
     this.customLanguages,
-  }) {
+  }) : super(whiteList: whiteList) {
     _cacheWordDictionary = null;
     _cacheLanguageIdentifiers = null;
+    if (autoAddLanguagesFromCustomDictionaries) {
+      registryLanguagesFromCustomDictionaries();
+    }
     initializeChecker(
       language: getCurrentLanguage(),
       safeDictionaryLoad: safeDictionaryLoad,
+      whiteList: whiteList,
       worksWithoutDictionary: worksWithoutDictionary,
       safeLanguageName: safeLanguageName,
       strategy: strategy,
@@ -323,6 +329,7 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
   bool isWordValid(String word) {
     // if word is just an whitespace then is not wrong
     if (word.trim().isEmpty) return true;
+    if (whiteList.contains(word)) return true;
     verifyState(alsoCache: true);
     final wordsMap = _cacheWordDictionary?.get ?? {};
     final newWordWithCaseSensitive =
