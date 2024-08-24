@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/mixin/disposable.dart';
 import '../common/cache_object.dart';
@@ -14,12 +13,13 @@ import '../word_tokenizer.dart';
 import 'mixin/check_ops.dart';
 
 /// add a cache var let us add any custom language
-CacheObject<List<String>> _languagesRegistry = CacheObject(
-  object: [...defaultLanguages],
+CacheObject<Set<String>> _languagesRegistry = CacheObject(
+  object: {...defaultLanguages},
 );
 
 abstract class Checker<T extends Object, R>
     with CheckOperations<List<TextSpan>, R>, Disposable, DisposableStreams {
+  final Set<String> _whiteList = {};
   late T _language;
 
   /// if it is true the checker always will be return null
@@ -57,6 +57,7 @@ abstract class Checker<T extends Object, R>
     Tokenizer? wordTokenizer,
     bool safeDictionaryLoad = false,
     bool worksWithoutDictionary = false,
+    List<String> whiteList = const [],
     this.caseSensitive = true,
     this.safeLanguageName = 'en',
     this.strategy = StrategyLanguageSearchOrder.byPackage,
@@ -64,6 +65,7 @@ abstract class Checker<T extends Object, R>
     initializeChecker(
       language: language,
       wordTokenizer: wordTokenizer,
+      whiteList: whiteList,
       safeDictionaryLoad: safeDictionaryLoad,
       worksWithoutDictionary: worksWithoutDictionary,
       safeLanguageName: safeLanguageName,
@@ -83,7 +85,7 @@ abstract class Checker<T extends Object, R>
 
   @protected
   void setRegistryToDefault() {
-    _languagesRegistry.set = [...defaultLanguages];
+    _languagesRegistry.set = {...defaultLanguages};
   }
 
   @protected
@@ -92,6 +94,25 @@ abstract class Checker<T extends Object, R>
 
   @protected
   bool get worksWithoutDictionary => _worksWithoutDictionary;
+
+  List<String> get whiteList => [..._whiteList];
+
+  void addNewWordToWhiteList(String word) {
+    assert(word.trim().isNotEmpty, '[$word] cannot be empty');
+    assert(!word.contains(RegExp(r'\p{Z}', unicode: true)),
+        '[$word] cannot contain whitespaces');
+    final words = word.split('\n');
+    if (words.length >= 2) {
+      _whiteList.addAll(words.map((element) => element.trim()));
+    } else {
+      _whiteList.add(word.trim());
+    }
+  }
+
+  void setNewWhiteList(List<String> words) {
+    _whiteList.clear();
+    _whiteList.addAll(words);
+  }
 
   @protected
   void initDictionary(String words);
@@ -152,6 +173,7 @@ abstract class Checker<T extends Object, R>
   void initializeChecker({
     required T language,
     Tokenizer? wordTokenizer,
+    List<String> whiteList = const [],
     bool safeDictionaryLoad = false,
     bool worksWithoutDictionary = false,
     String safeLanguageName = 'en',
@@ -159,7 +181,8 @@ abstract class Checker<T extends Object, R>
     StrategyLanguageSearchOrder strategy =
         StrategyLanguageSearchOrder.byPackage,
   }) {
-    _languagesRegistry.set = [...defaultLanguages];
+    _languagesRegistry.set = {...defaultLanguages};
+    _whiteList.addAll(List.from(whiteList));
     addNewEventToWidgetsState(null);
     _language = language;
     addNewEventToLanguageState(_language);
@@ -181,7 +204,7 @@ abstract class Checker<T extends Object, R>
   void registerLanguage(String language) {
     verifyState();
     if (!_languagesRegistry.get.contains(language)) {
-      _languagesRegistry.set = [..._languagesRegistry.get, language];
+      _languagesRegistry.set = {..._languagesRegistry.get, language};
     }
   }
 

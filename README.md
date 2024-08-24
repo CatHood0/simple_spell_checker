@@ -1,11 +1,12 @@
 # Simple Spell Checker
 
 ![simple spell checker example preview](https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif)
+
 **Simple Spell Checker** is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. The package also allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
 ## Use with caution
 
-since **Simple Spell Checker** is a client-side dependency that works without any need for an internet connection, it could weigh more than expected due to each of the dictionaries. As mentioned below, it supports a very wide variety of languages which can have a file of up to 300.000 words (this being just one language, since there are others such as Russian that contain up to 400.000 words), which makes the package increase in size more than expected. If you want to avoid your application increasing in size significantly, the best thing you can do is use the native solution [DefaultSpellCheckService](https://api.flutter.dev/flutter/services/DefaultSpellCheckService-class.html) to avoid this.
+**Simple Spell Checker** is a client-side dependency that works without any need for an internet connection, so, it could weigh more than expected due to each of the dictionaries. As mentioned below, it supports a very wide variety of languages which can have a file of up to 300.000 words (this being just one language, since there are others such as Russian that contain up to 400.000 words), which makes the package increase in size more than expected. If you want to avoid your application increasing in size significantly, the best thing you can do is use the native solution [DefaultSpellCheckService](https://api.flutter.dev/flutter/services/DefaultSpellCheckService-class.html) to avoid this.
 
 ## Features
 
@@ -15,7 +16,7 @@ since **Simple Spell Checker** is a client-side dependency that works without an
 - **Customizable Error Handling**: Optionally use custom gesture recognizers for wrong words, enabling custom interactions.
 - **Stream-based State Management**: Provides a stream of updates for spell-checking states, allowing reactive UI updates.
 
-## Current languages supported (more languages will be added in future releases)
+## Current languages supported
 
 The package already have a default list of words for these languages:
 
@@ -39,8 +40,6 @@ The package already have a default list of words for these languages:
 * Russian - `ru`
 
 ## Getting Started
-
-To use the `SimpleSpellChecker` in your `Flutter` project:
 
 **Add the Dependency**:
 
@@ -68,6 +67,8 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
    worksWithoutDictionary: true, 
    // byPackage | byUser -> defines if the language need to be searched first in customLanguages or in the default ones
    strategy: StrategyLanguageSearchOrder.byPackage, 
+   // this is a list of words that will be ignored by check ops
+   whiteList: [],  
    caseSensitive: false,
 );
 ```
@@ -90,6 +91,8 @@ MultiSpellChecker spellChecker = MultiSpellChecker(
    worksWithoutDictionary: true, 
    // byPackage | byUser -> defines if the language need to be searched first in customLanguages or in the default ones
    strategy: StrategyLanguageSearchOrder.byPackage, 
+   // this is a list of words that will be ignored by check ops
+   whiteList: [],  
    caseSensitive: false,
 );
 ```
@@ -193,14 +196,20 @@ When you add a custom language you will need to call `registerLanguage()` and pa
 
 ### Language Management
 
-* **setNewLanguageToState(String language)**: override the current language into the Spellchecker. _Only available for `SimpleSpellChecker` instances_
-* **setNewLanguageToCurrentLanguages(String language)**: add the language to the current ones into the Spellchecker. _Only available for `MultiSpellChecker` instances_
-* **setNewLanState(List languages)**: override the current languages into the Spellchecker. _Only available for `MultiSpellChecker` instances_
+* **setNewLanguageToState(String language)**: override the current language into the Spell Checker. _Only available for `SimpleSpellChecker` instances_
+* **setNewLanguageToCurrentLanguages(String language)**: add the language to the current ones into the Spell Checker. _Only available for `MultiSpellChecker` instances_
+* **setNewLanState(List languages)**: override the current languages into the Spell Checker. _Only available for `MultiSpellChecker` instances_
 * **registerLanguage(String language)**: Add a new language to the registries (the registry is a different instance that the current languages that contains all languages available and is used in `check()` methods to avoid check if the language is not available _however, this is overrided if `worksWithoutDictionary` is true_).
 * **updateCustomLanguageIfExist(LanguageIdentifier language, bool withException)**: override the current value if exist in `customLanguages` var.
 * **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
 
-### State 
+### White List Management
+
+* **SetNewWhiteList(List words)**: override the current white list into the Spell Checker.
+* **addNewWordToWhiteList(String words)**: add a new word to the white list.
+* **whiteList**: return the current white list state.
+
+### State Management 
 
 * **toggleChecker()**: activate or deactivate the spell checking. If it is deactivate `check()` methods always will return null 
 * **isCheckerActive()**: return the state of the spell checker.
