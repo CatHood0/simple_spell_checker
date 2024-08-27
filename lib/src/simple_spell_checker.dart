@@ -49,10 +49,10 @@ class SimpleSpellChecker extends Checker<String, String>
   ///
   /// Note: [words] param must be have every element separated by a new line
   List<LanguageIdentifier>? customLanguages;
-  late Tokenizer<String> _wordTokenizer;
+  late Tokenizer<List<String>> _wordTokenizer;
   SimpleSpellChecker({
     required super.language,
-    Tokenizer<String>? wordTokenizer,
+    Tokenizer<List<String>>? wordTokenizer,
     super.safeDictionaryLoad,
     super.worksWithoutDictionary,
     bool autoAddLanguagesFromCustomDictionaries = false,
@@ -408,7 +408,7 @@ class SimpleSpellChecker extends Checker<String, String>
   }
 
   /// Set a new cusotm Tokenizer instance to be used by the package
-  void setNewTokenizer(Tokenizer<String> tokenizer) {
+  void setNewTokenizer(Tokenizer<List<String>> tokenizer) {
     verifyState();
     _wordTokenizer = tokenizer;
   }

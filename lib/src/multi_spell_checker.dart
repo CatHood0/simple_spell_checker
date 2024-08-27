@@ -44,10 +44,10 @@ CacheObject<Map<String, int>>? _cacheWordDictionary;
 class MultiSpellChecker extends Checker<List<String>, List<String>>
     implements CheckOperationsStreams<List<TextSpan>> {
   List<LanguageIdentifier>? customLanguages;
-  late Tokenizer<String> _wordTokenizer;
+  late Tokenizer<List<String>> _wordTokenizer;
   MultiSpellChecker({
     required super.language,
-    Tokenizer<String>? wordTokenizer,
+    Tokenizer<List<String>>? wordTokenizer,
     super.safeDictionaryLoad,
     super.worksWithoutDictionary,
     super.caseSensitive = false,
@@ -403,7 +403,7 @@ class MultiSpellChecker extends Checker<List<String>, List<String>>
   }
 
   /// Set a new cusotm Tokenizer instance to be used by the package
-  void setNewTokenizer(Tokenizer<String> tokenizer) {
+  void setNewTokenizer(Tokenizer<List<String>> tokenizer) {
     verifyState();
     _wordTokenizer = tokenizer;
   }

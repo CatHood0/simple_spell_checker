@@ -19,5 +19,5 @@ abstract class Tokenizer<T extends Object> {
   final RegExp? separatorRegExp;
   Tokenizer({this.separatorRegExp});
   bool canTokenizeText(String text);
-  List<T> tokenize(String content);
+  T tokenize(String content);
 }
