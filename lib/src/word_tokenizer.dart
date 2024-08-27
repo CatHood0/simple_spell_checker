@@ -1,7 +1,7 @@
 import 'package:simple_spell_checker/src/common/tokenizer.dart';
 
 /// Default work tokenizer implemented by the package
-class WordTokenizer extends Tokenizer {
+class WordTokenizer extends Tokenizer<String> {
   WordTokenizer({
     super.separatorRegExp,
   });
@@ -13,12 +13,7 @@ class WordTokenizer extends Tokenizer {
 
   /// Divides a string into words
   @override
-  List<String> tokenize(
-    String content, {
-    @Deprecated(
-        'removeAllEmptyWords are no longer used and will be removed in future releases')
-    bool removeAllEmptyWords = false,
-  }) {
+  List<String> tokenize(String content) {
     final List<String> words = (separatorRegExp ?? defaultSeparatorRegExp)
         .allMatches(content)
         .map(

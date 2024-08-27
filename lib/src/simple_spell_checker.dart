@@ -8,10 +8,13 @@ import 'package:simple_spell_checker/simple_spell_checker.dart'
     show LanguageIdentifier, defaultLanguages, isWordHasNumber;
 import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/abtract_checker.dart';
+import 'package:simple_spell_checker/src/spell_checker_interface/mixin/stream_checks.dart';
 import 'package:simple_spell_checker/src/utils.dart'
     show defaultLanguages, defaultLanguagesDictionaries, isWordHasNumber;
+import 'package:simple_spell_checker/src/word_tokenizer.dart';
 import 'common/cache_object.dart' show CacheObject;
 import 'common/strategy_language_search_order.dart';
+import 'common/tokenizer.dart';
 
 const _noLanguage = LanguageIdentifier(language: 'no_lang', words: '');
 
@@ -38,16 +41,18 @@ CacheObject<Map<String, int>>? _cacheWordDictionary;
 // [setNewLanguage] method to override the current language from the class
 // second:
 // [reloadDictionary] or [reloadDictionarySync] methods to set a new state to the directionary
-class SimpleSpellChecker extends Checker<String, String> {
+class SimpleSpellChecker extends Checker<String, String>
+    implements CheckOperationsStreams<List<TextSpan>> {
   /// By default we only have support for the most used languages
   /// but, we cannot cover all the cases. By this, you can use [customLanguages]
   /// adding the key of the language and your words
   ///
   /// Note: [words] param must be have every element separated by a new line
   List<LanguageIdentifier>? customLanguages;
+  late Tokenizer<String> _wordTokenizer;
   SimpleSpellChecker({
     required super.language,
-    super.wordTokenizer,
+    Tokenizer<String>? wordTokenizer,
     super.safeDictionaryLoad,
     super.worksWithoutDictionary,
     bool autoAddLanguagesFromCustomDictionaries = false,
@@ -62,9 +67,9 @@ class SimpleSpellChecker extends Checker<String, String> {
     if (autoAddLanguagesFromCustomDictionaries) {
       registryLanguagesFromCustomDictionaries();
     }
+    _wordTokenizer = wordTokenizer ?? WordTokenizer();
     initializeChecker(
       language: getCurrentLanguage(),
-      wordTokenizer: wordTokenizer,
       safeDictionaryLoad: safeDictionaryLoad,
       worksWithoutDictionary: worksWithoutDictionary,
       safeLanguageName: safeLanguageName,
@@ -97,9 +102,9 @@ class SimpleSpellChecker extends Checker<String, String> {
         !worksWithoutDictionary) {
       return null;
     }
-    if (!wordTokenizer.canTokenizeText(text)) return null;
+    if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -162,9 +167,9 @@ class SimpleSpellChecker extends Checker<String, String> {
         !worksWithoutDictionary) {
       yield [];
     }
-    if (!wordTokenizer.canTokenizeText(text)) yield [];
+    if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <TextSpan>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -227,9 +232,9 @@ class SimpleSpellChecker extends Checker<String, String> {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
-    if (!wordTokenizer.canTokenizeText(text)) return null;
+    if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <O>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
       final word = words.elementAt(i);
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
@@ -280,11 +285,11 @@ class SimpleSpellChecker extends Checker<String, String> {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered as a custom language. Please, first add your new language using [addNewLanguage] and after add your [customLanguages] to avoid this message.');
     }
-    if (!wordTokenizer.canTokenizeText(text)) yield [];
+    if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <T>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
-      final word = words.elementAt(i);
+      final word = words.elementAt(i).toString();
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
       if (isWordHasNumber(word) ||
           isWordValid(word) ||
@@ -400,6 +405,19 @@ class SimpleSpellChecker extends Checker<String, String> {
     wordsMap.addEntries(entries);
     _cacheWordDictionary ??= CacheObject(object: {});
     _cacheWordDictionary!.set = {...wordsMap};
+  }
+
+  /// Set a new cusotm Tokenizer instance to be used by the package
+  void setNewTokenizer(Tokenizer<String> tokenizer) {
+    verifyState();
+    _wordTokenizer = tokenizer;
+  }
+
+  /// Reset the Tokenizer instance to use the default implementation
+  /// crated by the package
+  void setWordTokenizerToDefault() {
+    verifyState();
+    _wordTokenizer = WordTokenizer();
   }
 
   @override
