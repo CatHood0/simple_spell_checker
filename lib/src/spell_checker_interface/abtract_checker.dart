@@ -128,6 +128,7 @@ abstract class Checker<T extends Object, R>
   void addCustomLanguage(LanguageIdentifier language);
 
   @protected
+  @mustCallSuper
   void addNewEventToLanguageState(T? language) {
     if (!_languageState.isClosed || !_disposedControllers) {
       _languageState.add(_language);
@@ -135,6 +136,7 @@ abstract class Checker<T extends Object, R>
   }
 
   @protected
+  @mustCallSuper
   void addNewEventToWidgetsState(Object? object) {
     if (!_simpleSpellCheckerWidgetsState.isClosed || !_disposedControllers) {
       _simpleSpellCheckerWidgetsState.add(object);
@@ -143,6 +145,7 @@ abstract class Checker<T extends Object, R>
 
   /// Use dispose when you don't need the SimpleSpellchecker already
   @override
+  @mustCallSuper
   void dispose() {
     if (!_simpleSpellCheckerWidgetsState.isClosed)
       _simpleSpellCheckerWidgetsState.close();
@@ -153,6 +156,7 @@ abstract class Checker<T extends Object, R>
 
   /// Use disposeControllers is just never will be use the StreamControllers
   @override
+  @mustCallSuper
   void disposeControllers() {
     if (!_simpleSpellCheckerWidgetsState.isClosed)
       _simpleSpellCheckerWidgetsState.close();
@@ -161,6 +165,7 @@ abstract class Checker<T extends Object, R>
   }
 
   /// This will return all the words contained on the current state of the dictionary
+  @mustCallSuper
   T getCurrentLanguage() {
     verifyState();
     return _language;
@@ -236,6 +241,7 @@ abstract class Checker<T extends Object, R>
   }
 
   /// Verify if [Checker] is not disposed yet
+  @mustCallSuper
   @protected
   void verifyState() {
     if (!_disposedControllers) {

@@ -308,6 +308,124 @@ spellChecker.disposeControllers();
 
 It clears any cached data and closes the internal stream to prevent memory leaks.
 
+## You can create your custom `SpellChecker` extending it from `Checker` class
+
+As you now we create default implementation that can check your text without any issue (as we expect), but sometimes, we could need some different implementation from the default ones. By this, we can create our custom spell checker extending it from `Checker` class that contains all params and
+methods used by `MultiSpellChecker` or `SimpleSpellChecker`.
+
+```dart
+// if you want to add also the check streams ops
+// you ca implement the interface [CheckOperationsStreams]
+abstract class Checker<T extends Object, R> with CheckOperations<List<TextSpan>, R>, Disposable, DisposableStreams {
+
+// params
+final Set<String> _whiteList = {};
+late T _language;
+
+/// if it is true the checker always will be return null
+bool _turnOffChecking = false;
+
+/// If the current language is not founded on [customLanguages] or default ones,
+/// then select one of the existent to avoid conflicts
+late bool _safeDictionaryLoad;
+
+/// If it is true then the spell checker
+/// ignores if the dictionary or language is not founded
+late bool _worksWithoutDictionary;
+
+final bool caseSensitive;
+
+/// the state of SimpleSpellChecker and to store to a existent language with its dictionary
+/// If _safeDictionaryLoad is true, this will be used as the default language to update
+final String safeLanguageName;
+StrategyLanguageSearchOrder strategy;
+
+/// decide if the checker is disposed
+bool _disposed = false;
+
+/// this just can be called on closeControllers
+bool _disposedControllers = false;
+
+final StreamController<Object?> _simpleSpellCheckerWidgetsState =
+    StreamController.broadcast();
+
+final StreamController<T?> _languageState = StreamController.broadcast();
+
+// methods
+
+@protected
+bool get safeDictionaryLoad => _safeDictionaryLoad;
+
+@protected
+bool get turnOffChecking => _turnOffChecking;
+
+@protected
+void setRegistryToDefault() => _languagesRegistry.set = {...defaultLanguages};
+
+@protected
+List<String> get languagesRegistry => List.unmodifiable(_languagesRegistry.get);
+
+/// This will return all the words contained on the current state of the dictionary
+T getCurrentLanguage() {
+   verifyState();
+   return _language;
+}
+
+@protected
+bool get worksWithoutDictionary => _worksWithoutDictionary;
+
+@protected
+void initDictionary(String words);
+
+void addCustomLanguage(LanguageIdentifier language);
+
+/// This method is already defined and doesn't need to be override
+/// since it is used to initialize the params into [Checker]
+void initializeChecker({...});
+
+/// Verify if [Checker] is not disposed yet
+@protected
+@mustCallSuper
+void verifyState();
+
+// these methods let us add new states to the [StreamControllers] 
+// and them are already defined
+@protected
+@mustCallSuper
+void addNewEventToLanguageState(T? language);
+
+@protected
+@mustCallSuper
+void addNewEventToWidgetsState(Object? object);
+
+// dispose methods
+@mustCallSuper
+void dispose();
+
+@mustCallSuper
+void disposeControllers();
+
+// methods from [CheckOperations] interface
+// that need to be implemented by the developer
+Future<void> reloadDictionary();
+bool isWordValid(String word);
+void reloadDictionarySync();
+bool checkLanguageRegistry(R language);
+T? check(
+  String text, {
+  TextStyle? wrongStyle,
+  TextStyle? commonStyle,
+  LongPressGestureRecognizer Function(String)?
+      customLongPressRecognizerOnWrongSpan,
+});
+
+List<O>? checkBuilder<O>(
+  String text, {
+  required O Function(String, bool) builder,
+});
+}
+```
+
 ## Contributions
 
 If you find a bug or want to add a new feature, please open an **issue** or submit a **pull request** on the [GitHub repository](https://github.com/CatHood0/simple_spell_checker/).
