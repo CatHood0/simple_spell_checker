@@ -9,9 +9,12 @@ import 'package:simple_spell_checker/simple_spell_checker.dart'
 import 'package:simple_spell_checker/src/common/extensions.dart';
 import 'package:simple_spell_checker/src/common/strategy_language_search_order.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/abtract_checker.dart';
+import 'package:simple_spell_checker/src/spell_checker_interface/mixin/stream_checks.dart';
 import 'package:simple_spell_checker/src/utils.dart'
     show defaultLanguagesDictionaries, isWordHasNumber;
+import 'package:simple_spell_checker/src/word_tokenizer.dart';
 import 'common/cache_object.dart' show CacheObject;
+import 'common/tokenizer.dart';
 
 CacheObject<List<LanguageIdentifier>>? _cacheLanguageIdentifiers;
 
@@ -38,11 +41,13 @@ CacheObject<Map<String, int>>? _cacheWordDictionary;
 // [setNewLanguage] method to override the current language from the class
 // second:
 // [reloadDictionary] or [reloadDictionarySync] methods to set a new state to the directionary
-class MultiSpellChecker extends Checker<List<String>, List<String>> {
+class MultiSpellChecker extends Checker<List<String>, List<String>>
+    implements CheckOperationsStreams<List<TextSpan>> {
   List<LanguageIdentifier>? customLanguages;
+  late Tokenizer<List<String>> _wordTokenizer;
   MultiSpellChecker({
     required super.language,
-    super.wordTokenizer,
+    Tokenizer<List<String>>? wordTokenizer,
     super.safeDictionaryLoad,
     super.worksWithoutDictionary,
     super.caseSensitive = false,
@@ -64,9 +69,9 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
       worksWithoutDictionary: worksWithoutDictionary,
       safeLanguageName: safeLanguageName,
       strategy: strategy,
-      wordTokenizer: wordTokenizer,
       caseSensitive: caseSensitive,
     );
+    _wordTokenizer = wordTokenizer ?? WordTokenizer();
   }
 
   @protected
@@ -106,18 +111,18 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
-    if (!wordTokenizer.canTokenizeText(text)) return null;
+    if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <TextSpan>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
-      final word = words.elementAt(i);
+      final word = words.elementAt(i).toString();
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
       if (isWordHasNumber(word) ||
           isWordValid(word) ||
           word.contains(' ') ||
           word.noWords) {
         if (nextIndex != -1) {
-          final nextWord = words.elementAt(nextIndex);
+          final nextWord = words.elementAt(nextIndex).toString();
           if (nextWord.contains(' ')) {
             spans.add(TextSpan(text: '$word$nextWord', style: commonStyle));
             // ignore the next since it was already passed
@@ -171,18 +176,18 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
         !worksWithoutDictionary) {
       yield [];
     }
-    if (!wordTokenizer.canTokenizeText(text)) yield [];
+    if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <TextSpan>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
-      final word = words.elementAt(i);
+      final word = words.elementAt(i).toString();
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
       if (isWordHasNumber(word) ||
           isWordValid(word) ||
           word.contains(' ') ||
           word.noWords) {
         if (nextIndex != -1) {
-          final nextWord = words.elementAt(nextIndex);
+          final nextWord = words.elementAt(nextIndex).toString();
           if (nextWord.contains(' ')) {
             spans.add(TextSpan(text: '$word$nextWord', style: commonStyle));
             yield [...spans];
@@ -236,18 +241,18 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
-    if (!wordTokenizer.canTokenizeText(text)) return null;
+    if (!_wordTokenizer.canTokenizeText(text)) return null;
     final spans = <O>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
-      final word = words.elementAt(i);
+      final word = words.elementAt(i).toString();
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
       if (isWordHasNumber(word) ||
           isWordValid(word) ||
           word.contains(' ') ||
           word.noWords) {
         if (nextIndex != -1) {
-          final nextWord = words.elementAt(nextIndex);
+          final nextWord = words.elementAt(nextIndex).toString();
           if (nextWord.contains(' ')) {
             spans.add(builder.call('$word$nextWord', true));
             // ignore the next since it was already passed
@@ -289,18 +294,18 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} are not supported or registered on the [customLanguages]. Please, first add your new language using [registerLanguage] and after add the language identifier using [addCustomLanguage] to avoid this message.');
     }
-    if (!wordTokenizer.canTokenizeText(text)) yield [];
+    if (!_wordTokenizer.canTokenizeText(text)) yield [];
     final spans = <T>[];
-    final words = wordTokenizer.tokenize(text);
+    final words = _wordTokenizer.tokenize(text);
     for (int i = 0; i < words.length; i++) {
-      final word = words.elementAt(i);
+      final word = words.elementAt(i).toString();
       final nextIndex = (i + 1) < words.length - 1 ? i + 1 : -1;
       if (isWordHasNumber(word) ||
           isWordValid(word) ||
           word.contains(' ') ||
           word.noWords) {
         if (nextIndex != -1) {
-          final nextWord = words.elementAt(nextIndex);
+          final nextWord = words.elementAt(nextIndex).toString();
           if (nextWord.contains(' ')) {
             spans.add(builder.call('$word$nextWord', true));
             yield [...spans];
@@ -395,6 +400,19 @@ class MultiSpellChecker extends Checker<List<String>, List<String>> {
     }
     _initLanguageCache(dictionaries);
     initDictionary('');
+  }
+
+  /// Set a new cusotm Tokenizer instance to be used by the package
+  void setNewTokenizer(Tokenizer<List<String>> tokenizer) {
+    verifyState();
+    _wordTokenizer = tokenizer;
+  }
+
+  /// Reset the Tokenizer instance to use the default implementation
+  /// crated by the package
+  void setWordTokenizerToDefault() {
+    verifyState();
+    _wordTokenizer = WordTokenizer();
   }
 
   void _initLanguageCache(List<LanguageIdentifier> identifiers) {

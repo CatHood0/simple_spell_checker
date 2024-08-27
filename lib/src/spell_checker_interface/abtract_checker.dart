@@ -7,9 +7,7 @@ import 'package:simple_spell_checker/src/spell_checker_interface/mixin/disposabl
 import '../common/cache_object.dart';
 import '../common/language_identifier.dart';
 import '../common/strategy_language_search_order.dart';
-import '../common/tokenizer.dart';
 import '../utils.dart';
-import '../word_tokenizer.dart';
 import 'mixin/check_ops.dart';
 
 /// add a cache var let us add any custom language
@@ -33,9 +31,6 @@ abstract class Checker<T extends Object, R>
   /// ignores if the dictionary or language is not founded
   late bool _worksWithoutDictionary;
 
-  /// Decides how the text will be divided and if the text could be tokenized
-  late Tokenizer _wordTokenizer;
-
   final bool caseSensitive;
 
   /// the state of SimpleSpellChecker and to store to a existent language with its dictionary
@@ -54,7 +49,6 @@ abstract class Checker<T extends Object, R>
   final StreamController<T?> _languageState = StreamController.broadcast();
   Checker({
     required T language,
-    Tokenizer? wordTokenizer,
     bool safeDictionaryLoad = false,
     bool worksWithoutDictionary = false,
     List<String> whiteList = const [],
@@ -64,7 +58,6 @@ abstract class Checker<T extends Object, R>
   }) {
     initializeChecker(
       language: language,
-      wordTokenizer: wordTokenizer,
       whiteList: whiteList,
       safeDictionaryLoad: safeDictionaryLoad,
       worksWithoutDictionary: worksWithoutDictionary,
@@ -73,9 +66,6 @@ abstract class Checker<T extends Object, R>
       strategy: strategy,
     );
   }
-
-  @protected
-  Tokenizer get wordTokenizer => _wordTokenizer;
 
   @protected
   bool get safeDictionaryLoad => _safeDictionaryLoad;
@@ -114,6 +104,14 @@ abstract class Checker<T extends Object, R>
     _whiteList.addAll(words);
   }
 
+  /// [initDictionary] is a method used when the dictionary need to be
+  /// loaded before of use it on [check()] functions
+  ///
+  /// Here we can place all necessary logic to initalize an valid directionary
+  /// used by [isWordValid] method
+  ///
+  /// You can use [defaultLanguagesDictionarie] that correspond with the current
+  /// languages implemented into the package
   @protected
   void initDictionary(String words);
 
@@ -172,7 +170,6 @@ abstract class Checker<T extends Object, R>
   @protected
   void initializeChecker({
     required T language,
-    Tokenizer? wordTokenizer,
     List<String> whiteList = const [],
     bool safeDictionaryLoad = false,
     bool worksWithoutDictionary = false,
@@ -189,7 +186,6 @@ abstract class Checker<T extends Object, R>
     _safeDictionaryLoad = safeDictionaryLoad;
     _worksWithoutDictionary = worksWithoutDictionary;
     this.strategy = strategy;
-    _wordTokenizer = wordTokenizer ?? WordTokenizer();
     reloadDictionarySync();
   }
 
@@ -229,19 +225,6 @@ abstract class Checker<T extends Object, R>
   void setNewStrategy(StrategyLanguageSearchOrder strategy) {
     verifyState();
     this.strategy = strategy;
-  }
-
-  /// Set a new cusotm Tokenizer instance to be used by the package
-  void setNewTokenizer(Tokenizer tokenizer) {
-    verifyState();
-    _wordTokenizer = tokenizer;
-  }
-
-  /// Reset the Tokenizer instance to use the default implementation
-  /// crated by the package
-  void setWordTokenizerToDefault() {
-    verifyState();
-    _wordTokenizer = WordTokenizer();
   }
 
   /// toggle the state of the checking
