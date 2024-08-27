@@ -41,7 +41,9 @@ CacheObject<Map<String, int>>? _cacheWordDictionary;
 // [setNewLanguage] method to override the current language from the class
 // second:
 // [reloadDictionary] or [reloadDictionarySync] methods to set a new state to the directionary
-class MultiSpellChecker extends Checker<List<String>, List<String>>
+
+class MultiSpellChecker
+    extends Checker<List<String>, List<String>, List<TextSpan>>
     implements CheckOperationsStreams<List<TextSpan>> {
   List<LanguageIdentifier>? customLanguages;
   late Tokenizer<List<String>> _wordTokenizer;

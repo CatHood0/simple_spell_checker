@@ -41,7 +41,8 @@ CacheObject<Map<String, int>>? _cacheWordDictionary;
 // [setNewLanguage] method to override the current language from the class
 // second:
 // [reloadDictionary] or [reloadDictionarySync] methods to set a new state to the directionary
-class SimpleSpellChecker extends Checker<String, String>
+
+class SimpleSpellChecker extends Checker<String, String, List<TextSpan>>
     implements CheckOperationsStreams<List<TextSpan>> {
   /// By default we only have support for the most used languages
   /// but, we cannot cover all the cases. By this, you can use [customLanguages]

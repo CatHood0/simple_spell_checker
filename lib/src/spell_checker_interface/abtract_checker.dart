@@ -15,8 +15,8 @@ CacheObject<Set<String>> _languagesRegistry = CacheObject(
   object: {...defaultLanguages},
 );
 
-abstract class Checker<T extends Object, R>
-    with CheckOperations<List<TextSpan>, R>, Disposable, DisposableStreams {
+abstract class Checker<T extends Object, R, OP extends Object>
+    with CheckOperations<OP, R>, Disposable, DisposableStreams {
   final Set<String> _whiteList = {};
   late T _language;
 

@@ -316,7 +316,7 @@ methods used by `MultiSpellChecker` or `SimpleSpellChecker`.
 ```dart
 // if you want to add also the check streams ops
 // you ca implement the interface [CheckOperationsStreams]
-abstract class Checker<T extends Object, R> with CheckOperations<List<TextSpan>, R>, Disposable, DisposableStreams {
+abstract class Checker<T extends Object, R, OP extends Object> with CheckOperations<OP, R>, Disposable, DisposableStreams {
 
 // params
 final Set<String> _whiteList = {};
@@ -411,7 +411,7 @@ Future<void> reloadDictionary();
 bool isWordValid(String word);
 void reloadDictionarySync();
 bool checkLanguageRegistry(R language);
-T? check(
+OP? check(
   String text, {
   TextStyle? wrongStyle,
   TextStyle? commonStyle,
