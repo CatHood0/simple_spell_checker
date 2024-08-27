@@ -1,3 +1,11 @@
+## 1.2.3
+
+* Chore: removed deprecated member from Tokenizer.
+* Feat: support for generic return in Tokenizer class by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/7
+* Feat: make public Checker API by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/8
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.2.2...V1.2.3
+
 ## 1.2.2
 
 * Fix: some parameters in `MultiSpellChecker` are not used by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/4

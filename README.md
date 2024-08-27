@@ -1,6 +1,8 @@
-# Simple Spell Checker
+<h1 align="center">Simple Spell Checker</h1>
 
-![simple spell checker example preview](https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif)
+<p align="center">
+<img src=https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif />
+</p>
 
 **Simple Spell Checker** is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. The package also allows customization of languages, providing efficient and adaptable spell-checking for various applications.
 
@@ -134,13 +136,13 @@ List<Widget>? result = spellChecker.checkBuilder<Widget>(
 
 ### Creating your custom `Tokenizer`
 
-Use the `wordTokenizer` param from constructor to set a custom instance of your `Tokenizer` or use `setNewTokenizer()` or `setWordTokenizerToDefault()`.
+Use the `wordTokenizer` param from constructor to set a custom instance of your `Tokenizer` or use `setNewTokenizer()` or `setWordTokenizerToDefault()`. _By default on `MultiSpellChecker` and `SimpleSpellChecker` only accept `Tokenizer` implementations with `List<String>` types only_.
 
 #### Example of a custom `Tokenizer`:
 
 ```dart
 /// custom tokenizer implemented by the package
-class CustomWordTokenizer extends Tokenizer {
+class CustomWordTokenizer extends Tokenizer<List<String>> {
   CustomWordTokenizer() : super(separatorRegExp: RegExp(r'\S+|\s+'));
 
   @override
