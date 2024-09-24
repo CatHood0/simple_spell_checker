@@ -3,9 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart' show LongPressGestureRecognizer;
 import 'package:flutter/material.dart'
     show Colors, TextDecoration, TextDecorationStyle, TextSpan, TextStyle;
-import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show LanguageIdentifier;
 import 'package:simple_spell_checker/src/common/extensions.dart';
+import 'package:simple_spell_checker/src/common/language_identifier.dart';
 import 'package:simple_spell_checker/src/spell_checker_interface/abtract_checker.dart';
 import 'package:simple_spell_checker/src/utils.dart';
 import 'package:simple_spell_checker/src/word_tokenizer.dart';
