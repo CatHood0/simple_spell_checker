@@ -1,28 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
 /// [LanguageIdentifier] is a representation of a register of a language with it's dictionary
 ///   [language] ref to the country code
 ///   [word] ref to the dictionary
-///
-/// [words] dictionary must have a plain text format where the new lines separate every word
-///
-/// # Example:
-/// it language should have a dictionary format like:
-///
-/// italia
-/// miniatura
-/// famiglia
-/// specie
-/// europa
-/// latino
-/// animalia
-/// roma
-///
-/// Making simple and easier add custom dictionaries for everyone
 @immutable
+@Deprecated('LanguageIdentifier is no longer used and will be removed in future releases.')
 class LanguageIdentifier {
   final String language;
-  final String words;
+  final Map<String, int> words;
 
   const LanguageIdentifier({
     required this.language,
@@ -31,18 +17,22 @@ class LanguageIdentifier {
 
   LanguageIdentifier copyWith({
     String? language,
+    @Deprecated(
+        'words is no longer used since words is map type. Use wordsMap instead')
     String? words,
+    Map<String, int>? wordsMap,
   }) {
     return LanguageIdentifier(
       language: language ?? this.language,
-      words: words ?? this.words,
+      words: wordsMap ?? this.words,
     );
   }
 
   @override
   bool operator ==(covariant LanguageIdentifier other) {
     if (identical(this, other)) return true;
-    return language == other.language && words == other.words;
+    return language == other.language &&
+        const DeepCollectionEquality().equals(words, other.words);
   }
 
   @override

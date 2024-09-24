@@ -53,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _controller = SpellCheckerController(
         spellchecker: SimpleSpellChecker(
           language: language,
-          safeDictionaryLoad: true,
         ),
         text:
             'Simple Spell Checker is a simple but powerful spell checker, that allows to all developers detect and highlight spelling errors in text. It Allows customization of languages, providing efficient and adaptable spell-checking for various applications.',
@@ -61,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _titleController = SpellCheckerController(
         spellchecker: SimpleSpellChecker(
           language: language,
-          safeDictionaryLoad: true,
         ),
         text: 'What is Simple Spell Checker',
       );
