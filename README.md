@@ -75,8 +75,8 @@ Use the `checkBuilder<T>()` method to analyze a `String` for spelling errors and
 ```dart
 List<Widget>? result = spellChecker.checkBuilder<Widget>(
   'Your text here',
-  builder: (word, isWrong) {
-    return Text(word, style: TextStyle(color: isWrong ? Colors.red : null));
+  builder: (word, isValid) {
+    return Text(word, style: TextStyle(color: !isValid ? Colors.red : null));
   }
 );
 ```
