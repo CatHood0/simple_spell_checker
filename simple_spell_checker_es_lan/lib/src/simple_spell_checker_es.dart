@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart' show SimpleSpellChecker, languagesToBeUsed;
 import 'package:simple_spell_checker_es_lan/src/es/join_es_words.dart';
 
-class SimpleSpellCheckerEnRegister {
+class SimpleSpellCheckerEsRegister {
   static const _splitter = LineSplitter();
 
   /// `registerEnglishLanguage` can be used to register manually the english
