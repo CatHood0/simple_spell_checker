@@ -37,3 +37,17 @@ final Map<String, Map<String, int>> languagesToBeUsed = {};
 bool isWordHasNumber(String s) {
   return s.contains(RegExp(r'[0-9]'));
 }
+
+final RegExp _removeDicCharacter = RegExp(r'\/(\S+)?');
+
+/// This is only for internal use and should not be used outside
+/// because this is used to remove unnecessary characters into the 
+/// dictionary string. By now is used, but in future releases
+/// will be removed since we need to change the implementation
+/// of the dictionaries
+@experimental
+String removeUnnecessaryCharacters(String original, [Object? replace]) {
+  return original
+      .replaceAll('-', '${replace ?? '\n'}')
+      .replaceAll(_removeDicCharacter, '');
+}
