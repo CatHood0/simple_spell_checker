@@ -26,7 +26,7 @@ class SimpleSpellCheckerEsRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterEnglishLanguage() {
+  static void unRegisterSpanishLanguage() {
     languagesToBeUsed.remove('es');
   }
 }
