@@ -11,7 +11,7 @@ class SimpleSpellCheckerBgRegister {
   /// language to be supported by the `SimpleSpellChecker`
   static void registerBulgarianLanguage() {
     if (languagesToBeUsed.containsKey('bg')) return;
-    SimpleSpellChecker.setLanguage('gb', _createDictionary(joinBulgarianWords));
+    SimpleSpellChecker.setLanguage('bg', _createDictionary(joinBulgarianWords));
   }
 
   static Map<String, int> _createDictionary(String words) {
