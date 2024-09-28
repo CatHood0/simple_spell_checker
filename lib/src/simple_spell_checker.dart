@@ -221,6 +221,7 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
   static void setLanguage(String language, Map<String, int> words) {
     assert(language.trim().isNotEmpty,
         'language param cannot be empty or just contain whitespaces. Got [$language]');
+    if(dictionaries.containsKey(language)) return;
     dictionaries.addAll({language: words});
   }
 
