@@ -10,22 +10,22 @@
 
 The package already have a default list of words for these languages:
 
-* [German]() - `de`, `de-ch` 
-* [English]() - `en`, `en-gb`
-* [Spanish]() - `es`
-* [Catalan]() - `ca`
-* [Arabic]() - `ar`
-* [Danish]() - `da`
-* [French]() - `fr`
-* [Bulgarian]() - `bg`
-* [Dutch]() - `nl`
-* [Korean]() - `ko`
-* [Estonian]() - `et`
-* [Hebrew]() - `he`
-* [Italian]() - `it`
-* [Norwegian]() - `no`
-* [Portuguese]() - `pt`
-* [Russian]() - `ru`
+* [German](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_de_lan) - `de`, `de-ch` 
+* [English](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_en_lan) - `en`, `en-gb`
+* [Spanish](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_es_lan) - `es`
+* [Catalan](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_ca_lan) - `ca`
+* [Arabic](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_ar_lan) - `ar`
+* [Danish](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_da_lan) - `da`
+* [French](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_fr_lan) - `fr`
+* [Bulgarian](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_bg_lan) - `bg`
+* [Dutch](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_nl_lan) - `nl`
+* [Korean](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_ko_lan) - `ko`
+* [Estonian](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_et_lan) - `et`
+* [Hebrew](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_he_lan) - `he`
+* [Italian](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_it_lan) - `it`
+* [Norwegian](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_no_lan) - `no`
+* [Portuguese](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_pt_lan) - `pt`
+* [Russian](https://github.com/CatHood0/simple_spell_checker/tree/master/simple_spell_checker_ru_lan) - `ru`
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ dependencies:
 ```
 
 > [!Note]
-> You will need to add some of the available dependencies that contains the supported languages by default. Since the [1.3.0](), all the dictionaries was removed and reimplemented into a separate package. Check [Current languages supported](#-current-languages-supported).
+> You will need to add some of the available dependencies that contains the supported languages by default. Since the `1.3.0` of the package, all the dictionaries was removed and reimplemented into a separate package. Check [Current languages supported](#-current-languages-supported).
 > 
 > if you use some of these packages to register a language, please, call register functions before use the `SimpleSpellChecker` to avoid any unexpected behavior.
 
