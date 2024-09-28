@@ -1,5 +1,9 @@
 import 'package:meta/meta.dart';
 
+/// This list contains all languages that are supported by 
+/// default in [simple_spell_checker]
+///
+/// If you want to import one of them, check [Current supported languages](https://github.com/CatHood0/simple_spell_checker?tab=readme-ov-file#current-languages-supported)
 final List<String> defaultLanguages = List.unmodifiable(
   [
     'pt',
@@ -13,13 +17,11 @@ final List<String> defaultLanguages = List.unmodifiable(
     'fr',
     'no',
     'nl',
-    'sv',
     'ru',
     'he',
     'et',
     'ar',
     'bg',
-    'sk',
     'ca',
     'da',
   ],
