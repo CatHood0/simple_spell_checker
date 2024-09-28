@@ -34,7 +34,8 @@ final Map<String, String> defaultLanguagesDictionaries = Map.unmodifiable({});
 /// This variable is used by the checker to add using [setLanguage]
 /// where the key is the language code, and the value is the dictionary
 @experimental
-final Map<String, Map<String, int>> languagesToBeUsed = {};
+@internal
+final Map<String, Map<String, int>> dictionaries = {};
 
 @experimental
 bool isWordHasNumber(String s) {
