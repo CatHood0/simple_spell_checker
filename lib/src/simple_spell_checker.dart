@@ -242,8 +242,12 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
     dictionaries[language] = dictionary;
   }
 
-  static bool checkIfExistLanguage(String language){
+  static bool containsLanguage(String language){
     return dictionaries.containsKey(language);
+  }
+
+  static void removeLanguage(String language){
+    dictionaries.remove(language);
   }
 
   /// Check spelling in realtime

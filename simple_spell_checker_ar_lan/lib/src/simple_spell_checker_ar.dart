@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_ar_lan/src/ar/join_arabic_words.dart';
 
 class SimpleSpellCheckerArRegister {
@@ -10,7 +10,7 @@ class SimpleSpellCheckerArRegister {
   /// `registerArabicLanguage` can be used to register manually the arabic
   /// language to be supported by the `SimpleSpellChecker`
   static void registerArabicLanguage() {
-    if (languagesToBeUsed.containsKey('ar')) return;
+    if (SimpleSpellChecker.containsLanguage('ar')) return;
     SimpleSpellChecker.setLanguage('ar', _createDictionary(joinArabicWords));
   }
 
@@ -29,6 +29,6 @@ class SimpleSpellCheckerArRegister {
   }
 
   static void unRegisterArabicLanguage() {
-    languagesToBeUsed.remove('ar');
+    SimpleSpellChecker.removeLanguage('ar');
   }
 }

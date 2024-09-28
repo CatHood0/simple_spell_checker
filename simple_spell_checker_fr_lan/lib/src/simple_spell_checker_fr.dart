@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_fr_lan/src/fr/join_french_words.dart';
 
 class SimpleSpellCheckerFrRegister {
@@ -10,7 +10,7 @@ class SimpleSpellCheckerFrRegister {
   /// `registerFrenchLanguage` can be used to register manually the french
   /// language to be supported by the `SimpleSpellChecker`
   static void registerFrenchLanguage() {
-    if (languagesToBeUsed.containsKey('fr')) return;
+    if (SimpleSpellChecker.containsLanguage('fr')) return;
     SimpleSpellChecker.setLanguage('fr', _createDictionary(joinFrenchWords));
   }
 
@@ -29,6 +29,6 @@ class SimpleSpellCheckerFrRegister {
   }
 
   static void unRegisterFrenchLanguage() {
-    languagesToBeUsed.remove('fr');
+    SimpleSpellChecker.removeLanguage('fr');
   }
 }

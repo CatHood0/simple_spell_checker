@@ -13,7 +13,7 @@ class SimpleSpellCheckerDeRegister {
   static void registerDeutschLanguage({String preferDeutsch = 'de'}) {
     assert(preferDeutsch == 'de' || preferDeutsch == 'de-ch',
         'simple_spell_checker_de_lan only support "de" and "de-ch" languages by default. Got $preferDeutsch');
-    if (languagesToBeUsed.containsKey(preferDeutsch)) return;
+    if (SimpleSpellChecker.containsLanguage(preferDeutsch)) return;
     if (preferDeutsch == 'de') {
       SimpleSpellChecker.setLanguage('de', _createDictionary(joinDeutschWords));
     } else {
@@ -37,6 +37,7 @@ class SimpleSpellCheckerDeRegister {
   }
 
   static void unRegisterDeutschLanguage() {
-    languagesToBeUsed.remove('de');
+    SimpleSpellChecker.removeLanguage('de');
+    SimpleSpellChecker.removeLanguage('de-ch');
   }
 }

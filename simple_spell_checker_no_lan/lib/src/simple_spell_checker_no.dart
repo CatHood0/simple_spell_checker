@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_no_lan/src/no/join_norwegian_words.dart';
 
 class SimpleSpellCheckerNoRegister {
@@ -9,7 +9,7 @@ class SimpleSpellCheckerNoRegister {
   /// `registerNorwegianLanguage` can be used to register manually the norwegian
   /// language to be supported by the `SimpleSpellChecker`
   static void registerNorwegianLanguage() {
-    if (languagesToBeUsed.containsKey('no')) return;
+    if (SimpleSpellChecker.containsLanguage('no')) return;
     SimpleSpellChecker.setLanguage('no', _createDictionary(joinNowergianWords));
   }
 
@@ -28,6 +28,6 @@ class SimpleSpellCheckerNoRegister {
   }
 
   static void unRegisterNorwegianLanguage() {
-    languagesToBeUsed.remove('no');
+    SimpleSpellChecker.removeLanguage('no');
   }
 }

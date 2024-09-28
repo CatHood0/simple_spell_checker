@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_ko_lan/src/ko/join_korean_words.dart';
 
 class SimpleSpellCheckerKoRegister {
@@ -9,7 +9,7 @@ class SimpleSpellCheckerKoRegister {
   /// `registerKoreanLanguage` can be used to register manually the korean
   /// language to be supported by the `SimpleSpellChecker`
   static void registerKoreanLanguage() {
-    if (languagesToBeUsed.containsKey('ko')) return;
+    if (SimpleSpellChecker.containsLanguage('ko')) return;
     SimpleSpellChecker.setLanguage('ko', _createDictionary(joinKoreanWords));
   }
 
@@ -28,6 +28,6 @@ class SimpleSpellCheckerKoRegister {
   }
 
   static void unRegisterKoreanLanguage() {
-    languagesToBeUsed.remove('ko');
+    SimpleSpellChecker.removeLanguage('ko');
   }
 }

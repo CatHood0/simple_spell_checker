@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_en_lan/src/en/gb/join_en_british_words.dart';
 import 'package:simple_spell_checker_en_lan/src/en/join_english_words.dart';
 
@@ -16,7 +16,7 @@ class SimpleSpellCheckerEnRegister {
   static void registerEnglishLanguage({String preferEnglish = 'en'}) {
     assert(preferEnglish == 'en' || preferEnglish == 'en-gb',
         'simple_spell_checker_en_lan only support "en" and "en-gb" languages by default. Got $preferEnglish');
-    if (languagesToBeUsed.containsKey(preferEnglish)) return;
+    if (SimpleSpellChecker.containsLanguage(preferEnglish)) return;
     if (preferEnglish == 'en') {
       SimpleSpellChecker.setLanguage('en', _createDictionary(joinEnglishWords));
     } else {
@@ -40,7 +40,7 @@ class SimpleSpellCheckerEnRegister {
   }
 
   static void unRegisterEnglishLanguage() {
-    languagesToBeUsed.remove('en');
-    languagesToBeUsed.remove('en-gb');
+    SimpleSpellChecker.removeLanguage('en');
+    SimpleSpellChecker.removeLanguage('en-gb');
   }
 }

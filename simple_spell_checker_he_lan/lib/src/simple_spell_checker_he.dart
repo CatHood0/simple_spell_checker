@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_he_lan/src/he/join_hebrew_words.dart';
 
 class SimpleSpellCheckerHeRegister {
@@ -9,7 +9,7 @@ class SimpleSpellCheckerHeRegister {
   /// `registerHebrewLanguage` can be used to register manually the hebrew
   /// language to be supported by the `SimpleSpellChecker`
   static void registerHebrewLanguage() {
-    if (languagesToBeUsed.containsKey('he')) return;
+    if (SimpleSpellChecker.containsLanguage('he')) return;
     SimpleSpellChecker.setLanguage('he', _createDictionary(joinHebrewWords));
   }
 
@@ -28,6 +28,6 @@ class SimpleSpellCheckerHeRegister {
   }
 
   static void unRegisterHebrewLanguage() {
-    languagesToBeUsed.remove('he');
+    SimpleSpellChecker.removeLanguage('he');
   }
 }
