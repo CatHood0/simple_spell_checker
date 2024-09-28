@@ -1,4 +1,4 @@
-<h1 align="center">Simple Spell Checker</h1>
+<h1 align="center">📝 Simple Spell Checker</h1>
 
 <p align="center">
 <img src=https://github.com/CatHood0/resources/blob/Main/simple_spell_checker/clideo_editor_49b21800e993489fa4cdbbd160ffd60c%20(online-video-cutter.com).gif />
@@ -10,24 +10,22 @@
 
 The package already have a default list of words for these languages:
 
-* German - `de`, `de-ch` 
-* English - `en`, `en-gb`
-* Spanish - `es`
-* Catalan - `ca`
-* Arabic - `ar`
-* Danish - `da`
-* French - `fr`
-* Bulgarian - `bg`
-* Dutch - `nl`
-* Korean - `ko`
-* Estonian - `et`
-* Hebrew - `he`
-* Slovak - `sk`
-* Italian - `it`
-* Norwegian - `no`
-* Portuguese - `pt`
-* Swedish - `sv`
-* Russian - `ru`
+* [German]() - `de`, `de-ch` 
+* [English]() - `en`, `en-gb`
+* [Spanish]() - `es`
+* [Catalan]() - `ca`
+* [Arabic]() - `ar`
+* [Danish]() - `da`
+* [French]() - `fr`
+* [Bulgarian]() - `bg`
+* [Dutch]() - `nl`
+* [Korean]() - `ko`
+* [Estonian]() - `et`
+* [Hebrew]() - `he`
+* [Italian]() - `it`
+* [Norwegian]() - `no`
+* [Portuguese]() - `pt`
+* [Russian]() - `ru`
 
 ## Getting Started
 
@@ -38,8 +36,13 @@ dependencies:
   simple_spell_checker: <latest_version>
 ```
 
-**Import the necessary components into your `Dart` file and initialize the Spell-Checker**:
+> [!Note]
+> You will need to add some of the available dependencies that contains the supported languages by default. Since the [1.3.0](), all the dictionaries was removed and reimplemented into a separate package. Check [Current languages supported](#-current-languages-supported).
+> 
+> if you use some of these packages to register a language, please, call register functions before use the `SimpleSpellChecker` to avoid any unexpected behavior.
 
+**Import the necessary components into your `Dart` file and initialize the Spell-Checker**:
+ 
 ### SimpleSpellChecker 
 
 `SimpleSpellChecker` is a single language checker.
@@ -54,11 +57,25 @@ SimpleSpellChecker spellChecker = SimpleSpellChecker(
 );
 ```
 
+
+**You can set your own dictionary using `setLanguage`:**
+
+ ```dart
+import 'package:simple_spell_checker/simple_spell_checker.dart';
+
+SimpleSpellChecker.setLanguage('sk', <String, int>{});
+//we can use unlearnWord and learnWord to register/remove a word from a registered language 
+// to learn a word
+SimpleSpellChecker.learnWord('sk', 'word_that_will_be_registered');
+// to unlearn a word
+SimpleSpellChecker.unlearnWord('sk', 'word_that_will_be_removed');
+```
+
 ## Check functions
 
 ### Check your text:
 
-Use the `check()` method to analyze a `String` for spelling errors:
+Use the `check()` method to analyze a `String` for spelling errors that return a list of spans with misspelled words:
 
 ```dart
 List<TextSpan>? result = spellChecker.check(
@@ -116,7 +133,6 @@ class CustomWordTokenizer extends Tokenizer<List<String>> {
 ### Language Management
 
 * **setNewLanguageToState(String language)**: override the current language into the Spell Checker. _Only available for `SimpleSpellChecker` instances_
-* **reloadDictionarySync()**: Reload the dictionary synchronously to update the language or dictionary.
 
 ### White List Management
 

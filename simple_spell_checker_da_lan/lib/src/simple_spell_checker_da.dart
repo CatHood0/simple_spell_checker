@@ -1,13 +1,13 @@
-
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
-import 'package:simple_spell_checker/simple_spell_checker.dart' show SimpleSpellChecker, languagesToBeUsed;
+import 'package:simple_spell_checker/simple_spell_checker.dart'
+    show SimpleSpellChecker, languagesToBeUsed;
 import 'package:simple_spell_checker_da_lan/src/da/join_danish_words.dart';
 
 class SimpleSpellCheckerDaRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDanishLanguage` can be used to register manually the catalan 
+  /// `registerDanishLanguage` can be used to register manually the catalan
   /// language to be supported by the `SimpleSpellChecker`
   static void registerDanishLanguage() {
     if (languagesToBeUsed.containsKey('da')) return;
@@ -18,12 +18,13 @@ class SimpleSpellCheckerDaRegister {
     if (words.trim().isEmpty) {
       return {};
     }
-    final Iterable<MapEntry<String, int>> entries = _splitter.convert(words).map(
-          (element) => MapEntry(
-            element.trim().toLowerCase(),
-            1,
-          ),
-        );
+    final Iterable<MapEntry<String, int>> entries =
+        _splitter.convert(words).map(
+              (element) => MapEntry(
+                element.trim().toLowerCase(),
+                1,
+              ),
+            );
     return {}..addEntries(entries);
   }
 
