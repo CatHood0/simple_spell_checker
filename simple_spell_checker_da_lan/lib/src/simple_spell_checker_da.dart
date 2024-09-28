@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_da_lan/src/da/join_danish_words.dart';
 
 class SimpleSpellCheckerDaRegister {
@@ -10,7 +10,7 @@ class SimpleSpellCheckerDaRegister {
   /// `registerDanishLanguage` can be used to register manually the danish 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerDanishLanguage() {
-    if (languagesToBeUsed.containsKey('da')) return;
+    if (SimpleSpellChecker.containsLanguage('da')) return;
     SimpleSpellChecker.setLanguage('da', _createDictionary(joinDanishWords));
   }
 
@@ -29,6 +29,6 @@ class SimpleSpellCheckerDaRegister {
   }
 
   static void unRegisterDanishLanguage() {
-    languagesToBeUsed.remove('da');
+    SimpleSpellChecker.removeLanguage('da');
   }
 }

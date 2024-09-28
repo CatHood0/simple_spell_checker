@@ -76,7 +76,7 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
     }
     verifyState();
 
-    if (languagesToBeUsed[getCurrentLanguage()] == null) {
+    if (dictionaries[getCurrentLanguage()] == null) {
       return null;
     }
     if (!_wordTokenizer.canTokenizeText(text)) return null;
@@ -131,7 +131,7 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
       return null;
     }
     verifyState();
-    if (languagesToBeUsed[getCurrentLanguage()] == null) {
+    if (dictionaries[getCurrentLanguage()] == null) {
       throw UnsupportedError(
           'The ${getCurrentLanguage()} is not supported or registered. Please, first add your new language using [setLanguage] to avoid this message.');
     }
@@ -173,7 +173,7 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
     if (word.trim().isEmpty) return true;
     if (whiteList.contains(word)) return true;
     verifyState();
-    final wordsMap = languagesToBeUsed[getCurrentLanguage()] ?? {};
+    final wordsMap = dictionaries[getCurrentLanguage()] ?? {};
     final newWordWithCaseSensitive =
         caseSensitive ? word.toLowerCaseFirst() : word.trim().toLowerCase();
     final int? validWord = wordsMap[newWordWithCaseSensitive];
@@ -205,7 +205,7 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
   /// This will return all the words contained on the current state of the dictionary
   Map<String, int>? getDictionary() {
     verifyState();
-    return languagesToBeUsed[getCurrentLanguage()];
+    return dictionaries[getCurrentLanguage()];
   }
 
   @override
@@ -221,25 +221,33 @@ class SimpleSpellChecker extends Checker<String, String, List<TextSpan>> {
   static void setLanguage(String language, Map<String, int> words) {
     assert(language.trim().isNotEmpty,
         'language param cannot be empty or just contain whitespaces. Got [$language]');
-    languagesToBeUsed.addAll({language: words});
+    dictionaries.addAll({language: words});
   }
 
   static void unlearnWord(String language, String word) {
     assert(language.trim().isNotEmpty,
         'language param cannot be empty or just contain whitespaces. Got [$language]');
-    if (!languagesToBeUsed.containsKey(language)) return;
-    final dictionary = languagesToBeUsed[language] ?? {};
+    if (!dictionaries.containsKey(language)) return;
+    final dictionary = dictionaries[language] ?? {};
     dictionary.remove(word);
-    languagesToBeUsed[language] = dictionary;
+    dictionaries[language] = dictionary;
   }
 
   static void learnWord(String language, String word) {
     assert(language.trim().isNotEmpty,
         'language param cannot be empty or just contain whitespaces. Got [$language]');
-    if (!languagesToBeUsed.containsKey(language)) return;
-    final dictionary = languagesToBeUsed[language] ?? {};
+    if (!dictionaries.containsKey(language)) return;
+    final dictionary = dictionaries[language] ?? {};
     dictionary.addAll({word: 1});
-    languagesToBeUsed[language] = dictionary;
+    dictionaries[language] = dictionary;
+  }
+
+  static bool containsLanguage(String language){
+    return dictionaries.containsKey(language);
+  }
+
+  static void removeLanguage(String language){
+    dictionaries.remove(language);
   }
 
   /// Check spelling in realtime

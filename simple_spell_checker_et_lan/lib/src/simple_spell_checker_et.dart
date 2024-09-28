@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_et_lan/src/et/join_estonian_words.dart';
 
 class SimpleSpellCheckerEtRegister {
@@ -9,7 +9,7 @@ class SimpleSpellCheckerEtRegister {
   /// `registerEstonianLanguage` can be used to register manually the estonian
   /// language to be supported by the `SimpleSpellChecker`
   static void registerEstonianLanguage() {
-    if (languagesToBeUsed.containsKey('et')) return;
+    if (SimpleSpellChecker.containsLanguage('et')) return;
     SimpleSpellChecker.setLanguage('et', _createDictionary(joinEstonianWords));
   }
 
@@ -28,6 +28,6 @@ class SimpleSpellCheckerEtRegister {
   }
 
   static void unRegisterEstonianLanguage() {
-    languagesToBeUsed.remove('et');
+    SimpleSpellChecker.removeLanguage('et');
   }
 }

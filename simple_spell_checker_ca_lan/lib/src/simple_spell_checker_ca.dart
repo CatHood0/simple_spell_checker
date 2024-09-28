@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_ca_lan/src/ca/join_catalan_words.dart';
 
 class SimpleSpellCheckerCaRegister {
@@ -10,7 +10,7 @@ class SimpleSpellCheckerCaRegister {
   /// `registerCatalanLanguage` can be used to register manually the catalan
   /// language to be supported by the `SimpleSpellChecker`
   static void registerCatalanLanguage() {
-    if (languagesToBeUsed.containsKey('ca')) return;
+    if (SimpleSpellChecker.containsLanguage('ca')) return;
     SimpleSpellChecker.setLanguage('ca', _createDictionary(joinCatalanWords));
   }
 
@@ -29,6 +29,6 @@ class SimpleSpellCheckerCaRegister {
   }
 
   static void unRegisterCatalanLanguage() {
-    languagesToBeUsed.remove('ca');
+    SimpleSpellChecker.removeLanguage('ca');
   }
 }

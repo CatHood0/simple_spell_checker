@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_bg_lan/src/bg/join_bulgarian_words.dart';
 
 class SimpleSpellCheckerBgRegister {
@@ -10,7 +10,7 @@ class SimpleSpellCheckerBgRegister {
   /// `registerBulgarianLanguage` can be used to register manually the bulgarian 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerBulgarianLanguage() {
-    if (languagesToBeUsed.containsKey('bg')) return;
+    if (SimpleSpellChecker.containsLanguage('bg')) return;
     SimpleSpellChecker.setLanguage('bg', _createDictionary(joinBulgarianWords));
   }
 
@@ -29,6 +29,6 @@ class SimpleSpellCheckerBgRegister {
   }
 
   static void unRegisterBulgarianLanguage() {
-    languagesToBeUsed.remove('bg');
+    SimpleSpellChecker.removeLanguage('bg');
   }
 }
