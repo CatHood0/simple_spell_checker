@@ -1,3 +1,4 @@
+// ignore: implementation_imports
 import 'package:simple_spell_checker/src/utils.dart';
 
 import 'pt_words1.dart';

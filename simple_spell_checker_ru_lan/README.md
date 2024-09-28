@@ -3,4 +3,4 @@ An internal plugin for [simple_spell_checker](https://github.com/CatHood0/simple
 
 > [!NOTE]
 >
-> Internal Use Only: Exclusively for `simple_spell_checker`. Breaking changes may occur.
+> Use Only if you will use `simple_spell_checker`. Breaking changes may occur.

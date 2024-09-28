@@ -1,7 +1,10 @@
 name: simple_spell_checker_et_lan
 description: "An internal plugin for simple_spell_checker package to register estonian language"
 version: 1.3.0
-homepage:
+homepage: https://github.com/CatHood0/simple_spell_checker/
+repository: https://github.com/CatHood0/simple_spell_checker/
+issue_tracker: https://github.com/CatHood0/simple_spell_checker/issues/
+documentation: https://github.com/CatHood0/simple_spell_checker/
 
 environment:
   sdk: ^3.5.3
@@ -10,6 +13,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  simple_spell_checker: ^1.3.0
 
 dependency_overrides:
   simple_spell_checker:
