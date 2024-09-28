@@ -7,7 +7,7 @@ import 'package:simple_spell_checker_es_lan/src/es/join_es_words.dart';
 class SimpleSpellCheckerEsRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerEnglishLanguage` can be used to register manually the english
+  /// `registerSpanishLanguage` can be used to register manually the spanish 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerSpanishLanguage() {
     if (languagesToBeUsed.containsKey('es')) return;

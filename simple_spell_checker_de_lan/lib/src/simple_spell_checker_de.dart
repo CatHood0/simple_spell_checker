@@ -8,7 +8,7 @@ import 'package:simple_spell_checker_de_lan/src/de/join_deutsch_words.dart';
 class SimpleSpellCheckerDeRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDeutschLanguage` can be used to register manually the arabic
+  /// `registerDeutschLanguage` can be used to register manually the deutsch 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerDeutschLanguage({String preferDeutsch = 'de'}) {
     assert(preferDeutsch == 'de' || preferDeutsch == 'de-ch',

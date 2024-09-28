@@ -7,7 +7,7 @@ import 'package:simple_spell_checker_da_lan/src/da/join_danish_words.dart';
 class SimpleSpellCheckerDaRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDanishLanguage` can be used to register manually the catalan
+  /// `registerDanishLanguage` can be used to register manually the danish 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerDanishLanguage() {
     if (languagesToBeUsed.containsKey('da')) return;
