@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:simple_spell_checker/simple_spell_checker.dart'
-    show SimpleSpellChecker, languagesToBeUsed;
+    show SimpleSpellChecker;
 import 'package:simple_spell_checker_de_lan/src/de/ch/join_deutsch_ch_words.dart';
 import 'package:simple_spell_checker_de_lan/src/de/join_deutsch_words.dart';
 
