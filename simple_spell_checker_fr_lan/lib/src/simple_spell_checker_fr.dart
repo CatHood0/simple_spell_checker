@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_fr_lan/src/fr/join_french_words.dart';
 class SimpleSpellCheckerFrRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerFrenchLanguage` can be used to register manually the french
+  /// this can be used to register manually the french
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerFrenchLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('fr')) return;
     SimpleSpellChecker.setLanguage('fr', _createDictionary(joinFrenchWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerFrRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterFrenchLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('fr');
   }
 }
