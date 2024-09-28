@@ -9,4 +9,4 @@ export 'src/common/extensions.dart';
 export 'src/common/tokenizer.dart';
 export 'src/simple_spell_checker.dart';
 export 'src/multi_spell_checker.dart';
-export 'src/utils.dart';
+export 'src/utils.dart' hide dictionaries, isWordHasNumber;

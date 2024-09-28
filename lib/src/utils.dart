@@ -1,22 +1,9 @@
-import 'package:simple_spell_checker/src/dictionaries/bg/join_bulgarian_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/da/join_danish_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/de/ch/join_deutsch_ch_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/de/join_deutsch_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/en/gb/join_en_british_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/en/join_english_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/es/join_es_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/et/join_estonian_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/fr/join_french_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/he/join_hebrew_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/it/join_italian_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/ko/join_korean_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/nl/join_dutch_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/no/join_norwegian_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/pt/join_portuguese_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/ru/join_russian_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/sk/join_slovak_words.dart';
-import 'package:simple_spell_checker/src/dictionaries/sv/join_swedish_words.dart';
+import 'package:meta/meta.dart';
 
+/// This list contains all languages that are supported by 
+/// default in [simple_spell_checker]
+///
+/// If you want to import one of them, check [Current supported languages](https://github.com/CatHood0/simple_spell_checker?tab=readme-ov-file#current-languages-supported)
 final List<String> defaultLanguages = List.unmodifiable(
   [
     'pt',
@@ -30,39 +17,42 @@ final List<String> defaultLanguages = List.unmodifiable(
     'fr',
     'no',
     'nl',
-    'sv',
     'ru',
     'he',
     'et',
     'ar',
     'bg',
-    'sk',
     'ca',
     'da',
   ],
 );
 
-final Map<String, String> defaultLanguagesDictionaries = Map.unmodifiable({
-  'en': joinEnglishWords,
-  'en-gb': joinBritishWords,
-  'de': joinDeutschWords,
-  'de-ch': joinDeutschSwitzerlandWords,
-  'es': joinSpanishWords,
-  'it': joinItalianWords,
-  'fr': joinFrenchWords,
-  'no': joinNowergianWords,
-  'ko': joinKoreanWords,
-  'sv': joinSwedishWords,
-  'he': joinHebrewWords,
-  'et': joinEstonianWords,
-  'ca': joinDanishWords,
-  'sk': joinSlovakWords,
-  'nl': joinDutchWords,
-  'pt': joinPortugueseWords,
-  'bg': joinBulgarianWords,
-  'ru': joinRussianWords,
-});
+@Deprecated(
+    'defaultLanguagesDictionaries is no longer used and will be removed in future releases')
+final Map<String, String> defaultLanguagesDictionaries = Map.unmodifiable({});
 
+/// This variable is used by the checker to add using [setLanguage]
+/// where the key is the language code, and the value is the dictionary
+@experimental
+@internal
+final Map<String, Map<String, int>> dictionaries = {};
+
+@experimental
+@internal
 bool isWordHasNumber(String s) {
   return s.contains(RegExp(r'[0-9]'));
+}
+
+final RegExp _removeDicCharacter = RegExp(r'\/(\S+)?');
+
+/// This is only for internal use and should not be used outside
+/// because this is used to remove unnecessary characters into the
+/// dictionary string. By now is used, but in future releases
+/// will be removed since we need to change the implementation
+/// of the dictionaries
+@experimental
+String removeUnnecessaryCharacters(String original, [Object? replace]) {
+  return original
+      .replaceAll('-', '${replace ?? '\n'}')
+      .replaceAll(_removeDicCharacter, '');
 }
