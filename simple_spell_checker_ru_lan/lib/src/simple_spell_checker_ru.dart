@@ -6,9 +6,9 @@ import 'package:simple_spell_checker_ru_lan/src/ru/join_russian_words.dart';
 class SimpleSpellCheckerRuRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerRussianLanguage` can be used to register manually the russian 
+  /// this can be used to register manually the russian 
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerRussianLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('ru')) return;
     SimpleSpellChecker.setLanguage('ru', _createDictionary(joinRussianWords));
   }
@@ -27,7 +27,7 @@ class SimpleSpellCheckerRuRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterRussianLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('ru');
   }
 }
