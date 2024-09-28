@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_es_lan/src/es/join_es_words.dart';
 class SimpleSpellCheckerEsRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerSpanishLanguage` can be used to register manually the spanish 
+  /// this can be used to register manually the spanish 
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerSpanishLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('es')) return;
     SimpleSpellChecker.setLanguage('es', _createDictionary(joinSpanishWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerEsRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterSpanishLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('es');
   }
 }
