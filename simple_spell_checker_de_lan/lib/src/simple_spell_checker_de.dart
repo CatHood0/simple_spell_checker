@@ -8,9 +8,9 @@ import 'package:simple_spell_checker_de_lan/src/de/join_deutsch_words.dart';
 class SimpleSpellCheckerDeRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDeutschLanguage` can be used to register manually the deutsch 
+  /// this can be used to register manually the deutsch 
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerDeutschLanguage({String preferDeutsch = 'de'}) {
+  static void registerLan({String preferDeutsch = 'de'}) {
     assert(preferDeutsch == 'de' || preferDeutsch == 'de-ch',
         'simple_spell_checker_de_lan only support "de" and "de-ch" languages by default. Got $preferDeutsch');
     if (SimpleSpellChecker.containsLanguage(preferDeutsch)) return;
@@ -36,7 +36,7 @@ class SimpleSpellCheckerDeRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterDeutschLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('de');
     SimpleSpellChecker.removeLanguage('de-ch');
   }
