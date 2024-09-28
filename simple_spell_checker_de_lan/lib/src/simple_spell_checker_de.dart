@@ -10,6 +10,9 @@ class SimpleSpellCheckerDeRegister {
 
   /// this can be used to register manually the deutsch 
   /// language to be supported by the `SimpleSpellChecker`
+  ///
+  /// [`preferDeutsch`] can be only `de` or `de-ch` since just these options
+  /// are supported by the `simple_spell_checker_de_lan`
   static void registerLan({String preferDeutsch = 'de'}) {
     assert(preferDeutsch == 'de' || preferDeutsch == 'de-ch',
         'simple_spell_checker_de_lan only support "de" and "de-ch" languages by default. Got $preferDeutsch');
