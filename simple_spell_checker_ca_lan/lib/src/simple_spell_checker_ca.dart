@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_ca_lan/src/ca/join_catalan_words.dart';
 class SimpleSpellCheckerCaRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerCatalanLanguage` can be used to register manually the catalan
+  /// this can be used to register manually the catalan
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerCatalanLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('ca')) return;
     SimpleSpellChecker.setLanguage('ca', _createDictionary(joinCatalanWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerCaRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterCatalanLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('ca');
   }
 }
