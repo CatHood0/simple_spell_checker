@@ -38,6 +38,7 @@ final Map<String, String> defaultLanguagesDictionaries = Map.unmodifiable({});
 final Map<String, Map<String, int>> dictionaries = {};
 
 @experimental
+@internal
 bool isWordHasNumber(String s) {
   return s.contains(RegExp(r'[0-9]'));
 }
