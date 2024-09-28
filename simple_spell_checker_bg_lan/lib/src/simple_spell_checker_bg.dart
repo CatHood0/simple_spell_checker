@@ -7,7 +7,7 @@ import 'package:simple_spell_checker_bg_lan/src/bg/join_bulgarian_words.dart';
 class SimpleSpellCheckerBgRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerBulgarianLanguage` can be used to register manually the arabic
+  /// `registerBulgarianLanguage` can be used to register manually the bulgarian 
   /// language to be supported by the `SimpleSpellChecker`
   static void registerBulgarianLanguage() {
     if (languagesToBeUsed.containsKey('bg')) return;
