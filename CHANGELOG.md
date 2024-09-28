@@ -1,3 +1,9 @@
+## What's Changed
+
+* Chore!: first step to improve package by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/16
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.2.3...V1.3.0
+
 ## 1.2.3
 
 * Chore: removed deprecated member from Tokenizer.
