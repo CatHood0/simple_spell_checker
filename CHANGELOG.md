@@ -1,4 +1,4 @@
-## What's Changed
+## 1.3.0
 
 * Chore!: first step to improve package by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/16
 
