@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_da_lan/src/da/join_danish_words.dart';
 class SimpleSpellCheckerDaRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDanishLanguage` can be used to register manually the danish 
+  /// this can be used to register manually the danish 
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerDanishLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('da')) return;
     SimpleSpellChecker.setLanguage('da', _createDictionary(joinDanishWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerDaRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterDanishLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('da');
   }
 }
