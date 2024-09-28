@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart' show immutable;
 ///   [language] ref to the country code
 ///   [word] ref to the dictionary
 @immutable
-@Deprecated('LanguageIdentifier is no longer used and will be removed in future releases.')
+@Deprecated(
+    'LanguageIdentifier is no longer used and will be removed in future releases.')
 class LanguageIdentifier {
   final String language;
   final Map<String, int> words;
