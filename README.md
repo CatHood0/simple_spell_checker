@@ -71,6 +71,25 @@ SimpleSpellChecker.learnWord('sk', 'word_that_will_be_registered');
 SimpleSpellChecker.unlearnWord('sk', 'word_that_will_be_removed');
 ```
 
+**Registering the default supported languages:**
+
+```dart
+import 'package:simple_spell_checker_en_lan/simple_spell_checker_en_lan.dart';
+import 'package:simple_spell_checker_he_lan/simple_spell_checker_he_lan.dart';
+import 'package:simple_spell_checker_ru_lan/simple_spell_checker_ru_lan.dart';
+
+// to register the language use
+SimpleSpellCheckerHeRegister.registerLan();
+SimpleSpellCheckerRuRegister.registerLan();
+// for english you can use `en` or `en-ch` 
+// by default is `en`
+SimpleSpellCheckerEnRegister.registerLan(preferEnglish: 'en');
+// to remove the language
+SimpleSpellCheckerHeRegister.removeLan();
+SimpleSpellCheckerRuRegister.removeLan();
+SimpleSpellCheckerEnRegister.removeLan();
+```
+
 ## Check functions
 
 ### Check your text:
