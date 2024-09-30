@@ -1,3 +1,10 @@
+## 1.3.1
+
+* Chore!: renamed register functions from internal language packages by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/18
+* Fix(changelog): typo where there is a title instead the version where the change was maded by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/17
+
+**Full Changelog**: https://github.com/CatHood0/simple_spell_checker/compare/V1.3.0...V1.3.1
+
 ## 1.3.0
 
 * Chore!: first step to improve package by @CatHood0 in https://github.com/CatHood0/simple_spell_checker/pull/16

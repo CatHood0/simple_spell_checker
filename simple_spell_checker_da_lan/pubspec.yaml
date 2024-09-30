@@ -1,6 +1,6 @@
 name: simple_spell_checker_da_lan
 description: "An internal plugin for simple_spell_checker package to register danish languages"
-version: 1.3.0
+version: 1.3.1
 homepage: https://github.com/CatHood0/simple_spell_checker/
 repository: https://github.com/CatHood0/simple_spell_checker/
 issue_tracker: https://github.com/CatHood0/simple_spell_checker/issues/
