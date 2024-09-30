@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "1.18.0"
   cupertino_icons:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: cupertino_icons
       sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
@@ -143,6 +143,13 @@ packages:
     dependency: "direct main"
     description:
       path: ".."
+      relative: true
+    source: path
+    version: "1.3.1"
+  simple_spell_checker_en_lan:
+    dependency: "direct main"
+    description:
+      path: "../simple_spell_checker_en_lan"
       relative: true
     source: path
     version: "1.3.0"

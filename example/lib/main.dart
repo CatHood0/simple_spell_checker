@@ -1,8 +1,10 @@
 import 'package:example/controller/spell_checker_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_spell_checker/simple_spell_checker.dart';
+import 'package:simple_spell_checker_en_lan/simple_spell_checker_en_lan.dart';
 
 void main() {
+  SimpleSpellCheckerEnRegister.registerLan();
   runApp(const MyApp());
 }
 
