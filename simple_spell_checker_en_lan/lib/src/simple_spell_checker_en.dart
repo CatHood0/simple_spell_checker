@@ -8,12 +8,12 @@ import 'package:simple_spell_checker_en_lan/src/en/join_english_words.dart';
 class SimpleSpellCheckerEnRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerEnglishLanguage` can be used to register manually the english
+  /// this can be used to register manually the english
   /// language to be supported by the `SimpleSpellChecker`
   ///
   /// [`preferEnglish`] can be only `en` or `en-gb` since just these options
   /// are supported by the `simple_spell_checker_en_lan`
-  static void registerEnglishLanguage({String preferEnglish = 'en'}) {
+  static void registerLan({String preferEnglish = 'en'}) {
     assert(preferEnglish == 'en' || preferEnglish == 'en-gb',
         'simple_spell_checker_en_lan only support "en" and "en-gb" languages by default. Got $preferEnglish');
     if (SimpleSpellChecker.containsLanguage(preferEnglish)) return;
@@ -39,7 +39,7 @@ class SimpleSpellCheckerEnRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterEnglishLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('en');
     SimpleSpellChecker.removeLanguage('en-gb');
   }

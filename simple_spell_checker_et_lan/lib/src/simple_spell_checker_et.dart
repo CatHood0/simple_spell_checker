@@ -6,9 +6,9 @@ import 'package:simple_spell_checker_et_lan/src/et/join_estonian_words.dart';
 class SimpleSpellCheckerEtRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerEstonianLanguage` can be used to register manually the estonian
+  /// this can be used to register manually the estonian
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerEstonianLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('et')) return;
     SimpleSpellChecker.setLanguage('et', _createDictionary(joinEstonianWords));
   }
@@ -27,7 +27,7 @@ class SimpleSpellCheckerEtRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterEstonianLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('et');
   }
 }

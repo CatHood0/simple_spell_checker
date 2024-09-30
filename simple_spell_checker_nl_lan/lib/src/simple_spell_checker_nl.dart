@@ -6,9 +6,9 @@ import 'package:simple_spell_checker_nl_lan/src/nl/join_dutch_words.dart';
 class SimpleSpellCheckerNlRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerDutchLanguage` can be used to register manually the dutch
+  /// this can be used to register manually the dutch
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerDutchLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('nl')) return;
     SimpleSpellChecker.setLanguage('nl', _createDictionary(joinDutchWords));
   }
@@ -27,7 +27,7 @@ class SimpleSpellCheckerNlRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterDutchanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('nl');
   }
 }

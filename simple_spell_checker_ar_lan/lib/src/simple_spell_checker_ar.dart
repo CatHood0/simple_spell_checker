@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_ar_lan/src/ar/join_arabic_words.dart';
 class SimpleSpellCheckerArRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerArabicLanguage` can be used to register manually the arabic
+  /// this can be used to register manually the arabic
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerArabicLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('ar')) return;
     SimpleSpellChecker.setLanguage('ar', _createDictionary(joinArabicWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerArRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterArabicLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('ar');
   }
 }

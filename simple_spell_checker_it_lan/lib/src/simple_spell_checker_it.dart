@@ -6,9 +6,9 @@ import 'package:simple_spell_checker_it_lan/src/it/join_italian_words.dart';
 class SimpleSpellCheckerItRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerItalianLanguage` can be used to register manually the italian
+  /// this can be used to register manually the italian
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerItalianLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('it')) return;
     SimpleSpellChecker.setLanguage('it', _createDictionary(joinItalianWords));
   }
@@ -27,7 +27,7 @@ class SimpleSpellCheckerItRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterItalianLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('it');
   }
 }

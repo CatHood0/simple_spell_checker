@@ -6,9 +6,9 @@ import 'package:simple_spell_checker_pt_lan/src/pt/join_portuguese_words.dart';
 class SimpleSpellCheckerPtRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerPortugueseLanguage` can be used to register manually the portuguese
+  /// this can be used to register manually the portuguese
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerPortugueseLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('pt')) return;
     SimpleSpellChecker.setLanguage(
         'pt', _createDictionary(joinPortugueseWords));
@@ -28,7 +28,7 @@ class SimpleSpellCheckerPtRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterPortugueseLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('pt');
   }
 }

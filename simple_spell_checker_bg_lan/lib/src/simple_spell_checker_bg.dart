@@ -7,9 +7,9 @@ import 'package:simple_spell_checker_bg_lan/src/bg/join_bulgarian_words.dart';
 class SimpleSpellCheckerBgRegister {
   static const _splitter = LineSplitter();
 
-  /// `registerBulgarianLanguage` can be used to register manually the bulgarian 
+  /// this can be used to register manually the bulgarian 
   /// language to be supported by the `SimpleSpellChecker`
-  static void registerBulgarianLanguage() {
+  static void registerLan() {
     if (SimpleSpellChecker.containsLanguage('bg')) return;
     SimpleSpellChecker.setLanguage('bg', _createDictionary(joinBulgarianWords));
   }
@@ -28,7 +28,7 @@ class SimpleSpellCheckerBgRegister {
     return {}..addEntries(entries);
   }
 
-  static void unRegisterBulgarianLanguage() {
+  static void removeLan() {
     SimpleSpellChecker.removeLanguage('bg');
   }
 }
